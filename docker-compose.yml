@@ -1,0 +1,14 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app/frontend  # Map the local frontend directory to the /app/frontend directory in the container
+  backend:
+    build: ./backend
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./backend:/app/backend  # Map the local backend directory to the /app/backend directory in the container
