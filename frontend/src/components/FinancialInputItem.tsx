@@ -1,11 +1,11 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton, Input, Select } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { financesSlice } from "../reduxFeatures/finances/financesSlice";
 
 interface FinancialInputItemProps {
-  itemKey: number;
+  id: string;
   type: string;
   category: string;
   amount: number;
@@ -13,7 +13,7 @@ interface FinancialInputItemProps {
 }
 
 const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
-  itemKey,
+  id,
   type,
   category,
   amount,
@@ -22,10 +22,20 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
   const dispatch = useDispatch();
   
   const [item, setItem] = useState({
+    id: id,
     category: category,
     amount: amount,
     frequency: frequency,
   });
+
+  useEffect(() => {
+    setItem({
+      id: id,
+      category: category,
+      amount: amount,
+      frequency: frequency,
+    });
+  }, [id, category, amount, frequency]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newItem = { ...item };
@@ -34,19 +44,19 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         newItem = { ...item, category: e.target.value };
         break;
       case "amount":
-        newItem = { ...item, amount: parseFloat(e.target.value) };
+        newItem = { ...item, amount: e.target.value ? parseFloat(e.target.value) : 0 };
         break;
       case "frequency":
         newItem = { ...item, frequency: e.target.value };
         break;
     }
     setItem(newItem);
-    dispatch(financesSlice.actions.editInput({ itemKey, type, item: newItem }));
+    dispatch(financesSlice.actions.editInput({ id: item.id, type, item: newItem }));
   };
 
   const onItemDelete = () => {
-    console.log("Deleting item", itemKey);
-    dispatch(financesSlice.actions.removeInput({ itemKey, type }));
+
+    dispatch(financesSlice.actions.removeInput({ id: item.id, type }));
   }
 
   return (
@@ -55,9 +65,9 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         <Flex>
           <Input
             name="category"
-            onBlur={handleFormChange}
+            onChange={handleFormChange}
             placeholder="Salary"
-            defaultValue={item.category}
+            value={item.category}
           />
         </Flex>
       </Box>
@@ -65,7 +75,7 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         <Flex>
           <Input
             name="amount"
-            onBlur={handleFormChange}
+            onChange={handleFormChange}
             placeholder="$100000"
             onKeyPress={(event) => {
               if (!/[0-9]/.test(event.key)) {
@@ -73,7 +83,7 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
                 alert('You can only use numbers');
               }
             }}
-            defaultValue={item.amount}
+            value={item.amount}
           />
         </Flex>
       </Box>
@@ -81,9 +91,9 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         <Flex>
           <Select
             name="frequency"
-            onBlur={handleFormChange}
+            onChange={handleFormChange}
             placeholder="Annually"
-            defaultValue={item.frequency}
+            value={item.frequency}
           >
             <option value="annual">Semi-Annually</option>
             <option value="month">Monthly</option>

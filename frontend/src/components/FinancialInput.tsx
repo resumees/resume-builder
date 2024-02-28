@@ -11,6 +11,7 @@ interface FinancialInputProps {
 }
 
 interface FinanceInput {
+  id: string
   category: string;
   amount: number;
   frequency: string;
@@ -58,7 +59,7 @@ const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
           <FinancialInputItem
             key={index}
             type={tableName}
-            itemKey={index}
+            id={item.id}
             category={item.category}
             amount={item.amount}
             frequency={item.frequency}
