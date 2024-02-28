@@ -70,28 +70,6 @@ const Sankey: React.FC = () => {
       labelOrientation="vertical"
       labelPadding={16}
       labelTextColor={{ from: "color", modifiers: [["darker", 1]] }}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          translateX: 130,
-          itemWidth: 100,
-          itemHeight: 14,
-          itemTextColor: "#999",
-          itemDirection: "left-to-right",
-          itemOpacity: 0.85,
-          symbolSize: 14,
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemTextColor: "#000",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
     />
     </div>
   );

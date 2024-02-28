@@ -37,7 +37,7 @@ const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-start h-screen">
+    <div className="w-full flex justify-center items-start mb-auto mr-auto">
       <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
         <h2 className="text-4xl font-extrabold dark:text-white pb-4">
           {tableName}

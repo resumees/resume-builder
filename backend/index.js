@@ -1,12 +1,16 @@
 const express = require('express');
+const connectDB = require('./middleware/dbConnect');
+const financeRoutes = require('./routes/finances.routes');
+
 const app = express();
-const port = 4000;
 
-app.get('/', (req, res) => {
-    console.log("Testing")
-    res.send('Hello, this is your Express backend!');
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); 
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+connectDB();
+
+app.use(financeRoutes);
+
+app.listen(4000, () => {
+  console.log('Server is running at http://localhost:4000');
 });
