@@ -2,7 +2,7 @@ import React from "react";
 import FinancialInput from "../components/FinancialInput";
 import Sankey from "../components/Sankey";
 import Constants from "../constants";
-import { Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { saveToLocalStorage } from "../reduxFeatures/finances/financesSlice";
 
@@ -16,12 +16,15 @@ const Finances: React.FC = () => {
         <FinancialInput tableName={Constants.TYPE_EXPENSE} />
       </div>
       <div className="w-1/2 flex flex-col items-end">
-        <Button
-          colorScheme="whatsapp"
-          onClick={() => dispatch(saveToLocalStorage())}
-        >
-          Save
-        </Button>
+        <Flex direction="row" align="center" justify="center">
+          <p className="mr-4">Testing</p>
+          <Button
+            colorScheme="whatsapp"
+            onClick={() => dispatch(saveToLocalStorage())}
+          >
+            Save
+          </Button>
+        </Flex>
         <Sankey />
       </div>
     </div>

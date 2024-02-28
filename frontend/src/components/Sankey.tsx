@@ -1,71 +1,58 @@
 import { ResponsiveSankey } from "@nivo/sankey";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const data = {
-  nodes: [
-    {
-      id: "John",
-      nodeColor: "hsl(195, 70%, 50%)",
-    },
-    {
-      id: "Raoul",
-      nodeColor: "hsl(244, 70%, 50%)",
-    },
-    {
-      id: "Jane",
-      nodeColor: "hsl(148, 70%, 50%)",
-    },
-    {
-      id: "Marcel",
-      nodeColor: "hsl(162, 70%, 50%)",
-    },
-    {
-      id: "Ibrahim",
-      nodeColor: "hsl(351, 70%, 50%)",
-    },
-    {
-      id: "Junko",
-      nodeColor: "hsl(244, 70%, 50%)",
-    },
-  ],
-  links: [
-    {
-      source: "Ibrahim",
-      target: "John",
-      value: 17,
-    },
-    {
-      source: "John",
-      target: "Marcel",
-      value: 143,
-    },
-    {
-      source: "John",
-      target: "Raoul",
-      value: 190,
-    },
-    {
-      source: "Junko",
-      target: "John",
-      value: 89,
-    },
-    {
-      source: "Raoul",
-      target: "Jane",
-      value: 44,
-    },
-    {
-      source: "Marcel",
-      target: "Raoul",
-      value: 130,
-    },
-  ],
-};
+interface SankeyData {
+  nodes: {
+    id: string;
+    nodeColor: string;
+  }[];
+  links: {
+    source: string;
+    target: string;
+    value: number;
+  }[];
+}
 
-const Sankey: React.FC = () => (
-  <div style={{ height: "500px", width: '100%' }}>
-    <ResponsiveSankey
-      data={data}
+interface FinanceInput {
+  id: string;
+  category: string;
+  amount: number;
+  frequency: number;
+}
+
+const Sankey: React.FC = () => {
+  const { income, expenses, totalIncome, totalExpense } = useSelector((state: any) => state.financials);
+
+  // Function used to transform the data from the redux store into the format required by the Sankey component
+  const transformData = () => {
+    const nodes = [
+      ...income.map((item: FinanceInput) => ({ id: item.category, nodeColor: "hsl(195, 70%, 50%)" })),
+      ...expenses.map((item: FinanceInput) => ({ id: item.category, nodeColor: "hsl(195, 70%, 50%)" })),
+      { id: "Income", nodeColor: "hsl(195, 70%, 50%)" },
+      { id: "Expense", nodeColor: "hsl(195, 70%, 50%)" },
+      { id: ".", nodeColor: "hsl(195, 70%, 50%)" },
+    ];
+
+    const links = [
+      ...income.map((item: FinanceInput) => ({ source: item.category, target: "Income", value: item.amount*item.frequency })),
+      ...expenses.map((item: FinanceInput) => ({ source: "Expense", target: item.category, value: item.amount*item.frequency })),
+      { source: "Income", target: ".", value: totalIncome },
+      { source: ".", target: "Expense", value: totalExpense },
+    ];
+    return { nodes, links };
+  };
+
+  const [sankeyData, setSankeyData] = useState<SankeyData>(transformData());
+
+  useEffect(() => {
+    setSankeyData(transformData());
+  }, [income, expenses])
+
+  return (
+    <div style={{ height: "500px", width: "100%" }}>
+      <ResponsiveSankey
+      data={sankeyData}
       margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
       align="justify"
       colors={{ scheme: "category10" }}
@@ -106,7 +93,8 @@ const Sankey: React.FC = () => (
         },
       ]}
     />
-  </div>
-);
+    </div>
+  );
+};
 
 export default Sankey;

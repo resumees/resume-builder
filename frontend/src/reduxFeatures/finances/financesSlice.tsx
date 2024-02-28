@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import constants from "../../constants";
 
 interface FinanceInput {
   id: string;
   category: string;
   amount: number;
-  frequency: string;
+  frequency: number;
 }
 
 const defaultState = {
@@ -14,14 +14,16 @@ const defaultState = {
     {
       id: uuidv4(),
       category: "Salary",
-      amount: 5000,
-      frequency: "month",
+      amount: 0,
+      frequency: 1,
     },
   ] as FinanceInput[],
   expenses: [] as FinanceInput[],
+  totalIncome: 0,
+  totalExpense: 0,
 };
 
-const savedState = localStorage.getItem('financials');
+const savedState = localStorage.getItem("financials");
 
 const initialState = savedState ? JSON.parse(savedState) : defaultState;
 
@@ -30,39 +32,64 @@ export const financesSlice = createSlice({
   initialState,
   reducers: {
     addIncome: (state) => {
-      state.income.push({ id: uuidv4(), category: "", amount: 0, frequency: "" });
+      state.income.push({
+        id: uuidv4(),
+        category: "",
+        amount: 0,
+        frequency: 1,
+      });
     },
     addExpense: (state) => {
-      state.expenses.push({ id: uuidv4(), category: "", amount: 0, frequency: "" });
+      state.expenses.push({
+        id: uuidv4(),
+        category: "",
+        amount: 0,
+        frequency: 1,
+      });
     },
     editInput: (state, action) => {
       const { id, type, item } = action.payload;
       if (type === constants.TYPE_INCOME) {
-        state.income = state.income.map((incomeItem: FinanceInput) => 
+        state.income = state.income.map((incomeItem: FinanceInput) =>
           incomeItem.id === id ? { ...incomeItem, ...item } : incomeItem
         );
+        state.totalIncome = state.income.reduce(
+          (total: number, incomeItem: FinanceInput) =>
+            total + incomeItem.amount * incomeItem.frequency,
+          0
+        );
       } else if (type === constants.TYPE_EXPENSE) {
-        state.expenses = state.expenses.map((expenseItem: FinanceInput) => 
+        state.expenses = state.expenses.map((expenseItem: FinanceInput) =>
           expenseItem.id === id ? { ...expenseItem, ...item } : expenseItem
+        );
+        state.totalExpense = state.expenses.reduce(
+          (total: number, expenseItem: FinanceInput) =>
+            total + expenseItem.amount * expenseItem.frequency,
+          0
         );
       }
     },
     removeInput: (state, action) => {
-      const { id, type } = action.payload;
-      console.log("hello", id, type, state.income);
+      const { id, type, item } = action.payload;
       if (type === constants.TYPE_INCOME) {
-        state.income = state.income.filter((incomeItem: FinanceInput) => incomeItem.id !== id);
-        console.log(state.income)
+        state.income = state.income.filter(
+          (incomeItem: FinanceInput) => incomeItem.id !== id
+        );
+        state.totalIncome -= item.amount * item.frequency;
       } else if (type === constants.TYPE_EXPENSE) {
-        state.expenses = state.expenses.filter((expenseItem: FinanceInput) => expenseItem.id !== id);
+        state.expenses = state.expenses.filter(
+          (expenseItem: FinanceInput) => expenseItem.id !== id
+        );
+        state.totalExpense -= item.amount * item.frequency;
       }
     },
     saveToLocalStorage: (state) => {
-      localStorage.setItem('financials', JSON.stringify(state));
+      localStorage.setItem("financials", JSON.stringify(state));
     },
   },
 });
 
-export const { addIncome, addExpense, saveToLocalStorage } = financesSlice.actions;
+export const { addIncome, addExpense, saveToLocalStorage } =
+  financesSlice.actions;
 
 export default financesSlice.reducer;

@@ -14,13 +14,12 @@ interface FinanceInput {
   id: string
   category: string;
   amount: number;
-  frequency: string;
+  frequency: number;
 }
 
 const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
   const dispatch = useDispatch();
-  const income = useSelector((state: RootState) => state.financials.income);
-  const expenses = useSelector((state: RootState) => state.financials.expenses);
+  const { income, expenses, totalIncome, totalExpense } = useSelector((state: any) => state.financials);
   const [financeArray, setFinanceArray] = useState<FinanceInput[]>(
     tableName === Constants.TYPE_INCOME ? income : expenses
   );
@@ -38,7 +37,7 @@ const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-start h-screen rounded-lg border border-gray-300">
+    <div className="w-full flex justify-center items-start h-screen">
       <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
         <h2 className="text-4xl font-extrabold dark:text-white pb-4">
           {tableName}
@@ -73,6 +72,9 @@ const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
         >
           Add a new {tableName} input
         </Button>
+        <h2 className="text-4xl font-extrabold dark:text-white pb-4">
+          ${tableName === Constants.TYPE_INCOME ? totalIncome : totalExpense}
+        </h2>
       </Flex>
     </div>
   );

@@ -3,13 +3,14 @@ import { Box, Flex, IconButton, Input, Select } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { financesSlice } from "../reduxFeatures/finances/financesSlice";
+import Constants from "../constants";
 
 interface FinancialInputItemProps {
   id: string;
   type: string;
   category: string;
   amount: number;
-  frequency: string;
+  frequency: number;
 }
 
 const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
@@ -47,7 +48,7 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         newItem = { ...item, amount: e.target.value ? parseFloat(e.target.value) : 0 };
         break;
       case "frequency":
-        newItem = { ...item, frequency: e.target.value };
+        newItem = { ...item, frequency: parseFloat(e.target.value) };
         break;
     }
     setItem(newItem);
@@ -55,8 +56,7 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
   };
 
   const onItemDelete = () => {
-
-    dispatch(financesSlice.actions.removeInput({ id: item.id, type }));
+    dispatch(financesSlice.actions.removeInput({id: item.id, type, item: item }));
   }
 
   return (
@@ -92,13 +92,12 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
           <Select
             name="frequency"
             onChange={handleFormChange}
-            placeholder="Annually"
             value={item.frequency}
           >
-            <option value="annual">Semi-Annually</option>
-            <option value="month">Monthly</option>
-            <option value="week">Weekly</option>
-            <option value="daily">Daily</option>
+            <option value={Constants.FREQUENCY_ANNUAL}>Annually</option>
+            <option value={Constants.FREQUENCY_MONTHLY}>Monthly</option>
+            <option value={Constants.FREQUENCY_WEEKLY}>Weekly</option>
+            <option value={Constants.FREQUENCY_DAILY}>Daily</option>
           </Select>
         </Flex>
       </Box>
