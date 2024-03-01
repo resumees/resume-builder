@@ -2,18 +2,23 @@ import React from "react";
 import FinancialInput from "../components/FinancialInput";
 import Sankey from "../components/Sankey";
 import Constants from "../constants";
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { saveToLocalStorage } from "../reduxFeatures/finances/financesSlice";
+import { useSelector } from 'react-redux';
+import request from "../util/api";
+import { RootState } from "../store";
 
 const Finances: React.FC = () => {
   const dispatch = useDispatch();
-
+  const financialsReduxState = useSelector((state: RootState) => state.financials);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
   const handleSaveButtonClick = () => {
     dispatch(saveToLocalStorage());
+    request('http://localhost:4000/uploadFinancials', 'POST', { data: financialsReduxState })
+    .then((data: any) => console.log(data));
     onOpen(); 
   }
 

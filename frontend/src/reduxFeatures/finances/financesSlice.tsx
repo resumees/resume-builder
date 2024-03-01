@@ -9,6 +9,17 @@ interface FinanceInput {
   frequency: number;
 }
 
+interface FinancialsState {
+  income: FinanceInput[];
+  expenses: FinanceInput[];
+  totalIncome: number;
+  totalExpense: number;
+}
+
+interface RootState {
+  financials: FinancialsState;
+}
+
 const defaultState = {
   income: [
     {
