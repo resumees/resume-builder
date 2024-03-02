@@ -29,15 +29,12 @@ const Finances: React.FC = () => {
 
   const handleSaveButtonClick = () => {
     dispatch(saveToLocalStorage());
-    request("http://localhost:4000/uploadFinancials", "POST", {
+    request(`${import.meta.env.VITE_BACKEND_URL}/uploadFinancials`, "POST", {
       data: financialsReduxState,
     }).then((data: any) => console.log(data));
     onOpen();
   };
 
-  const handleLoginButtonClick = () => {
-    window.location.href = 'http://localhost:4000/auth/google';
-  }  
   return (
     <div className="w-full flex h-screen p-4">
       <div className="w-1/2 flex flex-row justify-center items-center">

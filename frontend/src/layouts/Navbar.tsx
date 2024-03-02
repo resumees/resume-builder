@@ -35,7 +35,7 @@ export default function WithSubnavigation() {
 
   // Check if user is authenticated
   useEffect(() => {
-    request("http://localhost:4000/auth/check-auth", "GET").then((res: any) =>
+    request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET").then((res: any) =>
       dispatch(setAuthentication(res.isAuthenticated))
     );
   }, [dispatch]);
@@ -46,7 +46,7 @@ export default function WithSubnavigation() {
   };
 
   const handleLogout = () => {
-    request('http://localhost:4000/auth/logout', 'POST').then(() => {
+    request(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, 'POST').then(() => {
         dispatch(setAuthentication(false));
     })
   }
