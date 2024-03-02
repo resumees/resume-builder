@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import constants from "../../constants";
+import constants from "../constants";
 
 interface FinanceInput {
   id: string;

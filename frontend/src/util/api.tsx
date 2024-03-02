@@ -4,6 +4,7 @@ const request = (url: string, method: string, body: any = null): Promise<any> =>
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: 'include', 
   };
 
   if (body) {

@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { addIncome, addExpense } from "../reduxFeatures/finances/financesSlice";
+import { addIncome, addExpense } from "../reduxFeatures/financesSlice";
 import React, { useState, useEffect } from "react";
 import FinancialInputItem from "./FinancialInputItem";
 import { RootState } from "../store";
@@ -19,7 +19,7 @@ interface FinanceInput {
 
 const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
   const dispatch = useDispatch();
-  const { income, expenses, totalIncome, totalExpense } = useSelector((state: any) => state.financials);
+  const { income, expenses, totalIncome, totalExpense } = useSelector((state: any) => state.global.financials);
   const [financeArray, setFinanceArray] = useState<FinanceInput[]>(
     tableName === Constants.TYPE_INCOME ? income : expenses
   );

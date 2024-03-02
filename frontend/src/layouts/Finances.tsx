@@ -2,26 +2,42 @@ import React from "react";
 import FinancialInput from "../components/FinancialInput";
 import Sankey from "../components/Sankey";
 import Constants from "../constants";
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { saveToLocalStorage } from "../reduxFeatures/finances/financesSlice";
-import { useSelector } from 'react-redux';
+import { saveToLocalStorage } from "../reduxFeatures/financesSlice";
+import { useSelector } from "react-redux";
 import request from "../util/api";
 import { RootState } from "../store";
 
 const Finances: React.FC = () => {
   const dispatch = useDispatch();
-  const financialsReduxState = useSelector((state: RootState) => state.financials);
+  const financialsReduxState = useSelector(
+    (state: RootState) => state.global.financials
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
   const handleSaveButtonClick = () => {
     dispatch(saveToLocalStorage());
-    request('http://localhost:4000/uploadFinancials', 'POST', { data: financialsReduxState })
-    .then((data: any) => console.log(data));
-    onOpen(); 
-  }
+    request("http://localhost:4000/uploadFinancials", "POST", {
+      data: financialsReduxState,
+    }).then((data: any) => console.log(data));
+    onOpen();
+  };
 
+  const handleLoginButtonClick = () => {
+    window.location.href = 'http://localhost:4000/auth/google';
+  }  
   return (
     <div className="w-full flex h-screen p-4">
       <div className="w-1/2 flex flex-row justify-center items-center">
@@ -30,9 +46,9 @@ const Finances: React.FC = () => {
       </div>
       <div className="w-1/2 flex flex-col items-end">
         <Flex direction="row" align="center" justify="center">
-          <p className="mr-4">Testing</p>
           <Button
-            colorScheme="whatsapp"
+            colorScheme='messenger'
+            size="sm"
             onClick={() => handleSaveButtonClick()}
           >
             Save
@@ -41,9 +57,7 @@ const Finances: React.FC = () => {
             <ModalOverlay />
             <ModalContent>
               <ModalCloseButton />
-              <ModalBody>
-                You have saved your current data
-              </ModalBody>
+              <ModalBody>You have saved your current data</ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={onClose}>
                   Close

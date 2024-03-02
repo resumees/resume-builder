@@ -1,6 +1,7 @@
 import { ResponsiveSankey } from "@nivo/sankey";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface SankeyData {
   nodes: {
@@ -22,7 +23,7 @@ interface FinanceInput {
 }
 
 const Sankey: React.FC = () => {
-  const { income, expenses, totalIncome, totalExpense } = useSelector((state: any) => state.financials);
+  const { income, expenses, totalIncome, totalExpense } = useSelector((state: RootState) => state.global.financials);
 
   // Function used to transform the data from the redux store into the format required by the Sankey component
   const transformData = () => {

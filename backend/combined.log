@@ -1,2 +1,57 @@
 {"level":"info","message":"Financial data uploaded","service":"user-service"}
 {"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"level":"error","message":"Upload financials error: TypeError: Cannot read properties of undefined (reading '_id')","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"error","message":"Upload financials error: MongoServerError: E11000 duplicate key error collection: taboo.financials index: _id_ dup key: { _id: \"65e2a415134a29979617d558\" }","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"PATH: /auth/check-auth - User is authenticated","service":"user-service"}
+{"level":"info","message":"Financial data uploaded","service":"user-service"}

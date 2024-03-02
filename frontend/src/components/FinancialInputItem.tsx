@@ -2,7 +2,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton, Input, Select } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { financesSlice } from "../reduxFeatures/finances/financesSlice";
+import { financesSlice } from "../reduxFeatures/financesSlice";
 import Constants from "../constants";
 
 interface FinancialInputItemProps {

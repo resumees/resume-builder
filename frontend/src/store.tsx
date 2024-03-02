@@ -1,11 +1,16 @@
-// app/store.ts
-import { configureStore } from '@reduxjs/toolkit';
-import financesSlice from './reduxFeatures/finances/financesSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import financesSlice from './reduxFeatures/financesSlice';
+import authenticationSlice from './reduxFeatures/authenticationSlice';
+
+const rootReducer = combineReducers({
+  global: combineReducers({
+    authentication: authenticationSlice,
+    financials: financesSlice,
+  }),
+});
 
 export const store = configureStore({
-  reducer: {
-    financials: financesSlice,
-  },
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
