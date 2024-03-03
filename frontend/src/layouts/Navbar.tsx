@@ -42,7 +42,7 @@ export default function WithSubnavigation() {
 
   // Redirect to Google OAuth
   const handleLogin = () => {
-    window.location.href = "http://localhost:4000/auth/google";
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`
   };
 
   // When user logs out, set auth to false and remove token from localStorage to reset session
