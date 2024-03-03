@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import constants from "../constants";
 
@@ -97,10 +97,19 @@ export const financesSlice = createSlice({
     saveToLocalStorage: (state) => {
       localStorage.setItem("financials", JSON.stringify(state));
     },
+    setFinancialsState: (state, action: PayloadAction<FinancialsState>) => {
+      state.income = action.payload.income;
+      state.expenses = action.payload.expenses;
+      state.totalIncome = action.payload.totalIncome;
+      state.totalExpense = action.payload.totalExpense;
+      if (!localStorage.getItem('financials')) {
+        localStorage.setItem('financials', JSON.stringify(state));
+      }
+    },
   },
 });
 
-export const { addIncome, addExpense, saveToLocalStorage } =
+export const { addIncome, addExpense, saveToLocalStorage, setFinancialsState } =
   financesSlice.actions;
 
 export default financesSlice.reducer;

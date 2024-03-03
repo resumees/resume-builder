@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FinancialInput from "../components/FinancialInput";
 import Sankey from "../components/Sankey";
 import Constants from "../constants";
@@ -14,24 +14,36 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { saveToLocalStorage } from "../reduxFeatures/financesSlice";
+import { saveToLocalStorage, setFinancialsState } from "../reduxFeatures/financesSlice";
 import { useSelector } from "react-redux";
 import request from "../util/api";
 import { RootState } from "../store";
 
 const Finances: React.FC = () => {
   const dispatch = useDispatch();
-  const financialsReduxState = useSelector(
-    (state: RootState) => state.global.financials
+  const { financials, authentication } = useSelector(
+    (state: RootState) => ({
+      financials: state.global.financials,
+      authentication: state.global.authentication
+    })
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
+  useEffect(() => {
+    if (authentication.isAuthenticated && !localStorage.getItem('financials')) {
+      request(`${import.meta.env.VITE_BACKEND_URL}/financials/getFinancials`, "GET").then((res: any) => {
+        dispatch({ type: "global/setFinancialsState", payload: res.data });
+        dispatch(setFinancialsState(res.data));
+      });
+    }
+  }, [authentication.isAuthenticated]);
+
   const handleSaveButtonClick = () => {
     dispatch(saveToLocalStorage());
     request(`${import.meta.env.VITE_BACKEND_URL}/uploadFinancials`, "POST", {
-      data: financialsReduxState,
-    }).then((data: any) => console.log(data));
+      data: financials,
+    });
     onOpen();
   };
 

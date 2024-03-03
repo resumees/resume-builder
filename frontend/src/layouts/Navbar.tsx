@@ -35,8 +35,8 @@ export default function WithSubnavigation() {
 
   // Check if user is authenticated
   useEffect(() => {
-    request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET").then((res: any) =>
-      dispatch(setAuthentication(res.isAuthenticated))
+    request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET").then(
+      (res: any) => dispatch(setAuthentication(res.isAuthenticated))
     );
   }, [dispatch]);
 
@@ -45,11 +45,16 @@ export default function WithSubnavigation() {
     window.location.href = "http://localhost:4000/auth/google";
   };
 
+  // When user logs out, set auth to false and remove token from localStorage to reset session
   const handleLogout = () => {
-    request(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, 'POST').then(() => {
+    request(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, "POST")
+      .then(() => {
         dispatch(setAuthentication(false));
-    })
-  }
+      })
+      .then(() => {
+        localStorage.removeItem("financials");
+      });
+  };
 
   return (
     <Box>

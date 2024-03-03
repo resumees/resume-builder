@@ -8,6 +8,12 @@ const uploadFinancesToDB = async (request) => {
   );
 };
 
+const getFinancesData = async (request) => {
+  const finances = await Financials.findOne({ _id: request.user._id });
+  return finances;
+};
+
 module.exports = {
-  uploadFinancesToDB
+  uploadFinancesToDB,
+  getFinancesData
 };
