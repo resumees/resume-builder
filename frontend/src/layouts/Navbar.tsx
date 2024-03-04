@@ -89,7 +89,7 @@ export default function WithSubnavigation() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            Logo
+            Taboo
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -319,41 +319,19 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Tab 1",
+    label: "Finances",
+    href: "/finances",
     children: [
       {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
+        label: "Visualise",
+        subLabel: "Visualise your finances in a simple graph",
+        href: "/finances/visualise",
       },
       {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
+        label: "Test",
+        subLabel: "Test",
+        href: "/",
       },
     ],
-  },
-  {
-    label: "Tab 2",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Tab 3",
-    href: "#",
-  },
-  {
-    label: "Tab 4",
-    href: "#",
-  },
+  }
 ];
