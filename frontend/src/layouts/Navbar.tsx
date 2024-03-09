@@ -328,9 +328,9 @@ const NAV_ITEMS: Array<NavItem> = [
         href: "/finances/visualise",
       },
       {
-        label: "Test",
-        subLabel: "Test",
-        href: "/",
+        label: "Financial comparison",
+        subLabel: "Check which financial plans are best for you",
+        href: "/finances/comparison",
       },
     ],
   }
