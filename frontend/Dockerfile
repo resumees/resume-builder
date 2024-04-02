@@ -8,13 +8,13 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies at the root level
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Change the working directory to the frontend directory
 WORKDIR /app/frontend
 
 # Install any additional dependencies needed for the frontend
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Expose the port
 EXPOSE 3000

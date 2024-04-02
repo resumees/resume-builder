@@ -62,6 +62,7 @@ const FinancialInput: React.FC<FinancialInputProps> = ({ tableName }) => {
             category={item.category}
             amount={item.amount}
             frequency={item.frequency}
+            tableName={tableName}
           />
         ))}
         <Button

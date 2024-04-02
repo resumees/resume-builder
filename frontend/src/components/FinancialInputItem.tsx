@@ -1,5 +1,6 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton, Input, Select } from "@chakra-ui/react";
+import CreatableSelect from "react-select/creatable";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { financesSlice } from "../reduxFeatures/financesSlice";
@@ -11,6 +12,7 @@ interface FinancialInputItemProps {
   category: string;
   amount: number;
   frequency: number;
+  tableName: string;
 }
 
 const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
@@ -18,10 +20,10 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
   type,
   category,
   amount,
-  frequency
+  frequency,
 }) => {
   const dispatch = useDispatch();
-  
+
   const [item, setItem] = useState({
     id: id,
     category: category,
@@ -45,19 +47,26 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
         newItem = { ...item, category: e.target.value };
         break;
       case "amount":
-        newItem = { ...item, amount: e.target.value ? parseFloat(e.target.value) : 0 };
+        newItem = {
+          ...item,
+          amount: e.target.value ? parseFloat(e.target.value) : 0,
+        };
         break;
       case "frequency":
         newItem = { ...item, frequency: parseFloat(e.target.value) };
         break;
     }
     setItem(newItem);
-    dispatch(financesSlice.actions.editInput({ id: item.id, type, item: newItem }));
+    dispatch(
+      financesSlice.actions.editInput({ id: item.id, type, item: newItem })
+    );
   };
 
   const onItemDelete = () => {
-    dispatch(financesSlice.actions.removeInput({id: item.id, type, item: item }));
-  }
+    dispatch(
+      financesSlice.actions.removeInput({ id: item.id, type, item: item })
+    );
+  };
 
   return (
     <Flex>
@@ -80,7 +89,7 @@ const FinancialInputItem: React.FC<FinancialInputItemProps> = ({
             onKeyPress={(event) => {
               if (!/[0-9]/.test(event.key)) {
                 event.preventDefault();
-                alert('You can only use numbers');
+                alert("You can only use numbers");
               }
             }}
             value={item.amount}

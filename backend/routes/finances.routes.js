@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getFinancesData,
   uploadFinancesToDB,
+  getPhoneData
 } = require("../service/financials.service");
 const router = express.Router();
 const logger = require("../middleware/logger");
@@ -28,6 +29,25 @@ router.get("/financials/getFinancials", authenticateJWT, async (req, res) => {
   } catch (error) {
     res.locals.errorMessage = error.message;
     logger.error("Retrieve financials error: " + error);
+    res.status(500).json({ message: `Error: ${error}` });
+  }
+});
+
+router.get("/financials/phone", authenticateJWT, async (req, res) => {
+  try {
+
+    console.log(req.query.page)
+    console.log(req.query.pageSize)
+    
+    const page = Number(req.query.page) || 1; // default to 1 if not provided
+    const pageSize = Number(req.query.pageSize) || 10; // default to 10 if not provided
+
+    let data = getPhoneData(page, pageSize);
+    logger.info("phone data retrieved");
+    res.json({ data: data });
+  } catch (error) {
+    res.locals.errorMessage = error.message;
+    logger.error("Retrieve phone error: " + error);
     res.status(500).json({ message: `Error: ${error}` });
   }
 });

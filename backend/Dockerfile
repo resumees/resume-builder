@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies at the root level
-RUN npm install
+RUN npm install 
 
 # Change the working directory to the backend directory
 WORKDIR /app/backend
