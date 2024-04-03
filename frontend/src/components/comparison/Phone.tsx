@@ -5,8 +5,9 @@ import { RootState } from "../../store";
 import request from "../../util/api";
 import SortedTable from "../ui/SortedTable";
 import { useLocation } from "react-router-dom";
+import Constants from "@/constants";
 
-interface ExpenseItem {
+export interface ExpenseItem {
   id: string;
   category: string;
   amount: number;
@@ -16,30 +17,30 @@ interface ExpenseItem {
 const Internet: React.FC = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const pageNumber = parseInt(params.get('pageNumber') || '1', 10);
+  const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
   const pageSize = 5;
 
-  useEffect(() => {
-    console.log(pageNumber);
-  }, [pageNumber])
-  
-  const { expenses } = useSelector(
-    (state: RootState) => state.global.financials
-  );
-  const telephoneFinances = expenses.find(
-    (item: ExpenseItem) => item.category === "Telephone"
+  const telephoneFinances = useSelector((state: RootState) =>
+    state.global.financials.expenses.find(
+      (item: ExpenseItem) => item.category === "Telephone"
+    )
   );
 
-  const [phoneData, setPhoneData] = useState();
+  const [phoneData, setPhoneData] = useState([]);
+  const [phoneDataLength, setPhoneDataLength] = useState(0);
 
   // Fetch phone data from backend
   useEffect(() => {
-    request(`${import.meta.env.VITE_BACKEND_URL}/financials/phone?page=${pageNumber}&pageSize=${pageSize}`, "GET").then(
-      (res: any) => {
-        console.log(res.data);
-        setPhoneData(res.data);
-      }
-    );
+    request(
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/financials/phone?page=${pageNumber}&pageSize=${pageSize}`,
+      "GET"
+    ).then((res: any) => {
+      setPhoneData(res.data.productData);
+      setPhoneDataLength(res.data.productDataLength);
+      console.log(phoneData);
+    });
   }, [pageNumber]);
 
   return (
@@ -64,7 +65,13 @@ const Internet: React.FC = () => {
           Available plans
         </Heading>
         <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
-          <SortedTable tableData={phoneData}/>
+          <SortedTable
+            tableData={phoneData}
+            tablePgSize={pageSize}
+            tableDataLength={phoneDataLength}
+            tableType={Constants.TABLE_TYPE.PHONE}
+            tableHeaders={Constants.PHONE_TABLE_HEADERS}
+          />
         </Box>
       </Box>
     </Box>

@@ -2,12 +2,13 @@ const express = require("express");
 const {
   getFinancesData,
   uploadFinancesToDB,
-  getPhoneData
+  getFinancialProductData
 } = require("../service/financials.service");
 const router = express.Router();
 const logger = require("../middleware/logger");
 const authenticateJWT = require("../middleware/jwt");
 const canstarData = require("../data/phone.json");
+const Constant = require("../helpers/constants");
 
 router.post("/uploadFinancials", authenticateJWT, async (req, res) => {
   try {
@@ -35,16 +36,26 @@ router.get("/financials/getFinancials", authenticateJWT, async (req, res) => {
 
 router.get("/financials/phone", authenticateJWT, async (req, res) => {
   try {
+    const page = Number(req.query.page) || 1; 
+    const pageSize = Number(req.query.pageSize) || 10; 
 
-    console.log(req.query.page)
-    console.log(req.query.pageSize)
-    
-    const page = Number(req.query.page) || 1; // default to 1 if not provided
-    const pageSize = Number(req.query.pageSize) || 10; // default to 10 if not provided
-
-    let data = getPhoneData(page, pageSize);
+    let data = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.PHONE);
     logger.info("phone data retrieved");
     res.json({ data: data });
+  } catch (error) {
+    res.locals.errorMessage = error.message;
+    logger.error("Retrieve phone error: " + error);
+    res.status(500).json({ message: `Error: ${error}` });
+  }
+});
+
+router.get("/financials/mortgage", authenticateJWT, async (req, res) => {
+  try {
+    const page = Number(req.query.page) || 1; 
+    const pageSize = Number(req.query.pageSize) || 10; 
+
+    logger.info("phone data retrieved");
+    res.json({ data: "test" });
   } catch (error) {
     res.locals.errorMessage = error.message;
     logger.error("Retrieve phone error: " + error);
