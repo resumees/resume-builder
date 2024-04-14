@@ -36,6 +36,8 @@ const getFinancialProductData = (page, pageSize, productType) => {
       );
     });
     productDataLength = phoneData.data.table.products.length;
+  } else if (productType === Constant.FINANCIAL_PRODUCTS.MORTGAGE) {
+    // Implement Mortgage data
   }
 
   return {
