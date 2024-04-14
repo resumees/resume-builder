@@ -9,4 +9,8 @@ class PhoneModel {
     }
 }
 
+class MortgageModel {
+    
+}
+
 module.exports = PhoneModel;
