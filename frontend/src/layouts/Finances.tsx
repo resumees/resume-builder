@@ -60,7 +60,7 @@ const Finances: React.FC = () => {
             size="sm"
             onClick={() => handleSaveButtonClick()}
           >
-            Save@@@@@
+            Save
           </Button>
           <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
