@@ -11,9 +11,9 @@
     "backend"
   ],
   "scripts": {
-    "start:frontend": "cd frontend && yarn run dev",
-    "start:backend": "cd backend && yarn start",
-    "start": "concurrently \"yarn start:frontend\" \"yarn start:backend\"",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start": "concurrently \"npm start:frontend\" \"npm start:backend\"",
     "docker": "docker-compose up --build"
   },
   "devDependencies": {

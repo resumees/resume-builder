@@ -20,4 +20,4 @@ RUN npm install
 EXPOSE 4000
 
 # Run the app when the container launches
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

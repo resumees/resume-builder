@@ -20,4 +20,4 @@ RUN npm install --legacy-peer-deps
 EXPOSE 3000
 
 # Start the application
-CMD ["yarn", "run", "dev"]
+CMD ["npm", "run", "dev"]
