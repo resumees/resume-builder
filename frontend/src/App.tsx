@@ -6,6 +6,7 @@ import Navbar from "./layouts/Navbar";
 import { RootState } from "./store";
 import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
 import Comparison from "./layouts/Comparison";
+import Home from "./Home";
 
 const AuthenticatedRoutes: React.FC = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.global.authentication);
@@ -24,7 +25,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center justify-center text-center w-full flex-grow">
             <Routes>
               <Route path="/" element={<AuthenticatedRoutes />}>
-                <Route index element={<h1>Home page</h1>} />
+                <Route index element={<Home />} />
                 <Route path="/finances/visualise" element={<Finances />} />
                 <Route path="/finances/comparison/*" element={<Comparison />} />
               </Route>
