@@ -1,10 +1,11 @@
 class PhoneModel {
-    constructor(company, title, information, data, cost, CTA) {
+    constructor(company, title, information, data, cost, link, CTA) {
         this.company = company;
         this.title = title;
         this.information = information;
         this.data = data;
         this.cost = cost;
+        this.link = link;
         this.CTA = CTA;
     }
 }
