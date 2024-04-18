@@ -12,7 +12,7 @@ function ProductOverview({productData}) {
 
     return(<Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
         <Text>
-        Your current {productData?.category} bill: $
+        Your current {productData?.category.toLowerCase()} bill: $
         {monthlyBill}{" "}
         / month
         </Text>
