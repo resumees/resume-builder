@@ -81,9 +81,9 @@ const SortedTable: React.FC<SortedTableProps> = ({
             href={data?.link}
             target="_blank"
             colorScheme="whatsapp"
-            variant="outline"
+            variant={data?.link != null ? "outline" : "hidden"}
           >
-            Go to site
+            {data?.link != null ? "Go to site" : ""}
           </Button>
         </Td>
       </Tr>
