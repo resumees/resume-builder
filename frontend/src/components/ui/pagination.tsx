@@ -59,11 +59,14 @@ const PaginationLink = ({
 )
 PaginationLink.displayName = "PaginationLink"
 
-const PaginationPrevious = ({ className, ...props }: { className: string }) => {
+const PaginationPrevious = ({ className, page, ...props }: { className: string, page: number }) => {
+  if (page === 1) {
+    return;
+  }
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      size="default"
+      size="default" 
       className={cn("gap-1 pl-2.5", className)}
       {...props}
     >
@@ -75,20 +78,22 @@ const PaginationPrevious = ({ className, ...props }: { className: string }) => {
 
 PaginationPrevious.displayName = "PaginationPrevious"
 
-const PaginationNext = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = ({  className, page, dataLength, pageSize,  ...props}: {className: string, page: number, dataLength: number, pageSize: number}) => {
+  if (page >= (Math.ceil(dataLength / pageSize))) {
+    return;
+  }
+  return (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
-    className={cn("gap-1 pr-2.5", className)}
+    className={cn("gap-1 pl-2.5", className)}
     {...props}
   >
     <span>Next</span>
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
-)
+  );
+}
 PaginationNext.displayName = "PaginationNext"
 
 const PaginationEllipsis = ({
