@@ -6,6 +6,7 @@ import { ExpenseItem } from "./Phone";
 import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
+import ProductOverview from "./ProductOverview";
 
 const HomeLoan: React.FC = () => {
   const mortgageFinances = useSelector((state: RootState) =>
@@ -35,16 +36,7 @@ const HomeLoan: React.FC = () => {
         <Heading as="h5" size="lg">
           Overview
         </Heading>
-        <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
-          <Text>
-            Your current mortgage bill: $
-            {(
-              (mortgageFinances?.amount * mortgageFinances?.frequency) /
-              12
-            ).toFixed(2)}{" "}
-            / month
-          </Text>
-        </Box>
+        <ProductOverview productData={mortgageFinances} />
       </Box>
       <Box display="flex" p={7} flexDirection="column" flex="1">
         <Heading as="h5" size="lg">
