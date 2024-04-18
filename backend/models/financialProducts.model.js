@@ -10,7 +10,17 @@ class PhoneModel {
 }
 
 class MortgageModel {
-    
+    constructor(company, information, interestRate, comparisonRate, monthlyRepayment, CTA) {
+        this.company = company;
+        this.information = information;
+        this.interestRate = interestRate;
+        this.comparisonRate = comparisonRate;
+        this.monthlyRepayment = monthlyRepayment;
+        this.CTA = CTA;
+    }
 }
 
-module.exports = PhoneModel;
+module.exports = {
+    PhoneModel,
+    MortgageModel
+};

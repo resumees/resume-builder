@@ -54,8 +54,8 @@ router.get("/financials/mortgage", authenticateJWT, async (req, res) => {
     const page = Number(req.query.page) || 1; 
     const pageSize = Number(req.query.pageSize) || 10; 
 
-    logger.info("phone data retrieved");
     res.json({ data: "test" });
+    logger.info("mortgage data retrieved");
   } catch (error) {
     res.locals.errorMessage = error.message;
     logger.error("Retrieve phone error: " + error);

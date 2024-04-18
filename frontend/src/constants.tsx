@@ -18,10 +18,11 @@ const Constants = {
         "CTA"
     ],
     MORTGAGE_TABLE_HEADERS: [
-        "company!",
-        "informa!!tion",
-        "!!!",
-        "co!!!st",
+        "company",
+        "information",
+        "interest rate",
+        "comparison rate",
+        "monthly payment",
         "CTA"
     ],
 };

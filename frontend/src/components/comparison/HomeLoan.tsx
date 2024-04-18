@@ -7,6 +7,7 @@ import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import ProductOverview from "./ProductOverview";
+import Constants from "@/constants";
 
 const HomeLoan: React.FC = () => {
   const mortgageFinances = useSelector((state: RootState) =>
@@ -42,13 +43,15 @@ const HomeLoan: React.FC = () => {
         <Heading as="h5" size="lg">
           Available plans
         </Heading>
-        {/* <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
+        <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
           <SortedTable
             tableData={{}}
+            tableType={Constants.TABLE_TYPE.MORTGAGE}
             tablePgSize={pageSize}
             tableDataLength={10}
+            tableHeaders={Constants.MORTGAGE_TABLE_HEADERS}
           />
-        </Box> */}
+        </Box>
       </Box>
     </Box>
   );
