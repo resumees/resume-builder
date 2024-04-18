@@ -98,7 +98,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious onClick={handlePreviousClick} />
+                  <PaginationPrevious onClick={handlePreviousClick} page={pageNumber}/>
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink>{pageNumber}</PaginationLink>
@@ -107,7 +107,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext onClick={handleNextClick} />
+                  <PaginationNext onClick={handleNextClick} page={pageNumber} dataLength={tableDataLength} pageSize={tablePgSize}/>
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
