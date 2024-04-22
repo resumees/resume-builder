@@ -45,20 +45,25 @@ const getFinancialProductData = (page, pageSize, productType) => {
       });
     productDataLength = phoneData.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.MORTGAGE) {
-    // productModel = mortgageData.data.table.products
-    //   .slice(start, end)
-    //   .map((mortgageProduct) => {
-    //     return new MortgageModel(
-    //       mortgageProduct.logo,
-    //       mortgageProduct.title,
-    //       mortgageProduct.callsToAction.map((action) => action.text),
-    //       mortgageProduct.properties.values,
-    //       mortgageProduct.callsToAction.find(
-    //         (action) => action.type === "costBreakDown"
-    //       ).text,
-    //       mortgageProduct.link
-    //     );
-    //   });
+    productModel = mortgageData.data.table.products
+      .slice(start, end)
+      .map((mortgageProduct) => {
+        return new MortgageModel(
+          mortgageProduct.logo,
+          mortgageProduct.title,
+          mortgageProduct.properties.values.find(
+            (obj) => obj.text === "Interest rate"
+          ).value,
+          mortgageProduct.properties.values.find(
+            (obj) => obj.text === "Comparison rate^"
+          ).value,
+          mortgageProduct.properties.values.find(
+            (obj) => obj.text === "Monthly repayment"
+          ).value,
+          mortgageProduct.link
+        );
+      });
+      productDataLength = mortgageData.data.table.products.length;  
   }
 
   return {

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ExpenseItem } from "./Phone";
@@ -20,6 +20,9 @@ const HomeLoan: React.FC = () => {
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
   const pageSize = 5;
 
+  const [mortgageData, setMortgageData] = useState([]);
+  const [mortgageDataLength, setMortgageDataLength] = useState(0);
+
   useEffect(() => {
     request(
       `${
@@ -28,6 +31,8 @@ const HomeLoan: React.FC = () => {
       "GET"
     ).then((res: any) => {
       console.log(res.data);
+      setMortgageData(res.data.productData);
+      setMortgageDataLength(res.data.productDataLength);
     });
   }, [pageNumber]);
 
@@ -45,10 +50,10 @@ const HomeLoan: React.FC = () => {
         </Heading>
         <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
           <SortedTable
-            tableData={{}}
+            tableData={mortgageData}
             tableType={Constants.TABLE_TYPE.MORTGAGE}
             tablePgSize={pageSize}
-            tableDataLength={10}
+            tableDataLength={mortgageDataLength}
             tableHeaders={Constants.MORTGAGE_TABLE_HEADERS}
           />
         </Box>

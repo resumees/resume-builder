@@ -40,7 +40,6 @@ const Internet: React.FC = () => {
     ).then((res: any) => {
       setPhoneData(res.data.productData);
       setPhoneDataLength(res.data.productDataLength);
-      console.log(phoneData);
     });
   }, [pageNumber]);
 

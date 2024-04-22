@@ -24,7 +24,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import Constants from "@/constants";
 
-interface TableData {
+interface PhoneData {
   company: string;
   data: any[];
   title: string;
@@ -32,8 +32,17 @@ interface TableData {
   CTA: string;
 }
 
+interface MortgageData {
+  company: string;
+  information: string;
+  comparisonRate: string;
+  interestRate: string;
+  monthlyRepayment: string;
+  CTA: string;
+}
+
 interface SortedTableProps {
-  tableData: TableData[];
+  tableData: any;
   tablePgSize: number;
   tableDataLength: number;
   tableType: string;
@@ -67,7 +76,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   };
 
   const PhoneData = () => {
-    return tableData.map((data, index) => (
+    return tableData.map((data: PhoneData, index: number) => (
       <Tr key={index}>
         <Td>
           <img src={data?.company} alt="Company Logo" />
@@ -90,15 +99,45 @@ const SortedTable: React.FC<SortedTableProps> = ({
     ));
   };
 
+  const MortgageData = () => {
+    return tableData.map((data: MortgageData, index: number) => (
+      <Tr key={index}>
+        <Td>
+          <img src={data?.company} alt="Company Logo" />
+        </Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+          {data?.information}
+        </Td>
+        <Td>{data?.comparisonRate}</Td>
+        <Td>{data?.interestRate}</Td>
+        <Td>{data?.monthlyRepayment}</Td>
+        <Td>
+          <Button
+            as="a"
+            href={data?.CTA}
+            target="_blank"
+            colorScheme="whatsapp"
+            variant={data?.CTA != null ? "outline" : "hidden"}
+          >
+            {data?.CTA != null ? "Go to site" : ""}
+          </Button>
+        </Td>
+      </Tr>
+    ));
+  };
+
   return (
-    <>
-      <TableContainer>
+    <Box display="flex" width="100%" overflowX="auto">
+      <TableContainer maxWidth="100%">
         <Table variant="simple">
           <TableCaption position="relative">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious onClick={handlePreviousClick} page={pageNumber}/>
+                  <PaginationPrevious
+                    onClick={handlePreviousClick}
+                    page={pageNumber}
+                  />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink>{pageNumber}</PaginationLink>
@@ -107,7 +146,12 @@ const SortedTable: React.FC<SortedTableProps> = ({
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext onClick={handleNextClick} page={pageNumber} dataLength={tableDataLength} pageSize={tablePgSize}/>
+                  <PaginationNext
+                    onClick={handleNextClick}
+                    page={pageNumber}
+                    dataLength={tableDataLength}
+                    pageSize={tablePgSize}
+                  />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
@@ -129,12 +173,12 @@ const SortedTable: React.FC<SortedTableProps> = ({
           {tableData && tableData.length > 0 && (
             <Tbody>
               {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
-              {tableType === Constants.TABLE_TYPE.MORTGAGE && PhoneData()}
+              {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
             </Tbody>
           )}
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

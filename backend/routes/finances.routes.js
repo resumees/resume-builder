@@ -39,9 +39,9 @@ router.get("/financials/phone", authenticateJWT, async (req, res) => {
     const page = Number(req.query.page) || 1; 
     const pageSize = Number(req.query.pageSize) || 10; 
 
-    let data = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.PHONE);
-    logger.info("phone data retrieved");
-    res.json({ data: data });
+    let phoneData = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.PHONE);
+    logger.info(`Phone data: ${phoneData}`)
+    res.json({ data: phoneData });
   } catch (error) {
     res.locals.errorMessage = error.message;
     logger.error("Retrieve phone error: " + error);
@@ -54,11 +54,12 @@ router.get("/financials/mortgage", authenticateJWT, async (req, res) => {
     const page = Number(req.query.page) || 1; 
     const pageSize = Number(req.query.pageSize) || 10; 
 
-    res.json({ data: "test" });
-    logger.info("mortgage data retrieved");
+    let mortgageData = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.MORTGAGE);
+    logger.info(`Mortgage data: ${mortgageData}`)
+    res.json({ data: mortgageData });
   } catch (error) {
     res.locals.errorMessage = error.message;
-    logger.error("Retrieve phone error: " + error);
+    logger.error("Retrieve mortgage error: " + error);
     res.status(500).json({ message: `Error: ${error}` });
   }
 });

@@ -4,7 +4,6 @@ const financeRoutes = require('./routes/finances.routes');
 const login = require('./routes/login.routes');
 const setupMiddleware = require('./middleware/app.middleware');
 require('dotenv').config();
-
 const app = express();
 
 setupMiddleware(app);
