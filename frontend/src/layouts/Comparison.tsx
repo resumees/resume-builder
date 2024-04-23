@@ -1,8 +1,8 @@
 import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
-import HomeLoan from "../components/comparison/HomeLoan";
-import Phone from "../components/comparison/Phone";
+import ProductComparison from "@/components/comparison/ProductComparison";
+import Constants from "@/constants";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
@@ -33,9 +33,33 @@ const Comparison: React.FC = () => {
         </TabList>
 
         <Routes>
-          <Route path="/homeloans" element={<HomeLoan />} />
-          <Route path="/phone" element={<Phone />} />
-          <Route path="/utilities" element={<h1>Utilities</h1>} />
+          <Route
+            path="/homeloans"
+            element={
+              <ProductComparison
+                key={`${Constants.TABLE_TYPE.MORTGAGE}`}
+                ProductType={Constants.TABLE_TYPE.MORTGAGE}
+              />
+            }
+          />
+          <Route
+            path="/phone"
+            element={
+              <ProductComparison
+                key={`${Constants.TABLE_TYPE.PHONE}`}
+                ProductType={Constants.TABLE_TYPE.PHONE}
+              />
+            }
+          />
+          <Route
+            path="/utilities"
+            element={
+              <ProductComparison
+                key={`${Constants.TABLE_TYPE.UTILITIES}`}
+                ProductType={Constants.TABLE_TYPE.UTILITIES}
+              />
+            }
+          />
         </Routes>
       </Tabs>
     </Box>

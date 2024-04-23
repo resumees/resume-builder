@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ProductOverview from "./ProductOverview";
 import { Box, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -6,35 +7,51 @@ import { ExpenseItem } from "./Phone";
 import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
-import ProductOverview from "./ProductOverview";
 import Constants from "@/constants";
 
-const HomeLoan: React.FC = () => {
-  const mortgageFinances = useSelector((state: RootState) =>
+type ProductComparisonProps = {
+  ProductType: string;
+};
+
+const ProductComparison: React.FC<ProductComparisonProps> = ({
+  ProductType,
+}) => {
+  const financeInput = useSelector((state: RootState) =>
     state.global.financials.expenses.find(
-      (item: ExpenseItem) => item.category === "Mortgage"
+      (item: ExpenseItem) => item.category === ProductType
     )
   );
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
   const pageSize = 5;
 
-  const [mortgageData, setMortgageData] = useState([]);
-  const [mortgageDataLength, setMortgageDataLength] = useState(0);
+  const [financeData, setFinanceData] = useState([]);
+  const [financeDataLength, setFinanceDataLength] = useState(0);
+  const [tableHeader, setTableHeader] = useState<string[]>([]);
+
 
   useEffect(() => {
     request(
       `${
         import.meta.env.VITE_BACKEND_URL
-      }/financials/mortgage?page=${pageNumber}&pageSize=${pageSize}`,
+      }/financials/${ProductType.toLowerCase()}?page=${pageNumber}&pageSize=${pageSize}`,
       "GET"
     ).then((res: any) => {
       console.log(res.data);
-      setMortgageData(res.data.productData);
-      setMortgageDataLength(res.data.productDataLength);
+      setFinanceData(res.data.productData);
+      setFinanceDataLength(res.data.productDataLength);
     });
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
+        setTableHeader(Constants.MORTGAGE_TABLE_HEADERS)
+    } else if (ProductType === Constants.TABLE_TYPE.PHONE) {
+        setTableHeader(Constants.PHONE_TABLE_HEADERS)
+    }
+  }, [ProductType])
 
   return (
     <Box display="flex" p={7} flexDirection="row" width="100%">
@@ -42,7 +59,7 @@ const HomeLoan: React.FC = () => {
         <Heading as="h5" size="lg">
           Overview
         </Heading>
-        <ProductOverview productData={mortgageFinances} />
+        <ProductOverview productData={financeInput} />
       </Box>
       <Box display="flex" p={7} flexDirection="column" flex="1">
         <Heading as="h5" size="lg">
@@ -50,16 +67,16 @@ const HomeLoan: React.FC = () => {
         </Heading>
         <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
           <SortedTable
-            tableData={mortgageData}
-            tableType={Constants.TABLE_TYPE.MORTGAGE}
-            tablePgSize={pageSize}
-            tableDataLength={mortgageDataLength}
-            tableHeaders={Constants.MORTGAGE_TABLE_HEADERS}
-          />
+          tableData={financeData}
+          tableType={ProductType}
+          tablePgSize={pageSize}
+          tableDataLength={financeDataLength}
+          tableHeaders={tableHeader}
+        />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default HomeLoan;
+export default ProductComparison;
