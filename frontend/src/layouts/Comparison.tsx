@@ -10,14 +10,13 @@ const Comparison: React.FC = () => {
   const handleTabChange = (index: number) => {
     switch (index) {
       case 0:
-        navigate("/finances/comparison/homeloans");
+        navigate(`/finances/comparison/homeloans?pageNumber=1`);
         break;
       case 1:
-        const params = new URLSearchParams({ pageNumber: '1' });
-        navigate(`/finances/comparison/phone?${params.toString()}`);
+        navigate(`/finances/comparison/phone?pageNumber=1`);
         break;
       case 2:
-        navigate("/finances/comparison/insurance");
+        navigate(`/finances/comparison/utilities?pageNumber=1`);
         break;
       default:
         break;
@@ -30,13 +29,13 @@ const Comparison: React.FC = () => {
         <TabList bg="lightblue">
           <Tab _hover={{ bg: "gray.300" }}>Home loans</Tab>
           <Tab _hover={{ bg: "gray.300" }}>Phone</Tab>
-          <Tab _hover={{ bg: "gray.300" }}>Insurance</Tab>
+          <Tab _hover={{ bg: "gray.300" }}>Utilities</Tab>
         </TabList>
 
         <Routes>
           <Route path="/homeloans" element={<HomeLoan />} />
           <Route path="/phone" element={<Phone />} />
-          <Route path="/insurance" element={<h1>insurance</h1>} />
+          <Route path="/utilities" element={<h1>Utilities</h1>} />
         </Routes>
       </Tabs>
     </Box>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import request from "../../util/api";
