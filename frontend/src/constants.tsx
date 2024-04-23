@@ -8,7 +8,8 @@ const Constants = {
     TABLE_TYPE: {
         INTERNET: "Internet",
         PHONE: "Phone",
-        MORTGAGE: "Mortgage"
+        MORTGAGE: "Mortgage",
+        UTILITIES: "Utilities",
     },
     PHONE_TABLE_HEADERS: [
         "company",

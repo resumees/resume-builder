@@ -105,9 +105,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
         <Td>
           <img src={data?.company} alt="Company Logo" />
         </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
-          {data?.information}
-        </Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
         <Td>{data?.comparisonRate}</Td>
         <Td>{data?.interestRate}</Td>
         <Td>{data?.monthlyRepayment}</Td>
@@ -124,7 +122,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
         </Td>
       </Tr>
     ));
-  };
+  }
 
   return (
     <Box display="flex" width="100%" overflowX="auto">
@@ -134,10 +132,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious
-                    onClick={handlePreviousClick}
-                    page={pageNumber}
-                  />
+                  <PaginationPrevious onClick={handlePreviousClick} page={pageNumber}/>
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink>{pageNumber}</PaginationLink>
@@ -146,12 +141,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext
-                    onClick={handleNextClick}
-                    page={pageNumber}
-                    dataLength={tableDataLength}
-                    pageSize={tablePgSize}
-                  />
+                  <PaginationNext onClick={handleNextClick} page={pageNumber} dataLength={tableDataLength} pageSize={tablePgSize}/>
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
