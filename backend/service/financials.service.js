@@ -64,6 +64,8 @@ const getFinancialProductData = (page, pageSize, productType) => {
         );
       });
       productDataLength = mortgageData.data.table.products.length;  
+  } else if (productType === Constant.FINANCIAL_PRODUCTS.UTILITIES) {
+    return "test"
   }
 
   return {

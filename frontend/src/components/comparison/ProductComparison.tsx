@@ -3,7 +3,6 @@ import ProductOverview from "./ProductOverview";
 import { Box, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { ExpenseItem } from "./Phone";
 import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
@@ -36,7 +35,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
     request(
       `${
         import.meta.env.VITE_BACKEND_URL
-      }/financials/${ProductType.toLowerCase()}?page=${pageNumber}&pageSize=${pageSize}`,
+      }/financials/comparison?productType=${ProductType.toLowerCase()}&page=${pageNumber}&pageSize=${pageSize}`,
       "GET"
     ).then((res: any) => {
       console.log(res.data);

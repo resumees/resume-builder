@@ -34,32 +34,18 @@ router.get("/financials/getFinancials", authenticateJWT, async (req, res) => {
   }
 });
 
-router.get("/financials/phone", authenticateJWT, async (req, res) => {
+router.get("/financials/comparison", authenticateJWT, async (req, res) => {
   try {
     const page = Number(req.query.page) || 1; 
     const pageSize = Number(req.query.pageSize) || 10; 
+    const productType = req.query.productType
 
-    let phoneData = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.PHONE);
-    logger.info(`Phone data: ${phoneData}`)
-    res.json({ data: phoneData });
+    productData = getFinancialProductData(page, pageSize, productType)
+    logger.info(`${productType} data: ${productData}`)
+    res.json({ data: productData });
   } catch (error) {
     res.locals.errorMessage = error.message;
-    logger.error("Retrieve phone error: " + error);
-    res.status(500).json({ message: `Error: ${error}` });
-  }
-});
-
-router.get("/financials/mortgage", authenticateJWT, async (req, res) => {
-  try {
-    const page = Number(req.query.page) || 1; 
-    const pageSize = Number(req.query.pageSize) || 10; 
-
-    let mortgageData = getFinancialProductData(page, pageSize, Constant.FINANCIAL_PRODUCTS.MORTGAGE);
-    logger.info(`Mortgage data: ${mortgageData}`)
-    res.json({ data: mortgageData });
-  } catch (error) {
-    res.locals.errorMessage = error.message;
-    logger.error("Retrieve mortgage error: " + error);
+    logger.error(`Retrieve ${productType} error: ` + error);
     res.status(500).json({ message: `Error: ${error}` });
   }
 });
