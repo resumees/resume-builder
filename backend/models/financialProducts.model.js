@@ -21,7 +21,18 @@ class MortgageModel {
     }
 }
 
+class ElectricityModel {
+    constructor(company, information, referencePrice, estimatedCost, CTA) {
+        this.company = company;
+        this.information = information;
+        this.referencePrice = referencePrice;
+        this.estimatedCost = estimatedCost;
+        this.CTA = CTA;
+    }
+}
+
 module.exports = {
     PhoneModel,
-    MortgageModel
+    MortgageModel,
+    ElectricityModel
 };

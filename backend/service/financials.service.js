@@ -1,9 +1,11 @@
 const Financials = require("../models/financials.model");
 const phoneData = require("../data/phone.json");
 const mortgageData = require("../data/mortgage.json");
+const electricityData = require("../data/electricity_endeavour.json");
 const {
   PhoneModel,
   MortgageModel,
+  ElectricityModel
 } = require("../models/financialProducts.model");
 const Constant = require("../helpers/constants");
 
@@ -65,7 +67,22 @@ const getFinancialProductData = (page, pageSize, productType) => {
       });
       productDataLength = mortgageData.data.table.products.length;  
   } else if (productType === Constant.FINANCIAL_PRODUCTS.UTILITIES) {
-    return "test"
+    productModel = electricityData.data.table.products
+      .slice(start, end)
+      .map((electricityProduct) => {
+        return new ElectricityModel(
+          electricityProduct.logo,
+          electricityProduct.title,
+          electricityProduct.properties.values.find(
+            (obj) => obj.text === "Reference price"
+          ).value,
+          electricityProduct.properties.values.find(
+            (obj) => obj.text === "Price/year (estimated)"
+          ).value,
+          electricityProduct.link
+        );  
+      })
+      productDataLength = electricityData.data.table.products.length;  
   }
 
   return {

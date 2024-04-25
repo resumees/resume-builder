@@ -41,6 +41,14 @@ interface MortgageData {
   CTA: string;
 }
 
+interface UtilityData {
+  company: string;
+  information: string;
+  referencePrice: string;
+  estimatedCost: string;
+  CTA: string;
+}
+
 interface SortedTableProps {
   tableData: any;
   tablePgSize: number;
@@ -124,6 +132,30 @@ const SortedTable: React.FC<SortedTableProps> = ({
     ));
   }
 
+  const UtilitiesData = () => {
+    return tableData.map((data: UtilityData, index: number) => (
+      <Tr key={index}>
+        <Td>
+          <img src={data?.company} alt="Company Logo" />
+        </Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
+        <Td>{data?.referencePrice}</Td>
+        <Td>{data?.estimatedCost}</Td>
+        <Td>
+          <Button
+            as="a"
+            href={data?.CTA}
+            target="_blank"
+            colorScheme="whatsapp"
+            variant={data?.CTA != null ? "outline" : "hidden"}
+          >
+            {data?.CTA != null ? "Go to site" : ""}
+          </Button>
+        </Td>
+      </Tr>
+    ));
+  }
+
   return (
     <Box display="flex" width="100%" overflowX="auto">
       <TableContainer maxWidth="100%">
@@ -164,6 +196,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Tbody>
               {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
               {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
+              {tableType === Constants.TABLE_TYPE.UTILITIES && UtilitiesData()}
             </Tbody>
           )}
         </Table>

@@ -26,6 +26,13 @@ const Constants = {
         "monthly payment",
         "CTA"
     ],
+    UTILITIY_TABLE_HEADERS: [
+        "company",
+        "information",
+        "referencePrice",
+        "estimatedCost",
+        "CTA"
+    ],
 };
 
 export default Constants;

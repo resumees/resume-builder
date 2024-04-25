@@ -30,7 +30,6 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const [financeDataLength, setFinanceDataLength] = useState(0);
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
-
   useEffect(() => {
     request(
       `${
@@ -45,12 +44,15 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   }, [pageNumber]);
 
   useEffect(() => {
-    if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
-        setTableHeader(Constants.MORTGAGE_TABLE_HEADERS)
-    } else if (ProductType === Constants.TABLE_TYPE.PHONE) {
-        setTableHeader(Constants.PHONE_TABLE_HEADERS)
+    const tableHeadersMap = {
+      [Constants.TABLE_TYPE.MORTGAGE]: Constants.MORTGAGE_TABLE_HEADERS,
+      [Constants.TABLE_TYPE.PHONE]: Constants.PHONE_TABLE_HEADERS,
+      [Constants.TABLE_TYPE.UTILITIES]: Constants.UTILITIY_TABLE_HEADERS
+    };
+    if (tableHeadersMap.hasOwnProperty(ProductType)) {
+      setTableHeader(tableHeadersMap[ProductType]);
     }
-  }, [ProductType])
+  }, [ProductType]);
 
   return (
     <Box display="flex" p={7} flexDirection="row" width="100%">
@@ -66,12 +68,12 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
         </Heading>
         <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
           <SortedTable
-          tableData={financeData}
-          tableType={ProductType}
-          tablePgSize={pageSize}
-          tableDataLength={financeDataLength}
-          tableHeaders={tableHeader}
-        />
+            tableData={financeData}
+            tableType={ProductType}
+            tablePgSize={pageSize}
+            tableDataLength={financeDataLength}
+            tableHeaders={tableHeader}
+          />
         </Box>
       </Box>
     </Box>
