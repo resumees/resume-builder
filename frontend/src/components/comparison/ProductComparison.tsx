@@ -32,13 +32,12 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
   useEffect(() => {
-
     const params = new URLSearchParams({
       productType: ProductType.toLowerCase(),
-      page: pageNumber.toString(), 
-      pageSize: pageSize.toString(), 
+      page: pageNumber.toString(),
+      pageSize: pageSize.toString(),
     });
-    
+
     request(
       `${
         import.meta.env.VITE_BACKEND_URL
@@ -49,8 +48,6 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       setFinanceData(res.data.productData);
       setFinanceDataLength(res.data.productDataLength);
     });
-
-    
   }, [pageNumber]);
 
   useEffect(() => {
@@ -72,10 +69,12 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
             Overview
           </Heading>
           <ProductOverview productData={financeInput} />
-          <SearchUtilities />
+          {ProductType === Constants.TABLE_TYPE.UTILITIES && (
+            <SearchUtilities />
+          )}
         </>
-        
       </Box>
+
       <Box display="flex" p={7} flexDirection="column" flex="1">
         <Heading as="h5" size="lg">
           Available plans
