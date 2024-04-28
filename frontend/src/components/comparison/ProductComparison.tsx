@@ -7,6 +7,7 @@ import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import Constants from "@/constants";
+import SearchUtilities from "./SearchUtilities";
 
 type ProductComparisonProps = {
   ProductType: string;
@@ -31,6 +32,13 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
   useEffect(() => {
+
+    const params = new URLSearchParams({
+      productType: ProductType.toLowerCase(),
+      page: pageNumber.toString(), 
+      pageSize: pageSize.toString(), 
+    });
+    
     request(
       `${
         import.meta.env.VITE_BACKEND_URL
@@ -41,13 +49,15 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       setFinanceData(res.data.productData);
       setFinanceDataLength(res.data.productDataLength);
     });
+
+    
   }, [pageNumber]);
 
   useEffect(() => {
     const tableHeadersMap = {
       [Constants.TABLE_TYPE.MORTGAGE]: Constants.MORTGAGE_TABLE_HEADERS,
       [Constants.TABLE_TYPE.PHONE]: Constants.PHONE_TABLE_HEADERS,
-      [Constants.TABLE_TYPE.UTILITIES]: Constants.UTILITIY_TABLE_HEADERS
+      [Constants.TABLE_TYPE.UTILITIES]: Constants.UTILITIY_TABLE_HEADERS,
     };
     if (tableHeadersMap.hasOwnProperty(ProductType)) {
       setTableHeader(tableHeadersMap[ProductType]);
@@ -57,10 +67,14 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   return (
     <Box display="flex" p={7} flexDirection="row" width="100%">
       <Box display="flex" p={7} flexDirection="column">
-        <Heading as="h5" size="lg">
-          Overview
-        </Heading>
-        <ProductOverview productData={financeInput} />
+        <>
+          <Heading as="h5" size="lg">
+            Overview
+          </Heading>
+          <ProductOverview productData={financeInput} />
+          <SearchUtilities />
+        </>
+        
       </Box>
       <Box display="flex" p={7} flexDirection="column" flex="1">
         <Heading as="h5" size="lg">

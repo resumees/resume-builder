@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import financesSlice from './reduxFeatures/financesSlice';
 import authenticationSlice from './reduxFeatures/authenticationSlice';
+import comparisonSlice from './reduxFeatures/comparisonSlice';
 
 const rootReducer = combineReducers({
   global: combineReducers({
     authentication: authenticationSlice,
     financials: financesSlice,
+    comparison: comparisonSlice,
   }),
 });
 
