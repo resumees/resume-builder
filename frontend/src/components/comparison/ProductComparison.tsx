@@ -22,6 +22,16 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
     )
   );
 
+  const searchParams = useSelector((state: RootState) => {
+    if (ProductType === Constants.TABLE_TYPE.UTILITIES) {
+      return state.global.comparison.utility;
+    } else if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
+      return state.global.comparison.mortgage;
+    } else if (ProductType === Constants.TABLE_TYPE.PHONE) {
+      return state.global.comparison.phone;
+    }
+  });
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
@@ -36,19 +46,18 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       productType: ProductType.toLowerCase(),
       page: pageNumber.toString(),
       pageSize: pageSize.toString(),
+      ...(searchParams !== null ? { params: JSON.stringify(searchParams) } : {}),
     });
 
     request(
-      `${
-        import.meta.env.VITE_BACKEND_URL
-      }/financials/comparison?productType=${ProductType.toLowerCase()}&page=${pageNumber}&pageSize=${pageSize}`,
+      `${import.meta.env.VITE_BACKEND_URL}/financials/comparison?${params}`,
       "GET"
     ).then((res: any) => {
       console.log(res.data);
       setFinanceData(res.data.productData);
       setFinanceDataLength(res.data.productDataLength);
     });
-  }, [pageNumber]);
+  }, [pageNumber, searchParams]);
 
   useEffect(() => {
     const tableHeadersMap = {

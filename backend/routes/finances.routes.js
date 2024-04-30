@@ -38,9 +38,10 @@ router.get("/financials/comparison", authenticateJWT, async (req, res) => {
   const page = Number(req.query.page) || 1;
   const pageSize = Number(req.query.pageSize) || 10;
   const productType = req.query.productType || null;
+  const params = JSON.parse(req.query.params) || null;
 
   try {
-    productData = getFinancialProductData(page, pageSize, productType);
+    productData = getFinancialProductData(page, pageSize, productType, params);
     logger.info(`${productType} data: ${productData}`);
     res.json({ data: productData });
   } catch (error) {
