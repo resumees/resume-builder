@@ -6,6 +6,7 @@ const {
   PhoneModel,
   MortgageModel,
   ElectricityModel,
+  GasModel
 } = require("../models/financialProducts.model");
 const Constant = require("../helpers/constants");
 const axios = require("axios");
@@ -68,33 +69,65 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
       });
     productDataLength = mortgageData.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.UTILITIES) {
-    const distributorPromise = await getDistributors(params);
-    console.log(distributorPromise);
+    if (params.postcode != null) {
+      // API call to canstar 
+      const canstarElectricityResponse = await getCanstarUtility(params);
 
-    productModel = electricityData.data.table.products
-      .slice(start, end)
-      .map((electricityProduct) => {
-        return new ElectricityModel(
-          electricityProduct.logo,
-          electricityProduct.title,
-          electricityProduct.properties.values.find(
-            (obj) => obj.text === "Reference price"
-          ).value,
-          electricityProduct.properties.values.find(
-            (obj) => obj.text === "Price/year (estimated)"
-          ).value,
-          electricityProduct.link
-        );
-      });
-    productDataLength = electricityData.data.table.products.length;
+      // This is to check whether the canstar api response was successful
+      productDataLength = canstarElectricityResponse.data.table.products.length;
+      console.log(`Length is: ${productDataLength}`);
+
+      // Create response for frontend
+      if (params.electricity) {
+        productModel = canstarElectricityResponse.data.table.products
+        .slice(start, end)
+        .map((electricityProduct) => {
+          return new ElectricityModel(
+            electricityProduct.logo,
+            electricityProduct.title,
+            electricityProduct.properties.values.find(
+              (obj) => obj.text === "Reference price"
+            ).value,
+            electricityProduct.properties.values.find(
+              (obj) => obj.text === "Price/year (estimated)"
+            ).value,
+            electricityProduct.link
+          );
+        });
+      } else if (params.gas) {
+        productModel = canstarElectricityResponse.data.table.products
+        .slice(start, end)
+        .map((gasProduct) => {
+          return new GasModel(
+            gasProduct.logo,
+            gasProduct.title,
+            gasProduct.properties.values.find(
+              (obj) => obj.text === "Supply charge"
+            ).value,
+            gasProduct.properties.values.find(
+              (obj) => obj.text === "Usage charge"
+            ).value,
+            gasProduct.properties.values.find(
+              (obj) => obj.text === "Price/year (estimated)"
+            ).value,
+            gasProduct.link
+          );
+        });
+      }
+    } else {
+      return {
+        error: "postcode is null",
+      };
+    }
   }
-
   return {
     productData: productModel,
     productDataLength: productDataLength,
   };
 };
 
+// This API call to origin energy takes in postcode and then returns what electricity, gas and solar providers are
+// available to the postcode. It can be possible that multiple are available in a given area
 const getDistributors = async (params) => {
   const { postcode, electricity, gas, solar } = params;
   try {
@@ -120,6 +153,78 @@ const getDistributors = async (params) => {
     });
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+const getCanstarUtility = async (params) => {
+  try {
+    const response = await axios.post(
+      "https://graph.canstar.com.au/graphql",
+      {
+        operationName: "Table",
+        variables: {
+          vertical: params.electricity
+            ? Constant.UTILITY_TYPE.ELECTRICITY
+            : params.gas
+            ? Constant.UTILITY_TYPE.GAS
+            : undefined,
+          selectorFields: [
+            {
+              name: "Suburb or postcode",
+              type: "string",
+              value: params.postcode,
+            }          
+          ],
+          filterFields: [
+            {
+              name: "Online Partner",
+              value: "false",
+            },
+          ],
+          sort: [
+            {
+              direction: "descending",
+              field: "Brand Satisfaction",
+              selected: false,
+            },
+            {
+              direction: "descending",
+              field: "Value Rank",
+              selected: true,
+            },
+            {
+              direction: "ascending",
+              field: "Price/year (estimated)",
+              selected: false,
+            },
+          ],
+          pagination: {
+            limit: 999,
+            offset: 0,
+            loadMore: 10,
+          },
+          featureFlags: [],
+        },
+        extensions: {
+          persistedQuery: {
+            version: 1,
+            sha256Hash:
+              "61977abf11f1c521c9cdb3657cfaacefcea88ae573662edf6078bc584eaa13c8",
+          },
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Cookie:
+            "_pxhd=u5zee2uFRjyND-fuAgP7e4Dch5zOfAMdtpPPAt5pKc5FgJTWuh29gJ2qa9Ii7KJ6S-TEHPMSYhQBTewQnN5yew==:6xwYUL9eCfGOFrrC/Dwzdc9u2QtvBPlfVMb293HIiFsb60kQOeMKpBI32LC2pwXKrsUiktT1sIvd6BDg3YTKWtVjwr0cgubAZaYz8drznfo=",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error:", error.response.data);
     throw error;
   }
 };

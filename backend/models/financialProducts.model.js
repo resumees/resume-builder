@@ -31,8 +31,20 @@ class ElectricityModel {
     }
 }
 
+class GasModel {
+    constructor(company, information, supplyCharge, usageCharge, totalCost, CTA) {
+        this.company = company;
+        this.information = information;
+        this.supplyCharge = supplyCharge;
+        this.usageCharge = usageCharge;
+        this.totalCost = totalCost;
+        this.CTA = CTA;
+    }
+}
+
 module.exports = {
     PhoneModel,
     MortgageModel,
-    ElectricityModel
+    ElectricityModel,
+    GasModel
 };

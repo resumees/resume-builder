@@ -35,7 +35,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
-  const pageSize = 5;
+  const pageSize = 10;
 
   const [financeData, setFinanceData] = useState([]);
   const [financeDataLength, setFinanceDataLength] = useState(0);

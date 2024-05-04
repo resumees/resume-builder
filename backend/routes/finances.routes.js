@@ -41,12 +41,12 @@ router.get("/financials/comparison", authenticateJWT, async (req, res) => {
   const params = JSON.parse(req.query.params) || null;
 
   try {
-    productData = getFinancialProductData(page, pageSize, productType, params);
-    logger.info(`${productType} data: ${productData}`);
+    productData = await getFinancialProductData(page, pageSize, productType, params);
+    logger.info(`PATH: /financials/comparison || Status: ${res.statusCode} || ProductType: ${productType} || Data: ${productData}`)
     res.json({ data: productData });
   } catch (error) {
     res.locals.errorMessage = error.message;
-    logger.error(`Retrieve ${productType} error: ` + error);
+    logger.error(`PATH: /financials/comparison || Status: ${res.statusCode} || ProductType: ${productType} || Error: ${error}`)
     res.status(500).json({ message: `Error: ${error}` });
   }
 });
