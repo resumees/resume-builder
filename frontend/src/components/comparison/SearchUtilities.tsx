@@ -7,24 +7,17 @@ import {
   Input,
   Button,
   Flex,
-  Checkbox,
 } from "@chakra-ui/react";
 import { addPostcode } from "@/reduxFeatures/comparisonSlice";
 
 interface SearchParams {
   postcode: string;
-  electricity: boolean;
-  gas: boolean;
-  solar: boolean;
 }
 
 const SearchUtilities: React.FC = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useState<SearchParams>({
-    postcode: "",
-    electricity: false,
-    gas: false,
-    solar: false,
+    postcode: ""
   });
   const [postcodeError, setPostcodeError] = useState<string>("");
 
@@ -32,15 +25,6 @@ const SearchUtilities: React.FC = () => {
     setSearchParams((prevSearchParams) => ({
       ...prevSearchParams,
       postcode: event.target.value,
-    }));
-  };
-
-  const handleCheckboxChange = (key: keyof SearchParams) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setSearchParams((prevSearchParams) => ({
-      ...prevSearchParams,
-      [key]: event.target.checked,
     }));
   };
 
@@ -56,7 +40,7 @@ const SearchUtilities: React.FC = () => {
   return (
     <Box display="flex" mt="2" flexDirection="column">
       <Heading as="h5" size="lg">
-        Search results
+        Filter results
       </Heading>
       <Box
         bg="white"
@@ -75,30 +59,6 @@ const SearchUtilities: React.FC = () => {
           value={searchParams.postcode}
         />
         {postcodeError && <Text color="red">{postcodeError}</Text>}
-        <Flex alignItems="center" mt="3">
-          <Text mr="2">Electricity:</Text>
-          <Checkbox
-            defaultChecked={searchParams.electricity}
-            onChange={handleCheckboxChange("electricity")}
-            size="lg"
-          />
-        </Flex>
-        <Flex alignItems="center" mt="3">
-          <Text mr="2">Gas:</Text>
-          <Checkbox
-            defaultChecked={searchParams.gas}
-            onChange={handleCheckboxChange("gas")}
-            size="lg"
-          />
-        </Flex>
-        <Flex alignItems="center" mt="3">
-          <Text mr="2">Solar:</Text>
-          <Checkbox
-            defaultChecked={searchParams.solar}
-            onChange={handleCheckboxChange("solar")}
-            size="lg"
-          />
-        </Flex>
         <Button
           colorScheme="blue"
           p={2}

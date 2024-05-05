@@ -68,17 +68,17 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
         );
       });
     productDataLength = mortgageData.data.table.products.length;
-  } else if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY) {
+  } else if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY || Constant.FINANCIAL_PRODUCTS.GAS) {
     if (params.postcode != null) {
       // API call to canstar 
-      const canstarElectricityResponse = await getCanstarUtility(params);
+      const canstarElectricityResponse = await getCanstarUtility(params, productType);
 
       // This is to check whether the canstar api response was successful
       productDataLength = canstarElectricityResponse.data.table.products.length;
       console.log(`Length is: ${productDataLength}`);
 
       // Create response for frontend
-      if (params.electricity) {
+      if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY) {
         productModel = canstarElectricityResponse.data.table.products
         .slice(start, end)
         .map((electricityProduct) => {
@@ -94,7 +94,7 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
             electricityProduct.link
           );
         });
-      } else if (params.gas) {
+      } else if (productType === Constant.FINANCIAL_PRODUCTS.GAS) {
         productModel = canstarElectricityResponse.data.table.products
         .slice(start, end)
         .map((gasProduct) => {
@@ -129,9 +129,9 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
 // This API call to origin energy takes in postcode and then returns what electricity, gas and solar providers are
 // available to the postcode. It can be possible that multiple are available in a given area
 const getDistributors = async (params) => {
-  const { postcode, electricity, gas, solar } = params;
+  const { postcode } = params;
   try {
-    const apiUrl = `https://www.originenergy.com.au/api/distributor/v1/postcodes/${postcode}/distributors?postcode=${postcode}&electricity=${electricity}&gas=${gas}&solar=${solar}`;
+    const apiUrl = `https://www.originenergy.com.au/api/distributor/v1/postcodes/${postcode}/distributors?postcode=${postcode}&electricity=true&gas=true&solar=true`;
     const response = await axios.get(apiUrl, {
       headers: {
         accept: "application/json, text/plain, */*",
@@ -157,16 +157,16 @@ const getDistributors = async (params) => {
   }
 };
 
-const getCanstarUtility = async (params) => {
+const getCanstarUtility = async (params, productType) => {
   try {
     const response = await axios.post(
       "https://graph.canstar.com.au/graphql",
       {
         operationName: "Table",
         variables: {
-          vertical: params.electricity
+          vertical: productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY
             ? Constant.UTILITY_TYPE.ELECTRICITY
-            : params.gas
+            : productType === Constant.FINANCIAL_PRODUCTS.GAS
             ? Constant.UTILITY_TYPE.GAS
             : undefined,
           selectorFields: [

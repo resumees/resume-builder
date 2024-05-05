@@ -34,6 +34,14 @@ const Constants = {
         "estimatedCost",
         "CTA"
     ],
+    GAS_TABLE_HEADERS: [
+        "company",
+        "information",
+        "supplyCharge",
+        "usageCharge",
+        "Total Estimated Cost",
+        "CTA"
+    ],
 };
 
 export default Constants;

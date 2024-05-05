@@ -3,6 +3,7 @@ module.exports = {
     PHONE: "phone",
     MORTGAGE: "mortgage",
     ELECTRICITY: "electricity",
+    GAS: "gas"
   },
 
   UTILITY_TYPE: {

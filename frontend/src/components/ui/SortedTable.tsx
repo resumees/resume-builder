@@ -41,11 +41,20 @@ interface MortgageData {
   CTA: string;
 }
 
-interface UtilityData {
+interface ElectricityData {
   company: string;
   information: string;
   referencePrice: string;
   estimatedCost: string;
+  CTA: string;
+}
+
+interface GasData {
+  company: string;
+  information: string;
+  supplyCharge: string;
+  usageCharge: string;
+  totalCost: string;
   CTA: string;
 }
 
@@ -132,8 +141,8 @@ const SortedTable: React.FC<SortedTableProps> = ({
     ));
   }
 
-  const UtilitiesData = () => {
-    return tableData.map((data: UtilityData, index: number) => (
+  const ElectricityData = () => {
+    return tableData.map((data: ElectricityData, index: number) => (
       <Tr key={index}>
         <Td>
           <img src={data?.company} alt="Company Logo" />
@@ -141,6 +150,31 @@ const SortedTable: React.FC<SortedTableProps> = ({
         <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
         <Td>{data?.referencePrice}</Td>
         <Td>{data?.estimatedCost}</Td>
+        <Td>
+          <Button
+            as="a"
+            href={data?.CTA}
+            target="_blank"
+            colorScheme="whatsapp"
+            variant={data?.CTA != null ? "outline" : "hidden"}
+          >
+            {data?.CTA != null ? "Go to site" : ""}
+          </Button>
+        </Td>
+      </Tr>
+    ));
+  }
+
+  const GasData = () => {
+    return tableData.map((data: GasData, index: number) => (
+      <Tr key={index}>
+        <Td>
+          <img src={data?.company} alt="Company Logo" />
+        </Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
+        <Td>{data?.supplyCharge}</Td>
+        <Td>{data?.usageCharge}</Td>
+        <Td>{data?.totalCost}</Td>
         <Td>
           <Button
             as="a"
@@ -196,7 +230,8 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Tbody>
               {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
               {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
-              {tableType === Constants.TABLE_TYPE.ELECTRICITY && UtilitiesData()}
+              {tableType === Constants.TABLE_TYPE.ELECTRICITY && ElectricityData()}
+              {tableType === Constants.TABLE_TYPE.GAS && GasData()}
             </Tbody>
           )}
         </Table>

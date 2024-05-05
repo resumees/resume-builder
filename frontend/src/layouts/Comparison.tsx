@@ -67,11 +67,10 @@ const Comparison: React.FC = () => {
           <Route
             path="/gas"
             element={
-              // <ProductComparison
-              //   key={`${Constants.TABLE_TYPE.UTILITIES}`}
-              //   ProductType={Constants.TABLE_TYPE.GAS}
-              // />
-              <h1>test</h1>
+              <ProductComparison
+                key={`${Constants.TABLE_TYPE.GAS}`}
+                ProductType={Constants.TABLE_TYPE.GAS}
+              />
             }
           />
         </Routes>

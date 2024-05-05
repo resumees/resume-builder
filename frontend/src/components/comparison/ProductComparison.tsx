@@ -23,13 +23,14 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   );
 
   const searchParams = useSelector((state: RootState) => {
-    if (ProductType === Constants.TABLE_TYPE.ELECTRICITY) {
-      return state.global.comparison.electricity;
-    } else if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
-      return state.global.comparison.mortgage;
-    } else if (ProductType === Constants.TABLE_TYPE.PHONE) {
-      return state.global.comparison.phone;
-    }
+    const comparisonMap = {
+      [Constants.TABLE_TYPE.ELECTRICITY]: state.global.comparison.electricity,
+      [Constants.TABLE_TYPE.MORTGAGE]: state.global.comparison.mortgage,
+      [Constants.TABLE_TYPE.PHONE]: state.global.comparison.phone,
+      [Constants.TABLE_TYPE.GAS]: state.global.comparison.gas,
+    };
+
+    return comparisonMap[ProductType];
   });
 
   const location = useLocation();
@@ -64,6 +65,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       [Constants.TABLE_TYPE.MORTGAGE]: Constants.MORTGAGE_TABLE_HEADERS,
       [Constants.TABLE_TYPE.PHONE]: Constants.PHONE_TABLE_HEADERS,
       [Constants.TABLE_TYPE.ELECTRICITY]: Constants.ELECTRICITY_TABLE_HEADERS,
+      [Constants.TABLE_TYPE.GAS]: Constants.GAS_TABLE_HEADERS,
     };
     if (tableHeadersMap.hasOwnProperty(ProductType)) {
       setTableHeader(tableHeadersMap[ProductType]);
@@ -78,9 +80,8 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
             Overview
           </Heading>
           <ProductOverview productData={financeInput} />
-          {ProductType === Constants.TABLE_TYPE.ELECTRICITY && (
-            <SearchUtilities />
-          )}
+          {(ProductType === Constants.TABLE_TYPE.ELECTRICITY ||
+            ProductType === Constants.TABLE_TYPE.GAS) && <SearchUtilities />}
         </>
       </Box>
 
