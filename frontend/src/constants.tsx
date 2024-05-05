@@ -9,7 +9,8 @@ const Constants = {
         INTERNET: "Internet",
         PHONE: "Phone",
         MORTGAGE: "Mortgage",
-        UTILITIES: "Utilities",
+        ELECTRICITY: "Electricity",
+        GAS: "Gas"
     },
     PHONE_TABLE_HEADERS: [
         "company",
@@ -26,7 +27,7 @@ const Constants = {
         "monthly payment",
         "CTA"
     ],
-    UTILITIY_TABLE_HEADERS: [
+    ELECTRICITY_TABLE_HEADERS: [
         "company",
         "information",
         "referencePrice",

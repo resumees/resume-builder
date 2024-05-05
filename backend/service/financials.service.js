@@ -68,7 +68,7 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
         );
       });
     productDataLength = mortgageData.data.table.products.length;
-  } else if (productType === Constant.FINANCIAL_PRODUCTS.UTILITIES) {
+  } else if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY) {
     if (params.postcode != null) {
       // API call to canstar 
       const canstarElectricityResponse = await getCanstarUtility(params);

@@ -16,7 +16,10 @@ const Comparison: React.FC = () => {
         navigate(`/finances/comparison/phone?pageNumber=1`);
         break;
       case 2:
-        navigate(`/finances/comparison/utilities?pageNumber=1`);
+        navigate(`/finances/comparison/electricity?pageNumber=1`);
+        break;
+      case 3:
+        navigate(`/finances/comparison/gas?pageNumber=1`);
         break;
       default:
         break;
@@ -29,7 +32,8 @@ const Comparison: React.FC = () => {
         <TabList bg="lightblue">
           <Tab _hover={{ bg: "gray.300" }}>Home loans</Tab>
           <Tab _hover={{ bg: "gray.300" }}>Phone</Tab>
-          <Tab _hover={{ bg: "gray.300" }}>Utilities</Tab>
+          <Tab _hover={{ bg: "gray.300" }}>Electricity</Tab>
+          <Tab _hover={{ bg: "gray.300" }}>Gas</Tab>
         </TabList>
 
         <Routes>
@@ -52,12 +56,22 @@ const Comparison: React.FC = () => {
             }
           />
           <Route
-            path="/utilities"
+            path="/electricity"
             element={
               <ProductComparison
-                key={`${Constants.TABLE_TYPE.UTILITIES}`}
-                ProductType={Constants.TABLE_TYPE.UTILITIES}
+                key={`${Constants.TABLE_TYPE.ELECTRICITY}`}
+                ProductType={Constants.TABLE_TYPE.ELECTRICITY}
               />
+            }
+          />
+          <Route
+            path="/gas"
+            element={
+              // <ProductComparison
+              //   key={`${Constants.TABLE_TYPE.UTILITIES}`}
+              //   ProductType={Constants.TABLE_TYPE.GAS}
+              // />
+              <h1>test</h1>
             }
           />
         </Routes>

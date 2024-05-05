@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ComparisonState {
-  utility: Utility,
+  electricity: Electricity,
   phone: Phone,
   mortgage: Mortgage,
 }
 
-interface Utility {
+interface Electricity {
   postcode: string | null;
   electricity: boolean;
   gas: boolean;
@@ -20,7 +20,7 @@ interface Mortgage{
 }
 
 const initialState: ComparisonState = {
-  utility: {
+  electricity: {
     postcode: null,
     electricity: false,
     gas: false,
@@ -36,16 +36,13 @@ export const comparisonSlice = createSlice({
   name: 'comparison',
   initialState,
   reducers: {
-    addPostcode: (state, action: PayloadAction<Utility>) => {
-      state.utility = action.payload;
-    },
-    clearPostcode: (state) => {
-      state.utility = { ...state.utility, postcode: null };
-    },
+    addPostcode: (state, action: PayloadAction<Electricity>) => {
+      state.electricity = action.payload;
+    }
   },
 });
 
 
-export const { addPostcode, clearPostcode } = comparisonSlice.actions;
+export const { addPostcode } = comparisonSlice.actions;
 
 export default comparisonSlice.reducer;

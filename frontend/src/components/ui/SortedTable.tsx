@@ -196,7 +196,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Tbody>
               {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
               {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
-              {tableType === Constants.TABLE_TYPE.UTILITIES && UtilitiesData()}
+              {tableType === Constants.TABLE_TYPE.ELECTRICITY && UtilitiesData()}
             </Tbody>
           )}
         </Table>
