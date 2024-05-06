@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import ProductOverview from "./ProductOverview";
 import { Box, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -8,6 +9,17 @@ import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import Constants from "@/constants";
 import SearchUtilities from "./SearchUtilities";
+
+/**
+ * Component: ProductComparison.tsx
+ * Parent: Comparison.tsx
+ * Description: This is the container for the Overview, Filter results and Available plans table
+ *              for the Comparison Layout. A customer will use this to determine what their current
+ *              expenditure is for the specific financial product, and a list of available products
+ *              on the market in table form
+ * Props:
+ *   - ProductType: Obtained from constants folder, can be either gas/mortgage/electricity/phone
+ */
 
 type ProductComparisonProps = {
   ProductType: string;
@@ -37,28 +49,29 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const params = new URLSearchParams(location.search);
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
   const pageSize = 10;
-
-  const [financeData, setFinanceData] = useState([]);
-  const [financeDataLength, setFinanceDataLength] = useState(0);
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
-  useEffect(() => {
-    const params = new URLSearchParams({
-      productType: ProductType.toLowerCase(),
-      page: pageNumber.toString(),
-      pageSize: pageSize.toString(),
-      ...(searchParams !== null ? { params: JSON.stringify(searchParams) } : {}),
-    });
-
-    request(
-      `${import.meta.env.VITE_BACKEND_URL}/financials/comparison?${params}`,
-      "GET"
-    ).then((res: any) => {
-      console.log(res.data);
-      setFinanceData(res.data.productData);
-      setFinanceDataLength(res.data.productDataLength);
-    });
-  }, [pageNumber, searchParams]);
+  const { data, isLoading, error, isError } = useQuery(
+    [`financeData${ProductType}`, pageNumber, searchParams],
+    () => {
+      const params = new URLSearchParams({
+        productType: ProductType.toLowerCase(),
+        page: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+        ...(searchParams !== null
+          ? { params: JSON.stringify(searchParams) }
+          : {}),
+      });
+      return request(
+        `${import.meta.env.VITE_BACKEND_URL}/financials/comparison?${params}`,
+        "GET"
+      );
+    },
+    {
+      cacheTime: 60000,
+      staleTime: 30000
+    }
+  );
 
   useEffect(() => {
     const tableHeadersMap = {
@@ -90,13 +103,19 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
           Available plans
         </Heading>
         <Box bg="white" p={4} borderRadius="md" mt={4} border="1px solid #ccc">
-          <SortedTable
-            tableData={financeData}
-            tableType={ProductType}
-            tablePgSize={pageSize}
-            tableDataLength={financeDataLength}
-            tableHeaders={tableHeader}
-          />
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : isError ? (
+            <div>Error: {error.message}</div>
+          ) : (
+            <SortedTable
+              tableData={data?.data?.productData}
+              tableType={ProductType}
+              tablePgSize={pageSize}
+              tableDataLength={data?.data?.productDataLength}
+              tableHeaders={tableHeader}
+            />
+          )}
         </Box>
       </Box>
     </Box>
