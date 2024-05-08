@@ -8,7 +8,7 @@ import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import Constants from "@/constants";
-import SearchUtilities from "./SearchUtilities";
+import SearchBox from "./SearchBox";
 
 /**
  * Component: ProductComparison.tsx
@@ -51,6 +51,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const pageSize = 10;
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
+  // Comment out cacheTime and staleTime if testing API's as the data will be cached and lagged
   const { data, isLoading, error, isError } = useQuery(
     [`financeData${ProductType}`, pageNumber, searchParams],
     () => {
@@ -67,10 +68,10 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
         "GET"
       );
     },
-    {
-      cacheTime: 60000,
-      staleTime: 30000
-    }
+    // {
+    //   cacheTime: 60000,
+    //   staleTime: 30000
+    // }
   );
 
   useEffect(() => {
@@ -93,8 +94,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
             Overview
           </Heading>
           <ProductOverview productData={financeInput} />
-          {(ProductType === Constants.TABLE_TYPE.ELECTRICITY ||
-            ProductType === Constants.TABLE_TYPE.GAS) && <SearchUtilities />}
+          <SearchBox ProductType={ProductType}/>
         </>
       </Box>
 

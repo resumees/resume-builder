@@ -8,15 +8,17 @@ interface ComparisonState {
 }
 
 interface Electricity {
-  postcode: string | null;
+  postcode?: string | null;
 }
 
 interface Phone {}
 
-interface Mortgage {}
+interface Mortgage {
+  loanAmount?: string | null;
+}
 
 interface Gas {
-  postcode: string | null;
+  postcode?: string | null;
 }
 
 const initialState: ComparisonState = {
@@ -38,9 +40,12 @@ export const comparisonSlice = createSlice({
       state.electricity = action.payload;
       state.gas = action.payload;
     },
+    addLoanAmountMortgage: (state, action: PayloadAction<Mortgage>) => {
+      state.mortgage = action.payload;
+    },
   },
 });
 
-export const { addPostcode } = comparisonSlice.actions;
+export const { addPostcode, addLoanAmountMortgage } = comparisonSlice.actions;
 
 export default comparisonSlice.reducer;
