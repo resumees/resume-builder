@@ -49,7 +49,7 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
     productDataLength = phoneData.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.MORTGAGE) {
     console.log(params)
-    const canstarMortgageResponse = await getCanstarMortgage(params, productType);
+    const canstarMortgageResponse = await getCanstarMortgage(params);
 
     productModel = canstarMortgageResponse.data.table.products
       .slice(start, end)
