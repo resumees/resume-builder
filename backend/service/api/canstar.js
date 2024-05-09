@@ -74,124 +74,103 @@ const getCanstarUtility = async (params, productType) => {
   }
 };
 
-// const getCanstarMortgage = async () => {
-//     try {
-//       const response = await axios.get('https://graph.canstar.com.au/graphql?operationName=Table&variables=%7B%22vertical%22:%22mortgages%22,%22selectorFields%22:%5B%7B%22name%22:%22Loan%20amount%22,%22type%22:%22string%22,%22value%22:%22500000%22%7D,%7B%22name%22:%22Loan%20purpose%22,%22type%22:%22string%22,%22value%22:%22Refinance%22%7D,%7B%22name%22:%22State%22,%22type%22:%22string%22,%22value%22:%22New%2520South%2520Wales%22%7D%5D,%22filterFields%22:%5B%7B%22name%22:%22Loan%20type%22,%22type%22:%22string%22,%22value%22:%22Variable%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2295%2525%2520or%2520higher%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2290%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2285%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2280%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2270%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2260%2525%2520or%2520less%22%7D,%7B%22name%22:%22Repayment%20type%22,%22type%22:%22string%22,%22value%22:%22Principal%2520%2526%2520Interest%22%7D,%7B%22name%22:%22Online%20Partner%22,%22value%22:%22false%22%7D%5D,%22sort%22:%5B%7B%22direction%22:%22ascending%22,%22field%22:%22Provider%22,%22selected%22:false%7D,%7B%22direction%22:%22descending%22,%22field%22:%22Star%20Rating%22,%22selected%22:true%7D,%7B%22direction%22:%22descending%22,%22field%22:%22Interest%20rate%22,%22selected%22:false%7D,%7B%22direction%22:%22ascending%22,%22field%22:%22Comparison%20rate%5E%22,%22selected%22:false%7D,%7B%22direction%22:%22ascending%22,%22field%22:%22Monthly%20repayment%22,%22selected%22:false%7D%5D,%22pagination%22:%7B%22limit%22:40,%22offset%22:0,%22loadMore%22:10%7D,%22featureFlags%22:%5B%5D%7D&extensions=%7B%22persistedQuery%22:%7B%22version%22:1,%22sha256Hash%22:%2261977abf11f1c521c9cdb3657cfaacefcea88ae573662edf6078bc584eaa13c8%22%7D%7D', {
-//         headers: {
-//           "accept": "application/json, text/plain, */*",
-//           "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-//           "apollo-require-preflight": "true",
-//           "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
-//           "sec-ch-ua-mobile": "?0",
-//           "sec-ch-ua-platform": "\"macOS\"",
-//           "sec-fetch-dest": "empty",
-//           "sec-fetch-mode": "cors",
-//           "sec-fetch-site": "same-site",
-//           "x-px-cookie": "eyJ1IjoiNDBiMzBjNDAtMGJhNS0xMWVmLWJjZmItOTdmMDQyNDI3NTdhIiwidiI6IjhiNjJlNzQ3LWQ5MjAtMTFlZS1hMDhhLTA2MWY5ODY4ZWJmYiIsInQiOjE1Mjk5NzEyMDAwMDAsImgiOiJiZWEyMmM1MmM3YTg2OGZjZTY3YTM0MjhhMWFjYjRlYWI0MTQwNGI0NGI0NjU4NmQzNTI2ZDk5MWQwYjY2N2Q1In0=",
-//           "Referer": "https://www.canstar.com.au/",
-//           "Referrer-Policy": "strict-origin-when-cross-origin"
-//         }
-//       });
-//       console.log(response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error:', error);
-//       throw error;
-//     }
-//   };
-
-// const getCanstarMortgage = async () => {
-//   try {
-//     // const params = "operationName=Table&variables=%7B%22vertical%22:%22mortgages%22,%22selectorFields%22:%5B%7B%22name%22:%22Loan%20amount%22,%22type%22:%22string%22,%22value%22:%22500000%22%7D,%7B%22name%22:%22Loan%20purpose%22,%22type%22:%22string%22,%22value%22:%22Refinance%22%7D,%7B%22name%22:%22State%22,%22type%22:%22string%22,%22value%22:%22New%2520South%2520Wales%22%7D%5D,%22filterFields%22:%5B%7B%22name%22:%22Loan%20type%22,%22type%22:%22string%22,%22value%22:%22Variable%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2295%2525%2520or%2520higher%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2290%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2285%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2280%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2270%2525%22%7D,%7B%22name%22:%22LVR%22,%22type%22:%22string%22,%22value%22:%2260%2525%2520or%2520less%22%7D,%7B%22name%22:%22Repayment%20type%22,%22type%22:%22string%22,%22value%22:%22Principal%2520%2526%2520Interest%22%7D,%7B%22name%22:%22Online%20Partner%22,%22value%22:%22false%22%7D%5D,%22sort%22:%5B%7B%22direction%22:%22ascending%22,%22field%22:%22Provider%22,%22selected%22:false%7D,%7B%22direction%22:%22descending%22,%22field%22:%22Star%20Rating%22,%22selected%22:true%7D,%7B%22direction%22:%22descending%22,%22field%22:%22Interest%20rate%22,%22selected%22:false%7D,%7B%22direction%22:%22ascending%22,%22field%22:%22Comparison%20rate%5E%22,%22selected%22:false%7D,%7B%22direction%22:%22ascending%22,%22field%22:%22Monthly%20repayment%22,%22selected%22:false%7D%5D,%22pagination%22:%7B%22limit%22:40,%22offset%22:0,%22loadMore%22:10%7D,%22featureFlags%22:%5B%5D%7D&extensions=%7B%22persistedQuery%22:%7B%22version%22:1,%22sha256Hash%22:%2261977abf11f1c521c9cdb3657cfaacefcea88ae573662edf6078bc584eaa13c8%22%7D%7D"
-//     const params = {
-//       operationName: "Table",
-//       variables: {
-//         vertical: "mortgages",
-//         selectorFields: [
-//           { name: "Loan amount", type: "string", value: "500000" },
-//           { name: "Loan purpose", type: "string", value: "Refinance" },
-//           { name: "State", type: "string", value: "New South Wales" },
-//         ],
-//         filterFields: [
-//           { name: "Loan type", type: "string", value: "Variable" },
-//           { name: "LVR", type: "string", value: "95% or higher" },
-//           { name: "LVR", type: "string", value: "90%" },
-//           { name: "LVR", type: "string", value: "85%" },
-//           { name: "LVR", type: "string", value: "80%" },
-//           { name: "LVR", type: "string", value: "70%" },
-//           { name: "LVR", type: "string", value: "60% or less" },
-//           {
-//             name: "Repayment type",
-//             type: "string",
-//             value: "Principal & Interest",
-//           },
-//           { name: "Online Partner", value: "false" },
-//         ],
-//         sort: [
-//           { direction: "ascending", field: "Provider", selected: false },
-//           { direction: "descending", field: "Star Rating", selected: true },
-//           { direction: "descending", field: "Interest rate", selected: false },
-//           {
-//             direction: "ascending",
-//             field: "Comparison rate^",
-//             selected: false,
-//           },
-//           {
-//             direction: "ascending",
-//             field: "Monthly repayment",
-//             selected: false,
-//           },
-//         ],
-//         pagination: { limit: 40, offset: 0, loadMore: 10 },
-//         featureFlags: [],
-//       },
-//       extensions: {
-//         persistedQuery: {
-//           version: 1,
-//           sha256Hash:
-//             "61977abf11f1c521c9cdb3657cfaacefcea88ae573662edf6078bc584eaa13c8",
-//         },
-//       },
-//     };
-
-//     // Convert variables and extensions objects to JSON and then encode them
-//     const variablesString = encodeURIComponent(
-//       JSON.stringify(params.variables)
-//     );
-//     const extensionsString = encodeURIComponent(
-//       JSON.stringify(params.extensions)
-//     );
-
-//     // Combine the encoded strings with the operationName
-//     const paramsString = `operationName=${params.operationName}&variables=${variablesString}&extensions=${extensionsString}`;
-//     const url = `https://graph.canstar.com.au/graphql?${paramsString}`;
-//     const response = await axios.get(url, {
-//       headers: {
-//         accept: "application/json, text/plain, */*",
-//         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-//         "apollo-require-preflight": "true",
-//         "sec-ch-ua":
-//           '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
-//         "sec-ch-ua-mobile": "?0",
-//         "sec-ch-ua-platform": '"macOS"',
-//         "sec-fetch-dest": "empty",
-//         "sec-fetch-mode": "cors",
-//         "sec-fetch-site": "same-site",
-//         "x-px-cookie":
-//           "eyJ1IjoiNDBiMzBjNDAtMGJhNS0xMWVmLWJjZmItOTdmMDQyNDI3NTdhIiwidiI6IjhiNjJlNzQ3LWQ5MjAtMTFlZS1hMDhhLTA2MWY5ODY4ZWJmYiIsInQiOjE1Mjk5NzEyMDAwMDAsImgiOiJiZWEyMmM1MmM3YTg2OGZjZTY3YTM0MjhhMWFjYjRlYWI0MTQwNGI0NGI0NjU4NmQzNTI2ZDk5MWQwYjY2N2Q1In0=",
-//         Referer: "https://www.canstar.com.au/",
-//         "Referrer-Policy": "strict-origin-when-cross-origin",
-//       },
-//     });
-//     console.log(response);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error:", error);
-//     throw error;
-//   }
-// };
-
 const getCanstarMortgage = async (params) => {
+  let selectorFieldArr = [
+    {
+      name: "Loan amount",
+      type: "string",
+      value: params.loanAmount,
+    },
+    {
+      name: "Loan purpose",
+      type: "string",
+      value: params.loanPurpose,
+    },
+  ];
+  let filterFieldsArr = [
+    {
+      name: "LVR",
+      type: "string",
+      value: "95%25%20or%20higher",
+    },
+    {
+      name: "LVR",
+      type: "string",
+      value: "90%25",
+    },
+    {
+      name: "LVR",
+      type: "string",
+      value: "85%25",
+    },
+    {
+      name: "LVR",
+      type: "string",
+      value: "80%25",
+    },
+    {
+      name: "LVR",
+      type: "string",
+      value: "70%25",
+    },
+    {
+      name: "LVR",
+      type: "string",
+      value: "60%25%20or%20less",
+    },
+    {
+      name: "Repayment type",
+      type: "string",
+      value: "Principal%20%26%20Interest",
+    },
+    {
+      name: "Online Partner",
+      value: "false",
+    },
+  ];
+  let sortArr = [
+    {
+      direction: "ascending",
+      field: "Provider",
+      selected: false,
+    },
+    {
+      direction: "descending",
+      field: "Star Rating",
+      selected: true,
+    },
+    {
+      direction: "descending",
+      field: "Interest rate",
+      selected: false,
+    },
+    {
+      direction: "ascending",
+      field: "Comparison rate^",
+      selected: false,
+    },
+    {
+      direction: "ascending",
+      field: "Monthly repayment",
+      selected: false,
+    },
+  ];
+
+  if (params.interestRateType) {
+    filterFieldsArr.push({
+      name: "Loan type",
+      type: "string",
+      value: params.interestRateType,
+    });
+  } 
+  if (params.repaymentType) {
+    filterFieldsArr.push({
+      name: "Repayment Type",
+      type: "string",
+      value: params.repaymentType,
+    })
+  }
+
   try {
     const response = await axios.post(
       "https://graph.canstar.com.au/graphql",
@@ -199,98 +178,11 @@ const getCanstarMortgage = async (params) => {
         operationName: "Table",
         variables: {
           vertical: "mortgages",
-          selectorFields: [
-            {
-              name: "Loan amount",
-              type: "string",
-              value: params.loanAmount,
-            },
-            {
-              name: "Loan purpose",
-              type: "string",
-              value: "Refinance",
-            },
-            {
-              name: "State",
-              type: "string",
-              value: "New South Wales",
-            },
-          ],
-          filterFields: [
-            {
-              name: "Loan type",
-              type: "string",
-              value: "Variable",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "95%25%20or%20higher",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "90%25",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "85%25",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "80%25",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "70%25",
-            },
-            {
-              name: "LVR",
-              type: "string",
-              value: "60%25%20or%20less",
-            },
-            {
-              name: "Repayment type",
-              type: "string",
-              value: "Principal%20%26%20Interest",
-            },
-            {
-              name: "Online Partner",
-              value: "false",
-            },
-          ],
-          sort: [
-            {
-              direction: "ascending",
-              field: "Provider",
-              selected: false,
-            },
-            {
-              direction: "descending",
-              field: "Star Rating",
-              selected: true,
-            },
-            {
-              direction: "descending",
-              field: "Interest rate",
-              selected: false,
-            },
-            {
-              direction: "ascending",
-              field: "Comparison rate^",
-              selected: false,
-            },
-            {
-              direction: "ascending",
-              field: "Monthly repayment",
-              selected: false,
-            },
-          ],
+          selectorFields: selectorFieldArr,
+          filterFields: filterFieldsArr,
+          sort: sortArr,
           pagination: {
-            limit: 40,
+            limit: 50,
             offset: 0,
             loadMore: 10,
           },

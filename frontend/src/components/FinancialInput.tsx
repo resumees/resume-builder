@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addIncome, addExpense } from "../reduxFeatures/financesSlice";
 import React, { useState, useEffect } from "react";
 import FinancialInputItem from "./FinancialInputItem";
-import { RootState } from "../store";
 import Constants from "../constants";
 
 interface FinancialInputProps {
