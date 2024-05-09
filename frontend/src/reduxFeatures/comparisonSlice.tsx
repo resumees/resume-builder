@@ -1,32 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ComparisonState {
-  electricity: Electricity;
+  electricity: ElectricityParams;
   phone: Phone;
-  mortgage: Mortgage;
-  gas: Gas;
+  mortgage: MortgageParams;
+  gas: GasParams;
+  search: {
+    isSearching: boolean;
+  };
 }
 
-interface Electricity {
-  postcode: string | null;
+export interface ElectricityParams {
+  postcode?: string | null;
+}
+
+export interface MortgageParams {
+  loanAmount?: string | null;
+  loanPurpose?: string | null;
+  repaymentType?: string | null;
+  interestRateType?: string | null;
+}
+
+export interface GasParams {
+  postcode?: string | null;
 }
 
 interface Phone {}
-
-interface Mortgage {}
-
-interface Gas {
-  postcode: string | null;
-}
 
 const initialState: ComparisonState = {
   electricity: {
     postcode: null,
   },
   phone: {},
-  mortgage: {},
+  mortgage: {
+    loanAmount: "",
+    loanPurpose: "Buying next home",
+    repaymentType: "Principal & Interest",
+    interestRateType: "Variable"
+  },
   gas: {
     postcode: null,
+  },
+  search: {
+    isSearching: false,
   },
 };
 
@@ -34,13 +50,19 @@ export const comparisonSlice = createSlice({
   name: "comparison",
   initialState,
   reducers: {
-    addPostcode: (state, action: PayloadAction<Electricity>) => {
+    addPostcode: (state, action: PayloadAction<ElectricityParams | GasParams>) => {
       state.electricity = action.payload;
       state.gas = action.payload;
+    },
+    addMortgageSearch: (state, action: PayloadAction<MortgageParams>) => {
+      state.mortgage = action.payload;
+    },
+    searchBoxParams: (state, action: PayloadAction<boolean>) => {
+      state.search.isSearching = action.payload;
     },
   },
 });
 
-export const { addPostcode } = comparisonSlice.actions;
+export const { addPostcode, addMortgageSearch, searchBoxParams } = comparisonSlice.actions;
 
 export default comparisonSlice.reducer;

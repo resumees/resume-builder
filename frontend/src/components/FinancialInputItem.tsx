@@ -1,6 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, IconButton, Input, Select } from "@chakra-ui/react";
-import CreatableSelect from "react-select/creatable";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { financesSlice } from "../reduxFeatures/financesSlice";

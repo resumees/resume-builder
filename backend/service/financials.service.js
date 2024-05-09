@@ -8,7 +8,7 @@ const {
   GasModel
 } = require("../models/financialProducts.model");
 const Constant = require("../helpers/constants");
-const { getCanstarUtility } = require("./api/canstar");
+const { getCanstarUtility, getCanstarMortgage } = require("./api/canstar");
 
 const uploadFinancesToDB = async (request) => {
   await Financials.findOneAndUpdate(
@@ -48,7 +48,10 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
       });
     productDataLength = phoneData.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.MORTGAGE) {
-    productModel = mortgageData.data.table.products
+    console.log(params)
+    const canstarMortgageResponse = await getCanstarMortgage(params);
+
+    productModel = canstarMortgageResponse.data.table.products
       .slice(start, end)
       .map((mortgageProduct) => {
         return new MortgageModel(
@@ -66,8 +69,9 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
           mortgageProduct.link
         );
       });
-    productDataLength = mortgageData.data.table.products.length;
+    productDataLength = canstarMortgageResponse.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY || Constant.FINANCIAL_PRODUCTS.GAS) {
+    console.log(params)
     if (params.postcode != null) {
       // API call to canstar 
       const canstarElectricityResponse = await getCanstarUtility(params, productType)

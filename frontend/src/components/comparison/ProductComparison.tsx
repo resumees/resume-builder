@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ProductOverview from "./ProductOverview";
 import { Box, Heading } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import SortedTable from "../ui/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import Constants from "@/constants";
-import SearchUtilities from "./SearchUtilities";
+import SearchBox from "./SearchBox/SearchBox";
+import { searchBoxParams } from "@/reduxFeatures/comparisonSlice";
 
 /**
  * Component: ProductComparison.tsx
@@ -28,11 +29,16 @@ type ProductComparisonProps = {
 const ProductComparison: React.FC<ProductComparisonProps> = ({
   ProductType,
 }) => {
+  const dispatch = useDispatch();
   const financeInput = useSelector((state: RootState) =>
     state.global.financials.expenses.find(
-      (item: ExpenseItem) => item.category === ProductType
+      (item: { category: string }) => item.category === ProductType
     )
   );
+
+  const isSearching = useSelector((state: RootState) => {
+    return state.global.comparison.search.isSearching;
+  });
 
   const searchParams = useSelector((state: RootState) => {
     const comparisonMap = {
@@ -51,9 +57,11 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
   const pageSize = 10;
   const [tableHeader, setTableHeader] = useState<string[]>([]);
 
-  const { data, isLoading, error, isError } = useQuery(
-    [`financeData${ProductType}`, pageNumber, searchParams],
+  // Comment out cacheTime and staleTime if testing API's as the data will be cached and lagged
+  const { data, isLoading, isError } = useQuery(
+    [`financeData${ProductType}`, pageNumber, isSearching],
     () => {
+      console.log("api search");
       const params = new URLSearchParams({
         productType: ProductType.toLowerCase(),
         page: pageNumber.toString(),
@@ -69,7 +77,9 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
     },
     {
       cacheTime: 60000,
-      staleTime: 30000
+      onSettled: () => {
+        dispatch(searchBoxParams(false));
+      },
     }
   );
 
@@ -93,8 +103,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
             Overview
           </Heading>
           <ProductOverview productData={financeInput} />
-          {(ProductType === Constants.TABLE_TYPE.ELECTRICITY ||
-            ProductType === Constants.TABLE_TYPE.GAS) && <SearchUtilities />}
+          <SearchBox ProductType={ProductType} />
         </>
       </Box>
 
@@ -106,7 +115,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
           {isLoading ? (
             <div>Loading...</div>
           ) : isError ? (
-            <div>Error: {error.message}</div>
+            <div>Error</div>
           ) : (
             <SortedTable
               tableData={data?.data?.productData}
