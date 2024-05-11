@@ -3,6 +3,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import Constants from "@/constants";
 import MortgageSearchBox from "./MortgageSearchBox";
 import UtilitySearchBox from "./UtilitySearchBox";
+import PhoneSearchBox from "./PhoneSearchBox";
 
 /**
  * Component: SearchBox.tsx
@@ -31,9 +32,13 @@ const SearchBox: React.FC<SearchBoxProps> = ({ ProductType }) => {
       return (
         <UtilitySearchBox />
       );
-    } else if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
+    } 
+    if (ProductType === Constants.TABLE_TYPE.MORTGAGE) {
       return <MortgageSearchBox />;
-    } else return null;
+    } 
+    if (ProductType === Constants.TABLE_TYPE.PHONE) {
+      return <PhoneSearchBox />;
+    } 
   };
 
   return (

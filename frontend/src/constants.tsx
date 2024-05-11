@@ -72,6 +72,26 @@ const Constants = {
             FIXED_5: "Fixed loan 5 years",
             VARIABLE: "Variable"
         }
+    },
+    PHONE_SEARCHBOX: {
+        PLAN_TYPE: {
+            TITLE: "Plan Type",
+            PHONE_INTERNET: "Phone and Internet plan",
+            PHONE_INTERNET_API: "Phone on a plan",
+            SIM_ONLY: "Sim only",
+        },
+        DATA_ALLOWANCE: {
+            TITLE: "Data allowance / month",
+            MB_500: "500MB",
+            GB_1: "1GB",
+            GB_5: "5GB",
+            GB_10: "10GB",
+            GB_20: "20GB",
+            GB_40: "40GB",
+            GB_60: "60GB",
+            GB_80: "80GB",
+            GB_100: "100GB",
+        }
     }
 };
 

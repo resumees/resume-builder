@@ -162,13 +162,13 @@ const getCanstarMortgage = async (params) => {
       type: "string",
       value: params.interestRateType,
     });
-  } 
+  }
   if (params.repaymentType) {
     filterFieldsArr.push({
       name: "Repayment Type",
       type: "string",
       value: params.repaymentType,
-    })
+    });
   }
 
   try {

@@ -19,8 +19,6 @@ const MortgageSearchBox: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
     setMortgageParams((prevParams) => ({
       ...prevParams,
       [name]: value,
