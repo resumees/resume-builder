@@ -45,6 +45,11 @@ export default function WithSubnavigation() {
     window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`
   };
 
+  // Redirect to Home Page
+  const handleHome = () => {
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/`
+  };
+
   // When user logs out, set auth to false and remove token from localStorage to reset session
   const handleLogout = () => {
     request(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, "POST")
@@ -84,13 +89,14 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
-          >
+          <Button 
+            onClick={() => handleHome()}
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"m"}
+            color={"grey.800"}
+            variant={"link"} >
             Taboo
-          </Text>
+          </Button>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
