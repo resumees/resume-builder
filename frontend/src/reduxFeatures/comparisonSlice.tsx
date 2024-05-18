@@ -5,6 +5,7 @@ interface ComparisonState {
   phone: PhoneParams;
   mortgage: MortgageParams;
   gas: GasParams;
+  internet: InternetParams;
   search: {
     isSearching: boolean;
   };
@@ -23,6 +24,11 @@ export interface MortgageParams {
 
 export interface GasParams {
   postcode?: string | null;
+}
+
+export interface InternetParams {
+  internetType: string | null;
+  speedTier: string | null;
 }
 
 export interface PhoneParams {
@@ -46,6 +52,10 @@ const initialState: ComparisonState = {
   },
   gas: {
     postcode: null,
+  },
+  internet: {
+    internetType: "NBN",
+    speedTier: "Standard",
   },
   search: {
     isSearching: false,

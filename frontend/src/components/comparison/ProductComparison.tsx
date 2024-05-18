@@ -46,6 +46,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       [Constants.TABLE_TYPE.MORTGAGE]: state.global.comparison.mortgage,
       [Constants.TABLE_TYPE.PHONE]: state.global.comparison.phone,
       [Constants.TABLE_TYPE.GAS]: state.global.comparison.gas,
+      [Constants.TABLE_TYPE.INTERNET]: state.global.comparison.internet
     };
 
     return comparisonMap[ProductType];
@@ -89,6 +90,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       [Constants.TABLE_TYPE.PHONE]: Constants.PHONE_TABLE_HEADERS,
       [Constants.TABLE_TYPE.ELECTRICITY]: Constants.ELECTRICITY_TABLE_HEADERS,
       [Constants.TABLE_TYPE.GAS]: Constants.GAS_TABLE_HEADERS,
+      [Constants.TABLE_TYPE.INTERNET]: Constants.INTERNET_TABLE_HEADERS,
     };
     if (tableHeadersMap.hasOwnProperty(ProductType)) {
       setTableHeader(tableHeadersMap[ProductType]);

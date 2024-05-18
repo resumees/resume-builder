@@ -4,6 +4,7 @@ import Constants from "@/constants";
 import MortgageSearchBox from "./MortgageSearchBox";
 import UtilitySearchBox from "./UtilitySearchBox";
 import PhoneSearchBox from "./PhoneSearchBox";
+import InternetSearchBox from "./InternetSearchBox";
 
 /**
  * Component: SearchBox.tsx
@@ -39,6 +40,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({ ProductType }) => {
     if (ProductType === Constants.TABLE_TYPE.PHONE) {
       return <PhoneSearchBox />;
     } 
+    if (ProductType === Constants.TABLE_TYPE.INTERNET) {
+      return <InternetSearchBox />;
+    }
   };
 
   return (

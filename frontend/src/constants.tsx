@@ -12,6 +12,13 @@ const Constants = {
         ELECTRICITY: "Electricity",
         GAS: "Gas"
     },
+    INTERNET_TABLE_HEADERS: [
+        "company",
+        "information",
+        "speed",
+        "cost",
+        "CTA"
+    ],
     PHONE_TABLE_HEADERS: [
         "company",
         "information",

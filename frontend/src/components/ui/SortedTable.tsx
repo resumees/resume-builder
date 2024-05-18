@@ -24,6 +24,14 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import Constants from "@/constants";
 
+interface InternetData {
+  company: string;
+  information: string;
+  stats: string;
+  monthlyCost: string;
+  CTA: string;
+}
+
 interface PhoneData {
   company: string;
   data: any[];
@@ -90,6 +98,28 @@ const SortedTable: React.FC<SortedTableProps> = ({
       });
       navigate(`${location.pathname}?${params.toString()}`);
     }
+  };
+
+  const InternetData = () => {
+    return tableData.map((data: InternetData, index: number) => (
+      <Tr key={index}>
+        <Td>
+          Company Logo
+        </Td>
+        <Td>Title</Td>
+        <Td>Data / Speed Stats</Td>
+        <Td>Cost</Td>
+        <Td>
+          <Button
+            as="a"
+            colorScheme="whatsapp"
+            variant={data?.company != null ? "outline" : "hidden"}
+            >
+              "Go to site"
+            </Button>
+        </Td>
+      </Tr>
+    ));
   };
 
   const PhoneData = () => {
@@ -232,6 +262,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
               {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
               {tableType === Constants.TABLE_TYPE.ELECTRICITY && ElectricityData()}
               {tableType === Constants.TABLE_TYPE.GAS && GasData()}
+              {tableType === Constants.TABLE_TYPE.INTERNET && InternetData()}
             </Tbody>
           )}
         </Table>
