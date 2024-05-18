@@ -47,7 +47,7 @@ export default function WithSubnavigation() {
 
   // Redirect to Home Page
   const handleHome = () => {
-    window.location.href = `${import.meta.env.VITE_HOMEPAGE_URL}`
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/`
   };
 
   // When user logs out, set auth to false and remove token from localStorage to reset session
