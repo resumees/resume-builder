@@ -50,7 +50,7 @@ const App: React.FC = () => {
           </div>
         </Router>
       </ChakraProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 };

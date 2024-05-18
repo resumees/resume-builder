@@ -1,13 +1,39 @@
 import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import React from "react";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import ProductComparison from "@/components/comparison/ProductComparison";
 import Constants from "@/constants";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // State to keep track of the selected tab index
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
+  // Update selectedTabIndex when location pathname changes
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/finances/comparison/homeloans":
+        setSelectedTabIndex(0);
+        break;
+      case "/finances/comparison/phone":
+        setSelectedTabIndex(1);
+        break;
+      case "/finances/comparison/electricity":
+        setSelectedTabIndex(2);
+        break;
+      case "/finances/comparison/gas":
+        setSelectedTabIndex(3);
+        break;
+      default:
+        setSelectedTabIndex(0);
+        break;
+    }
+  }, [location.pathname]);
 
   const handleTabChange = (index: number) => {
+    setSelectedTabIndex(index); // Update selectedTabIndex
     switch (index) {
       case 0:
         navigate(`/finances/comparison/homeloans?pageNumber=1`);
@@ -28,7 +54,13 @@ const Comparison: React.FC = () => {
 
   return (
     <Box w="100%" h="100%">
-      <Tabs h="100%" isLazy orientation="vertical" onChange={handleTabChange}>
+      <Tabs
+        h="100%"
+        isLazy
+        orientation="vertical"
+        onChange={handleTabChange}
+        index={selectedTabIndex}
+      >
         <TabList bg="lightblue">
           <Tab _hover={{ bg: "gray.300" }}>Home loans</Tab>
           <Tab _hover={{ bg: "gray.300" }}>Phone</Tab>
