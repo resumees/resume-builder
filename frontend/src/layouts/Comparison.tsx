@@ -115,7 +115,10 @@ const Comparison: React.FC = () => {
           <Route
             path="/internet"
             element={
-              <p>Internet WIP</p>
+              <ProductComparison
+              key={`${Constants.TABLE_TYPE.INTERNET}`}
+              ProductType={Constants.TABLE_TYPE.INTERNET}
+              />
             }
           />
         </Routes>
