@@ -26,6 +26,9 @@ const Comparison: React.FC = () => {
       case "/finances/comparison/gas":
         setSelectedTabIndex(3);
         break;
+      case "/finances/comparison/internet":
+        setSelectedTabIndex(4);
+        break;
       default:
         setSelectedTabIndex(0);
         break;
@@ -47,6 +50,9 @@ const Comparison: React.FC = () => {
       case 3:
         navigate(`/finances/comparison/gas?pageNumber=1`);
         break;
+      case 4:
+        navigate(`/finances/comparison/internet?pageNumber=1`);
+        break;
       default:
         break;
     }
@@ -66,6 +72,7 @@ const Comparison: React.FC = () => {
           <Tab _hover={{ bg: "gray.300" }}>Phone</Tab>
           <Tab _hover={{ bg: "gray.300" }}>Electricity</Tab>
           <Tab _hover={{ bg: "gray.300" }}>Gas</Tab>
+          <Tab _hover={{ bg: "gray.300" }}>Internet</Tab>
         </TabList>
 
         <Routes>
@@ -103,6 +110,12 @@ const Comparison: React.FC = () => {
                 key={`${Constants.TABLE_TYPE.GAS}`}
                 ProductType={Constants.TABLE_TYPE.GAS}
               />
+            }
+          />
+          <Route
+            path="/internet"
+            element={
+              <p>Internet WIP</p>
             }
           />
         </Routes>
