@@ -20,7 +20,7 @@ router.get(
     // Successful authentication, redirect home.
     const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     res.cookie('jwt', token, { httpOnly: true });
-    res.redirect("http://localhost:3000");
+    res.redirect(process.env.FRONTEND_ENDPOINT);
   }
 );
 
