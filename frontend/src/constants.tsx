@@ -82,15 +82,15 @@ const Constants = {
         },
         DATA_ALLOWANCE: {
             TITLE: "Data allowance / month",
-            MB_500: "500MB",
-            GB_1: "1GB",
-            GB_5: "5GB",
-            GB_10: "10GB",
-            GB_20: "20GB",
-            GB_40: "40GB",
-            GB_60: "60GB",
-            GB_80: "80GB",
-            GB_100: "100GB",
+            MB_500: "500MB+",
+            GB_1: "1GB+",
+            GB_5: "5GB+",
+            GB_10: "10GB+",
+            GB_20: "20GB+",
+            GB_40: "40GB+",
+            GB_60: "60GB+",
+            GB_80: "80GB+",
+            GB_100: "100GB+",
         }
     }
 };

@@ -35,8 +35,8 @@ const initialState: ComparisonState = {
     postcode: null,
   },
   phone: {
-    planType: "",
-    monthlyData: "500MB",
+    planType: "Sim only",
+    monthlyData: "500MB+",
   },
   mortgage: {
     loanAmount: "",

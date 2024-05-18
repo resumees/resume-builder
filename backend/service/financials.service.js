@@ -1,6 +1,5 @@
 const Financials = require("../models/financials.model");
 const phoneData = require("../data/phone.json");
-const mortgageData = require("../data/mortgage.json");
 const {
   PhoneModel,
   MortgageModel,
@@ -8,7 +7,7 @@ const {
   GasModel
 } = require("../models/financialProducts.model");
 const Constant = require("../helpers/constants");
-const { getCanstarUtility, getCanstarMortgage } = require("./api/canstar");
+const { getCanstarUtility, getCanstarMortgage, getCanstarPhone } = require("./api/canstar");
 
 const uploadFinancesToDB = async (request) => {
   await Financials.findOneAndUpdate(
@@ -32,7 +31,9 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
   let productDataLength;
 
   if (productType === Constant.FINANCIAL_PRODUCTS.PHONE) {
-    productModel = phoneData.data.table.products
+
+    const canstarPhoneResponse = await getCanstarPhone(params);
+    productModel = canstarPhoneResponse.data.table.products
       .slice(start, end)
       .map((phoneProduct) => {
         return new PhoneModel(
@@ -46,7 +47,7 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
           phoneProduct.link
         );
       });
-    productDataLength = phoneData.data.table.products.length;
+    productDataLength = canstarPhoneResponse.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.MORTGAGE) {
     console.log(params)
     const canstarMortgageResponse = await getCanstarMortgage(params);

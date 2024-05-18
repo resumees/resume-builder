@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, Input, Select, Button } from "@chakra-ui/react";
+import { Text, Select, Button } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { PhoneParams, addPhoneSearch } from "@/reduxFeatures/comparisonSlice";
+import { PhoneParams, addPhoneSearch, searchBoxParams } from "@/reduxFeatures/comparisonSlice";
 import Constants from "@/constants";
 
 const PhoneSearchBox: React.FC = () => {
@@ -33,7 +33,7 @@ const PhoneSearchBox: React.FC = () => {
       <Select
         name="planType"
         value={
-          phoneParams.planType || Constants.PHONE_SEARCHBOX.PLAN_TYPE.TITLE
+          phoneParams.planType || Constants.PHONE_SEARCHBOX.PLAN_TYPE.SIM_ONLY
         }
         onChange={handleInputChange}
       >
@@ -83,6 +83,14 @@ const PhoneSearchBox: React.FC = () => {
           {Constants.PHONE_SEARCHBOX.DATA_ALLOWANCE.GB_100}
         </option>
       </Select>
+      <Button
+        colorScheme="blue"
+        p={2}
+        mt="3"
+        onClick={() => dispatch(searchBoxParams(true))}
+      >
+        Search
+      </Button>
     </>
   );
 };
