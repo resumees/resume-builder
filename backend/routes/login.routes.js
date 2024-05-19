@@ -5,6 +5,8 @@ const router = express.Router();
 const authenticateJWT = require('../middleware/jwt');
 const logger = require("../middleware/logger");
 
+const isProdEnv = process.env.NODE_ENV === 'prod';
+
 router.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile"] })
@@ -19,7 +21,11 @@ router.get(
   function (req, res) {
     // Successful authentication, redirect home.
     const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    res.cookie('jwt', token, { httpOnly: true });
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: isProdEnv,
+      sameSite: isProdEnv ? 'none' : 'lax'
+    });
     res.redirect(process.env.FRONTEND_ENDPOINT);
   }
 );
