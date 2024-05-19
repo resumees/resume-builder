@@ -20,6 +20,7 @@ router.get(
   }),
   function (req, res) {
     // Successful authentication, redirect home.
+    logger.info('Login Successful - Providing JWT Token')
     const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     res.cookie('jwt', token, {
       httpOnly: true,
