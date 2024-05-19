@@ -4,7 +4,8 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-// Sets up all the required initial middleware for the app
+const isProdEnv = process.env.NODE_ENV === 'prod';
+
 module.exports = function(app) {
   app.use(session({
     secret: 'your secret',
@@ -12,18 +13,22 @@ module.exports = function(app) {
     saveUninitialized: false,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: true, //Enable when deployment OR when not using localhost, this wont work without https
-      sameSite: "none", //Enable when deployment OR when not using localhost, We're not on the same site, we're using different site so the cookie need to effectively transfer from Backend to Frontend
+      secure: isProdEnv, // Secure cookies in production
+      sameSite: isProdEnv ? 'none' : 'lax', // 'none' for cross-origin in production, 'lax' for local
+      domain: isProdEnv ? 'your-frontend-service.onrender.com' : undefined // Set domain for production
     }
   }));
+
   app.use(passport.initialize());
   app.use(passport.session());
+
   app.use(
     cors({
       origin: process.env.FRONTEND_ENDPOINT,
       credentials: true
     })
   );
+
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
