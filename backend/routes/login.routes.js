@@ -37,7 +37,6 @@ router.post('/auth/logout', authenticateJWT, (req, res) => {
 });
 
 router.get('/auth/check-auth', authenticateJWT, (req, res) => {
-  logger.info('PATH: /auth/check-auth - User is authenticated');
   res.json({ isAuthenticated: true });
 });
 

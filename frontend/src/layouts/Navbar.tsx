@@ -11,8 +11,8 @@ import {
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
+  Spinner
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -21,6 +21,7 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import React, { useEffect } from "react";
+import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthentication } from "../reduxFeatures/authenticationSlice";
 import request from "../util/api";
@@ -34,11 +35,23 @@ export default function WithSubnavigation() {
   const dispatch = useDispatch();
 
   // Check if user is authenticated
-  useEffect(() => {
-    request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET").then(
-      (res: any) => dispatch(setAuthentication(res.isAuthenticated))
-    );
-  }, [dispatch]);
+  const { isLoading } = useQuery(
+    'checkAuth', // unique query key
+    () => request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET"),
+    {
+      refetchInterval: false,
+      enabled: true, 
+      refetchOnMount: false, 
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: false,
+      cacheTime: 60000,
+      staleTime: 60000,
+      onSuccess: (data) => {
+        console.log("It was successful")
+        dispatch(setAuthentication(data.isAuthenticated));
+      },
+    },
+  );
 
   // Redirect to Google OAuth
   const handleLogin = () => {
@@ -109,6 +122,10 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
+          {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
           {isAuthenticated ? (
             <Button
               display={{ base: "none", md: "inline-flex" }}
@@ -151,6 +168,8 @@ export default function WithSubnavigation() {
               </Button>
             </>
           )}
+        </>
+      )}
         </Stack>
       </Flex>
 

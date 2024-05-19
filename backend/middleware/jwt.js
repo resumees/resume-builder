@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const logger = require("../middleware/logger");
 require("dotenv").config();
 
 function authenticateJWT(req, res, next) {
@@ -20,11 +21,12 @@ function authenticateJWT(req, res, next) {
       }
 
       req.user = dbUser;
-      
+      logger.info('PATH: /authenticateJWT - User is authenticated');
       next();
     });
   } else {
-    res.sendStatus(401);
+    logger.info('PATH: /authenticateJWT - User is NOT authenticated');
+    res.json({ isAuthenticated: false });
   }
 }
 
