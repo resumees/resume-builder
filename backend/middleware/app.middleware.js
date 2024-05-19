@@ -15,7 +15,7 @@ module.exports = function(app) {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       secure: isProdEnv, // Secure cookies in production
       sameSite: isProdEnv ? 'none' : 'lax', // 'none' for cross-origin in production, 'lax' for local
-      domain: isProdEnv ? 'your-frontend-service.onrender.com' : undefined // Set domain for production
+      domain: isProdEnv ? process.env.FRONTEND_ENDPOINT : undefined // Set domain for production
     }
   }));
 
