@@ -13,6 +13,7 @@ const Constants = {
         GAS: "Gas"
     },
     INTERNET_TABLE_HEADERS: [
+        "",
         "company",
         "information",
         "speed",
@@ -20,6 +21,7 @@ const Constants = {
         "CTA"
     ],
     PHONE_TABLE_HEADERS: [
+        "",
         "company",
         "information",
         "data",
@@ -27,6 +29,7 @@ const Constants = {
         "CTA"
     ],
     MORTGAGE_TABLE_HEADERS: [
+        "",
         "company",
         "information",
         "interest rate",
@@ -35,6 +38,7 @@ const Constants = {
         "CTA"
     ],
     ELECTRICITY_TABLE_HEADERS: [
+        "",
         "company",
         "information",
         "referencePrice",
@@ -42,6 +46,7 @@ const Constants = {
         "CTA"
     ],
     GAS_TABLE_HEADERS: [
+        "",
         "company",
         "information",
         "supplyCharge",

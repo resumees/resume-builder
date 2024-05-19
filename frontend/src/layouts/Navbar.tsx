@@ -36,7 +36,7 @@ export default function WithSubnavigation() {
 
   // Check if user is authenticated
   const { isLoading } = useQuery(
-    'checkAuth', // unique query key
+    'checkAuth', 
     () => request(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, "GET"),
     {
       refetchInterval: false,
@@ -47,7 +47,6 @@ export default function WithSubnavigation() {
       cacheTime: 60000,
       staleTime: 60000,
       onSuccess: (data) => {
-        console.log("It was successful")
         dispatch(setAuthentication(data.isAuthenticated));
       },
     },

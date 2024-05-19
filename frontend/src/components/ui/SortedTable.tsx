@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TableContainer,
   Table,
@@ -11,6 +11,8 @@ import {
   Button,
   Text,
   Box,
+  Checkbox,
+  Flex,
 } from "@chakra-ui/react";
 import {
   Pagination,
@@ -100,12 +102,23 @@ const SortedTable: React.FC<SortedTableProps> = ({
     }
   };
 
+  // Initialize state to keep track of checked rows
+  const [checkedRows, setCheckedRows] = useState<{ [key: number]: boolean }>(
+    {}
+  );
+
+  // Handle checkbox change
+  const handleCheckboxChange = (index: number) => {
+    setCheckedRows(() => ({
+      [index]: true,
+    }));
+  };
+
   const InternetData = () => {
     return tableData.map((data: InternetData, index: number) => (
       <Tr key={index}>
-        <Td>
-          Company Logo
-        </Td>
+        <Td></Td>
+        <Td>Company Logo</Td>
         <Td>Title</Td>
         <Td>Data / Speed Stats</Td>
         <Td>Cost</Td>
@@ -114,9 +127,9 @@ const SortedTable: React.FC<SortedTableProps> = ({
             as="a"
             colorScheme="whatsapp"
             variant={data?.company != null ? "outline" : "hidden"}
-            >
-              "Go to site"
-            </Button>
+          >
+            "Go to site"
+          </Button>
         </Td>
       </Tr>
     ));
@@ -125,6 +138,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   const PhoneData = () => {
     return tableData.map((data: PhoneData, index: number) => (
       <Tr key={index}>
+        <Td></Td>
         <Td>
           <img src={data?.company} alt="Company Logo" />
         </Td>
@@ -148,11 +162,29 @@ const SortedTable: React.FC<SortedTableProps> = ({
 
   const MortgageData = () => {
     return tableData.map((data: MortgageData, index: number) => (
-      <Tr key={index}>
+      <Tr
+        className={`cursor-pointer ${
+          checkedRows[index] ? "bg-green-100" : "hover:bg-green-50"
+        }`}
+        onClick={() => handleCheckboxChange(index)}
+        key={index}
+        bg={checkedRows[index] ? "green.100" : "transparent"}
+      >
+        <Td>
+          <Flex justify="center" align="center">
+            <Checkbox
+              onChange={() => handleCheckboxChange(index)}
+              isChecked={checkedRows[index]}
+              colorScheme="green"
+            />
+          </Flex>
+        </Td>
         <Td>
           <img src={data?.company} alt="Company Logo" />
         </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+          {data?.information}
+        </Td>
         <Td>{data?.comparisonRate}</Td>
         <Td>{data?.interestRate}</Td>
         <Td>{data?.monthlyRepayment}</Td>
@@ -169,15 +201,18 @@ const SortedTable: React.FC<SortedTableProps> = ({
         </Td>
       </Tr>
     ));
-  }
+  };
 
   const ElectricityData = () => {
     return tableData.map((data: ElectricityData, index: number) => (
       <Tr key={index}>
+        <Td></Td>
         <Td>
           <img src={data?.company} alt="Company Logo" />
         </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+          {data?.information}
+        </Td>
         <Td>{data?.referencePrice}</Td>
         <Td>{data?.estimatedCost}</Td>
         <Td>
@@ -193,15 +228,18 @@ const SortedTable: React.FC<SortedTableProps> = ({
         </Td>
       </Tr>
     ));
-  }
+  };
 
   const GasData = () => {
     return tableData.map((data: GasData, index: number) => (
       <Tr key={index}>
+        <Td></Td>
         <Td>
           <img src={data?.company} alt="Company Logo" />
         </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">{data?.information}</Td>
+        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+          {data?.information}
+        </Td>
         <Td>{data?.supplyCharge}</Td>
         <Td>{data?.usageCharge}</Td>
         <Td>{data?.totalCost}</Td>
@@ -218,7 +256,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
         </Td>
       </Tr>
     ));
-  }
+  };
 
   return (
     <Box display="flex" width="100%" overflowX="auto">
@@ -228,7 +266,10 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious onClick={handlePreviousClick} page={pageNumber}/>
+                  <PaginationPrevious
+                    onClick={handlePreviousClick}
+                    page={pageNumber}
+                  />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink>{pageNumber}</PaginationLink>
@@ -237,7 +278,12 @@ const SortedTable: React.FC<SortedTableProps> = ({
                   <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationNext onClick={handleNextClick} page={pageNumber} dataLength={tableDataLength} pageSize={tablePgSize}/>
+                  <PaginationNext
+                    onClick={handleNextClick}
+                    page={pageNumber}
+                    dataLength={tableDataLength}
+                    pageSize={tablePgSize}
+                  />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
@@ -260,7 +306,8 @@ const SortedTable: React.FC<SortedTableProps> = ({
             <Tbody>
               {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
               {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
-              {tableType === Constants.TABLE_TYPE.ELECTRICITY && ElectricityData()}
+              {tableType === Constants.TABLE_TYPE.ELECTRICITY &&
+                ElectricityData()}
               {tableType === Constants.TABLE_TYPE.GAS && GasData()}
               {tableType === Constants.TABLE_TYPE.INTERNET && InternetData()}
             </Tbody>

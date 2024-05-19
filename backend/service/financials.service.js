@@ -70,6 +70,7 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
           mortgageProduct.link
         );
       });
+
     productDataLength = canstarMortgageResponse.data.table.products.length;
   } else if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY || Constant.FINANCIAL_PRODUCTS.GAS) {
     console.log(params)
