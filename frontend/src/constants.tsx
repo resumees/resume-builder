@@ -32,9 +32,9 @@ const Constants = {
         "",
         "company",
         "information",
-        "interest rate",
-        "comparison rate",
-        "monthly payment",
+        "interest\nrate",
+        "comparison\nrate",
+        "monthly\npayment",
         "CTA"
     ],
     ELECTRICITY_TABLE_HEADERS: [

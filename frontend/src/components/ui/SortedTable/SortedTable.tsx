@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/pagination";
 import { useNavigate, useLocation } from "react-router-dom";
 import Constants from "@/constants";
+import { StyledTd, StyledTr, StyledTh } from "./SortedTable.styles";
 
 interface InternetData {
   company: string;
@@ -117,12 +118,12 @@ const SortedTable: React.FC<SortedTableProps> = ({
   const InternetData = () => {
     return tableData.map((data: InternetData, index: number) => (
       <Tr key={index}>
-        <Td></Td>
-        <Td>Company Logo</Td>
-        <Td>Title</Td>
-        <Td>Data / Speed Stats</Td>
-        <Td>Cost</Td>
-        <Td>
+        <StyledTd></StyledTd>
+        <StyledTd>Company Logo</StyledTd>
+        <StyledTd>Title</StyledTd>
+        <StyledTd>Data / Speed Stats</StyledTd>
+        <StyledTd>Cost</StyledTd>
+        <StyledTd>
           <Button
             as="a"
             colorScheme="whatsapp"
@@ -130,7 +131,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
           >
             "Go to site"
           </Button>
-        </Td>
+        </StyledTd>
       </Tr>
     ));
   };
@@ -138,14 +139,14 @@ const SortedTable: React.FC<SortedTableProps> = ({
   const PhoneData = () => {
     return tableData.map((data: PhoneData, index: number) => (
       <Tr key={index}>
-        <Td></Td>
-        <Td>
+        <StyledTd></StyledTd>
+        <StyledTd>
           <img src={data?.company} alt="Company Logo" />
-        </Td>
-        <Td>{data?.title}</Td>
-        <Td>{data?.data[3]?.value}</Td>
-        <Td>{data?.data[4]?.value}</Td>
-        <Td>
+        </StyledTd>
+        <StyledTd>{data?.title}</StyledTd>
+        <StyledTd>{data?.data[3]?.value}</StyledTd>
+        <StyledTd>{data?.data[4]?.value}</StyledTd>
+        <StyledTd>
           <Button
             as="a"
             href={data?.link}
@@ -155,14 +156,14 @@ const SortedTable: React.FC<SortedTableProps> = ({
           >
             {data?.link != null ? "Go to site" : ""}
           </Button>
-        </Td>
+        </StyledTd>
       </Tr>
     ));
   };
 
   const MortgageData = () => {
     return tableData.map((data: MortgageData, index: number) => (
-      <Tr
+      <StyledTr
         className={`cursor-pointer ${
           checkedRows[index] ? "bg-green-100" : "hover:bg-green-50"
         }`}
@@ -170,7 +171,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
         key={index}
         bg={checkedRows[index] ? "green.100" : "transparent"}
       >
-        <Td>
+        <StyledTd>
           <Flex justify="center" align="center">
             <Checkbox
               onChange={() => handleCheckboxChange(index)}
@@ -178,17 +179,17 @@ const SortedTable: React.FC<SortedTableProps> = ({
               colorScheme="green"
             />
           </Flex>
-        </Td>
-        <Td>
+        </StyledTd>
+        <StyledTd>
           <img src={data?.company} alt="Company Logo" />
-        </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+        </StyledTd>
+        <StyledTd className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
           {data?.information}
-        </Td>
-        <Td>{data?.comparisonRate}</Td>
-        <Td>{data?.interestRate}</Td>
-        <Td>{data?.monthlyRepayment}</Td>
-        <Td>
+        </StyledTd>
+        <StyledTd>{data?.comparisonRate}</StyledTd>
+        <StyledTd>{data?.interestRate}</StyledTd>
+        <StyledTd>{data?.monthlyRepayment}</StyledTd>
+        <StyledTd>
           <Button
             as="a"
             href={data?.CTA}
@@ -198,24 +199,24 @@ const SortedTable: React.FC<SortedTableProps> = ({
           >
             {data?.CTA != null ? "Go to site" : ""}
           </Button>
-        </Td>
-      </Tr>
+        </StyledTd>
+      </StyledTr>
     ));
   };
 
   const ElectricityData = () => {
     return tableData.map((data: ElectricityData, index: number) => (
-      <Tr key={index}>
-        <Td></Td>
-        <Td>
+      <StyledTr key={index}>
+        <StyledTd></StyledTd>
+        <StyledTd>
           <img src={data?.company} alt="Company Logo" />
-        </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+        </StyledTd>
+        <StyledTd className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
           {data?.information}
-        </Td>
-        <Td>{data?.referencePrice}</Td>
-        <Td>{data?.estimatedCost}</Td>
-        <Td>
+        </StyledTd>
+        <StyledTd>{data?.referencePrice}</StyledTd>
+        <StyledTd>{data?.estimatedCost}</StyledTd>
+        <StyledTd>
           <Button
             as="a"
             href={data?.CTA}
@@ -225,25 +226,25 @@ const SortedTable: React.FC<SortedTableProps> = ({
           >
             {data?.CTA != null ? "Go to site" : ""}
           </Button>
-        </Td>
-      </Tr>
+        </StyledTd>
+      </StyledTr>
     ));
   };
 
   const GasData = () => {
     return tableData.map((data: GasData, index: number) => (
       <Tr key={index}>
-        <Td></Td>
-        <Td>
+        <StyledTd></StyledTd>
+        <StyledTd>
           <img src={data?.company} alt="Company Logo" />
-        </Td>
-        <Td className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
+        </StyledTd>
+        <StyledTd className="whitespace-normal sm:whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap xl:whitespace-normal">
           {data?.information}
-        </Td>
-        <Td>{data?.supplyCharge}</Td>
-        <Td>{data?.usageCharge}</Td>
-        <Td>{data?.totalCost}</Td>
-        <Td>
+        </StyledTd>
+        <StyledTd>{data?.supplyCharge}</StyledTd>
+        <StyledTd>{data?.usageCharge}</StyledTd>
+        <StyledTd>{data?.totalCost}</StyledTd>
+        <StyledTd>
           <Button
             as="a"
             href={data?.CTA}
@@ -253,15 +254,15 @@ const SortedTable: React.FC<SortedTableProps> = ({
           >
             {data?.CTA != null ? "Go to site" : ""}
           </Button>
-        </Td>
+        </StyledTd>
       </Tr>
     ));
   };
 
   return (
-    <Box display="flex" width="100%" overflowX="auto">
-      <TableContainer maxWidth="100%">
-        <Table variant="simple">
+    <Box display="flex" overflowX="auto">
+      <TableContainer width="100%">
+        <Table width="100%"variant="simple">
           <TableCaption position="relative">
             <Pagination>
               <PaginationContent>
@@ -294,22 +295,21 @@ const SortedTable: React.FC<SortedTableProps> = ({
             </Box>
           </TableCaption>
           <Thead>
-            <Tr>
+            <StyledTr>
               {tableHeaders.map((header, index) => (
-                <Th key={index} style={{ textAlign: "left" }}>
+                <StyledTh key={index}>
                   {header}
-                </Th>
+                </StyledTh>
               ))}
-            </Tr>
+            </StyledTr>
           </Thead>
           {tableData && tableData.length > 0 && (
             <Tbody>
-              {tableType === Constants.TABLE_TYPE.PHONE && PhoneData()}
-              {tableType === Constants.TABLE_TYPE.MORTGAGE && MortgageData()}
-              {tableType === Constants.TABLE_TYPE.ELECTRICITY &&
-                ElectricityData()}
-              {tableType === Constants.TABLE_TYPE.GAS && GasData()}
-              {tableType === Constants.TABLE_TYPE.INTERNET && InternetData()}
+              {tableType === Constants.TABLE_TYPE.PHONE && <PhoneData />}
+              {tableType === Constants.TABLE_TYPE.MORTGAGE && <MortgageData />}
+              {tableType === Constants.TABLE_TYPE.ELECTRICITY && <ElectricityData />}
+              {tableType === Constants.TABLE_TYPE.GAS && <GasData />}
+              {tableType === Constants.TABLE_TYPE.INTERNET && <InternetData />}
             </Tbody>
           )}
         </Table>

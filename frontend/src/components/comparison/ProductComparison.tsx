@@ -4,12 +4,13 @@ import ProductOverview from "./ProductOverview";
 import { Box, Heading } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import SortedTable from "../ui/SortedTable";
+import SortedTable from "../ui/SortedTable/SortedTable";
 import request from "@/util/api";
 import { useLocation } from "react-router-dom";
 import Constants from "@/constants";
 import SearchBox from "./SearchBox/SearchBox";
 import { searchBoxParams } from "@/reduxFeatures/comparisonSlice";
+import TotalExpense from "./TotalExpenseBox/TotalExpense";
 
 /**
  * Component: ProductComparison.tsx
@@ -46,7 +47,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
       [Constants.TABLE_TYPE.MORTGAGE]: state.global.comparison.mortgage,
       [Constants.TABLE_TYPE.PHONE]: state.global.comparison.phone,
       [Constants.TABLE_TYPE.GAS]: state.global.comparison.gas,
-      [Constants.TABLE_TYPE.INTERNET]: state.global.comparison.internet
+      [Constants.TABLE_TYPE.INTERNET]: state.global.comparison.internet,
     };
 
     return comparisonMap[ProductType];
@@ -99,7 +100,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
 
   return (
     <Box display="flex" p={7} flexDirection="row" width="100%">
-      <Box display="flex" p={7} flexDirection="column">
+      <Box display="flex" p={7} flexDirection="column" width="20%">
         <>
           <Heading as="h5" size="lg">
             Overview
@@ -109,7 +110,7 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
         </>
       </Box>
 
-      <Box display="flex" p={7} flexDirection="column" flex="1">
+      <Box display="flex" p={7} flexDirection="column" width="50%">
         <Heading as="h5" size="lg">
           Available plans
         </Heading>
@@ -128,6 +129,19 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
             />
           )}
         </Box>
+      </Box>
+
+      <Box
+        display="flex"
+        p={7}
+        flexDirection="column"
+        width="30%"
+        border="1px solid"
+        borderColor="gray.200"
+        bg="cyan.50"
+        alignSelf="flex-start"
+      >
+        <TotalExpense />
       </Box>
     </Box>
   );
