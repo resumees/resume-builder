@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { Td, Tr, Th } from "@chakra-ui/react";
 
 export const StyledTd = styled(Td)`
-
+  padding: 0.75rem;
 `;
 
-export const StyledTr = styled(Tr)`
-
-`;
+export const StyledTr = styled(Tr)``;
 
 export const StyledTh = styled(Th)`
-
+  padding: 0.75rem;
+  text-align: left;
+  white-space: pre-wrap;
 `;
 
 // export const StyledTd = styled(Td)`

@@ -11,13 +11,13 @@ function authenticateJWT(req, res, next) {
     // Verify the JWT
     jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
       if (err) {
-        return res.sendStatus(403);
+        return res.json({ isAuthenticated: false });
       }
       // Find the user in the database using the _id
       const dbUser = await User.findById(user._id);
 
       if (!dbUser) {
-        return res.sendStatus(401);
+        return res.json({ isAuthenticated: false });
       }
 
       req.user = dbUser;
