@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TableContainer,
   Table,
   TableCaption,
   Thead,
   Tr,
-  Th,
   Tbody,
-  Td,
   Button,
   Text,
   Box,
@@ -87,7 +85,14 @@ const SortedTable: React.FC<SortedTableProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const pageSize = 10;
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
+  const start = (pageNumber - 1) * pageSize;
+
+  useEffect(() => {
+    console.log(`start: ${start}`)
+    console.log(`end: ${start + pageNumber}`)
+  }, [])
 
   const handleNextClick = () => {
     const params = new URLSearchParams({ pageNumber: String(pageNumber + 1) });
@@ -115,11 +120,15 @@ const SortedTable: React.FC<SortedTableProps> = ({
     }));
   };
 
+  useEffect(() => {
+    console.log(tableData)
+  }, [tableData])
+
   const InternetData = () => {
-    return tableData.map((data: InternetData, index: number) => (
+    return tableData.slice(start, start + pageSize).map((data: InternetData, index: number) => (
       <Tr key={index}>
         <StyledTd></StyledTd>
-        <StyledTd>Company Logo</StyledTd>
+        <StyledTd>Company Logo</StyledTd> 
         <StyledTd>Title</StyledTd>
         <StyledTd>Data / Speed Stats</StyledTd>
         <StyledTd>Cost</StyledTd>
@@ -137,7 +146,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   };
 
   const PhoneData = () => {
-    return tableData.map((data: PhoneData, index: number) => (
+    return tableData.slice(start, start + pageSize).map((data: PhoneData, index: number) => (
       <Tr key={index}>
         <StyledTd></StyledTd>
         <StyledTd>
@@ -162,7 +171,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   };
 
   const MortgageData = () => {
-    return tableData.map((data: MortgageData, index: number) => (
+    return tableData.slice(start, start + pageSize).map((data: MortgageData, index: number) => (
       <StyledTr
         className={`cursor-pointer ${
           checkedRows[index] ? "bg-green-100" : "hover:bg-green-50"
@@ -205,7 +214,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   };
 
   const ElectricityData = () => {
-    return tableData.map((data: ElectricityData, index: number) => (
+    return tableData.slice(start, start + pageSize).map((data: ElectricityData, index: number) => (
       <StyledTr key={index}>
         <StyledTd></StyledTd>
         <StyledTd>
@@ -232,7 +241,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
   };
 
   const GasData = () => {
-    return tableData.map((data: GasData, index: number) => (
+    return tableData.slice(start, start + pageSize).map((data: GasData, index: number) => (
       <Tr key={index}>
         <StyledTd></StyledTd>
         <StyledTd>

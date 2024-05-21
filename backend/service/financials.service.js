@@ -34,7 +34,6 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
 
     const canstarPhoneResponse = await getCanstarPhone(params);
     productModel = canstarPhoneResponse.data.table.products
-      .slice(start, end)
       .map((phoneProduct) => {
         return new PhoneModel(
           phoneProduct.logo,
@@ -53,7 +52,6 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
     const canstarMortgageResponse = await getCanstarMortgage(params);
 
     productModel = canstarMortgageResponse.data.table.products
-      .slice(start, end)
       .map((mortgageProduct) => {
         return new MortgageModel(
           mortgageProduct.logo,
@@ -85,7 +83,6 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
       // Create response for frontend
       if (productType === Constant.FINANCIAL_PRODUCTS.ELECTRICITY) {
         productModel = canstarElectricityResponse.data.table.products
-        .slice(start, end)
         .map((electricityProduct) => {
           return new ElectricityModel(
             electricityProduct.logo,
