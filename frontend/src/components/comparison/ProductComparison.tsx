@@ -61,9 +61,8 @@ const ProductComparison: React.FC<ProductComparisonProps> = ({
 
   // Comment out cacheTime and staleTime if testing API's as the data will be cached and lagged
   const { data, isLoading, isError } = useQuery(
-    [`financeData${ProductType}`, pageNumber, isSearching],
+    [`financeData${ProductType}`, isSearching],
     () => {
-      console.log("api search");
       const params = new URLSearchParams({
         productType: ProductType.toLowerCase(),
         page: pageNumber.toString(),

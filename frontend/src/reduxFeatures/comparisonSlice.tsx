@@ -48,7 +48,7 @@ const initialState: ComparisonState = {
     loanAmount: "",
     loanPurpose: "Buying next home",
     repaymentType: "Principal & Interest",
-    interestRateType: "Variable",
+    interestRateType: "Variable"
   },
   gas: {
     postcode: null,
@@ -90,6 +90,7 @@ export const {
   addMortgageSearch,
   searchBoxParams,
   addPhoneSearch,
+  
 } = comparisonSlice.actions;
 
 export default comparisonSlice.reducer;
