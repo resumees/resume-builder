@@ -14,19 +14,19 @@ const Comparison: React.FC = () => {
   // Update selectedTabIndex when location pathname changes
   useEffect(() => {
     switch (location.pathname) {
-      case "/finances/comparison/homeloans":
+      case "/comparison/homeloans":
         setSelectedTabIndex(0);
         break;
-      case "/finances/comparison/phone":
+      case "/comparison/phone":
         setSelectedTabIndex(1);
         break;
-      case "/finances/comparison/electricity":
+      case "/comparison/electricity":
         setSelectedTabIndex(2);
         break;
-      case "/finances/comparison/gas":
+      case "/comparison/gas":
         setSelectedTabIndex(3);
         break;
-      case "/finances/comparison/internet":
+      case "/comparison/internet":
         setSelectedTabIndex(4);
         break;
       default:
@@ -39,19 +39,19 @@ const Comparison: React.FC = () => {
     setSelectedTabIndex(index); // Update selectedTabIndex
     switch (index) {
       case 0:
-        navigate(`/finances/comparison/homeloans?pageNumber=1`);
+        navigate(`/comparison/homeloans?pageNumber=1`);
         break;
       case 1:
-        navigate(`/finances/comparison/phone?pageNumber=1`);
+        navigate(`/comparison/phone?pageNumber=1`);
         break;
       case 2:
-        navigate(`/finances/comparison/electricity?pageNumber=1`);
+        navigate(`/comparison/electricity?pageNumber=1`);
         break;
       case 3:
-        navigate(`/finances/comparison/gas?pageNumber=1`);
+        navigate(`/comparison/gas?pageNumber=1`);
         break;
       case 4:
-        navigate(`/finances/comparison/internet?pageNumber=1`);
+        navigate(`/comparison/internet?pageNumber=1`);
         break;
       default:
         break;
