@@ -98,7 +98,6 @@ const getFinancialProductData = async (page, pageSize, productType, params) => {
         });
       } else if (productType === Constant.FINANCIAL_PRODUCTS.GAS) {
         productModel = canstarElectricityResponse.data.table.products
-        .slice(start, end)
         .map((gasProduct) => {
           return new GasModel(
             gasProduct.logo,
