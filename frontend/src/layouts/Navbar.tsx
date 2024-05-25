@@ -343,19 +343,11 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Finances",
-    href: "/finances",
-    children: [
-      {
-        label: "Visualise",
-        subLabel: "Visualise your finances in a simple graph",
-        href: "/finances/visualise",
-      },
-      {
-        label: "Financial comparison",
-        subLabel: "Check which financial plans are best for you",
-        href: "/finances/comparison/homeloans",
-      },
-    ],
+    label: "Expenses",
+    href: "/expenses",
+  },
+  {
+    label: "Comparison",
+    href: "/comparison/homeloans",
   }
 ];

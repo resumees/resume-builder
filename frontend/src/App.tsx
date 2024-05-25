@@ -38,9 +38,9 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<AuthenticatedRoutes />}>
                   <Route index element={<Home />} />
-                  <Route path="/finances/visualise" element={<Finances />} />
+                  <Route path="/expenses" element={<Finances />} />
                   <Route
-                    path="/finances/comparison/*"
+                    path="/comparison/*"
                     element={<Comparison />}
                   />
                 </Route>
