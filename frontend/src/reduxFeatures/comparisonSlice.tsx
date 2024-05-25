@@ -13,6 +13,7 @@ interface ComparisonState {
 
 export interface ElectricityParams {
   postcode?: string | null;
+  selectedElectricity?: object
 }
 
 export interface MortgageParams {
@@ -20,10 +21,12 @@ export interface MortgageParams {
   loanPurpose?: string | null;
   repaymentType?: string | null;
   interestRateType?: string | null;
+  selectedMortgage?: object;
 }
 
 export interface GasParams {
   postcode?: string | null;
+  selectedGas?: object;
 }
 
 export interface InternetParams {
@@ -34,24 +37,29 @@ export interface InternetParams {
 export interface PhoneParams {
   planType: string | null;
   monthlyData: string | null;
+  selectedPhone?: object;
 }
 
 const initialState: ComparisonState = {
   electricity: {
     postcode: null,
+    selectedElectricity: {}
   },
   phone: {
     planType: "Sim only",
     monthlyData: "500MB+",
+    selectedPhone: {}
   },
   mortgage: {
     loanAmount: "",
     loanPurpose: "Buying next home",
     repaymentType: "Principal & Interest",
-    interestRateType: "Variable"
+    interestRateType: "Variable",
+    selectedMortgage: {}
   },
   gas: {
     postcode: null,
+    selectedGas: {}
   },
   internet: {
     internetType: "NBN",
@@ -76,8 +84,20 @@ export const comparisonSlice = createSlice({
     addMortgageSearch: (state, action: PayloadAction<MortgageParams>) => {
       state.mortgage = action.payload;
     },
+    selectMortgage: (state, action) => {
+      state.mortgage.selectedMortgage = action.payload;
+    },
     addPhoneSearch: (state, action: PayloadAction<PhoneParams>) => {
       state.phone = action.payload;
+    },
+    selectPhone: (state, action) => {
+      state.phone.selectedPhone = action.payload;
+    },
+    selectGas: (state, action) => {
+      state.gas.selectedGas = action.payload;
+    },
+    selectElectricity: (state, action) => {
+      state.electricity.selectedElectricity = action.payload;
     },
     searchBoxParams: (state, action: PayloadAction<boolean>) => {
       state.search.isSearching = action.payload;
@@ -90,7 +110,10 @@ export const {
   addMortgageSearch,
   searchBoxParams,
   addPhoneSearch,
-  
+  selectMortgage,
+  selectPhone,
+  selectGas,
+  selectElectricity
 } = comparisonSlice.actions;
 
 export default comparisonSlice.reducer;

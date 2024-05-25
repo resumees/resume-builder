@@ -23,9 +23,10 @@ import {
 } from "@/components/ui/pagination";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 import Constants from "@/constants";
 import { StyledTd, StyledTr, StyledTh } from "./SortedTable.styles";
+import { selectElectricity, selectGas, selectMortgage, selectPhone } from "@/reduxFeatures/comparisonSlice";
 
 interface InternetData {
   company: string;
@@ -86,6 +87,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const params = new URLSearchParams(location.search);
   const pageSize = 10;
   const pageNumber = parseInt(params.get("pageNumber") || "1", 10);
@@ -105,22 +107,56 @@ const SortedTable: React.FC<SortedTableProps> = ({
     }
   };
 
-  
-
   // Initialize state to keep track of checked rows
-  const [selectedProduct, setSelectedProduct] = useState<MortgageData>();
+  const [selectedProduct, setSelectedProduct] = useState<MortgageData | PhoneData | ElectricityData | GasData>();
 
   useEffect(() => {
-    const storedProduct = localStorage.getItem("selectedMortgage");
-    if (storedProduct) {
-      setSelectedProduct(JSON.parse(storedProduct));
+    const selectedMortgage = localStorage.getItem("selectedMortgage");
+    if (selectedMortgage) {
+      const parsedMortgage = JSON.parse(selectedMortgage);
+      dispatch(selectMortgage(parsedMortgage));
+      setSelectedProduct(parsedMortgage);
     }
-  }, []);
+  
+    const selectedElectricity = localStorage.getItem("selectedElectricity");
+    if (selectedElectricity) {
+      const parsedElectricity = JSON.parse(selectedElectricity);
+      dispatch(selectElectricity(parsedElectricity));
+      setSelectedProduct(parsedElectricity);
+    }
+  
+    const selectedPhone = localStorage.getItem("selectedPhone");
+    if (selectedPhone) {
+      const parsedPhone = JSON.parse(selectedPhone);
+      dispatch(selectPhone(parsedPhone));
+      setSelectedProduct(parsedPhone);
+    }
+  }, [dispatch]);
+  
 
   // Handle checkbox change
-  const handleCheckboxChange = (data: MortgageData) => {
-    if (data) {
+  const handleCheckboxChange = (data: MortgageData | PhoneData | ElectricityData | GasData, productType: string) => {
+    if (data && productType === Constants.TABLE_TYPE.MORTGAGE) {
       localStorage.setItem("selectedMortgage", JSON.stringify(data));
+      dispatch(selectMortgage(data));
+      setSelectedProduct(data);
+    }
+
+    if (data && productType === Constants.TABLE_TYPE.PHONE) {
+      localStorage.setItem("selectedPhone", JSON.stringify(data));
+      dispatch(selectPhone(data));
+      setSelectedProduct(data);
+    }
+
+    if (data && productType === Constants.TABLE_TYPE.ELECTRICITY) {
+      localStorage.setItem("selectedElectricity", JSON.stringify(data));
+      dispatch(selectElectricity(data));
+      setSelectedProduct(data);
+    }
+
+    if (data && productType === Constants.TABLE_TYPE.GAS) {
+      localStorage.setItem("selectedGas", JSON.stringify(data));
+      dispatch(selectGas(data));
       setSelectedProduct(data);
     }
   };
@@ -129,7 +165,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
     return tableData
       .slice(start, start + pageSize)
       .map((data: InternetData, index: number) => (
-        <Tr key={index}>
+        <StyledTr key={index}>
           <StyledTd></StyledTd>
           <StyledTd>Company Logo</StyledTd>
           <StyledTd>Title</StyledTd>
@@ -144,16 +180,37 @@ const SortedTable: React.FC<SortedTableProps> = ({
               "Go to site"
             </Button>
           </StyledTd>
-        </Tr>
+        </StyledTr>
       ));
   };
 
-  const PhoneData = () => {
+  const renderPhoneData = () => {
     return tableData
       .slice(start, start + pageSize)
       .map((data: PhoneData, index: number) => (
-        <Tr key={index}>
-          <StyledTd></StyledTd>
+        <StyledTr
+          key={index}
+          className={`cursor-pointer ${
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "bg-green-100"
+              : "hover:bg-green-50"
+          }`}
+          onClick={() => handleCheckboxChange(data, Constants.TABLE_TYPE.PHONE)}
+          bg={
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "green.100"
+              : "transparent"
+          }
+        >
+          <StyledTd>
+            <Flex justify="center" align="center">
+              <Checkbox
+                onChange={() => handleCheckboxChange(data, Constants.TABLE_TYPE.PHONE)}
+                isChecked={selectedProduct && isEqual(selectedProduct, data)}
+                colorScheme="green"
+              />
+            </Flex>
+          </StyledTd>
           <StyledTd>
             <img src={data?.company} alt="Company Logo" />
           </StyledTd>
@@ -171,58 +228,85 @@ const SortedTable: React.FC<SortedTableProps> = ({
               {data?.link != null ? "Go to site" : ""}
             </Button>
           </StyledTd>
-        </Tr>
+        </StyledTr>
       ));
   };
 
   const renderMortgageData = () => {
-    return tableData.slice(start, start + pageSize).map((data: MortgageData, index: number) => (
-      <StyledTr
-        key={index}
-        className={`cursor-pointer ${
-          selectedProduct && isEqual(selectedProduct, data)
-            ? "bg-green-100"
-            : "hover:bg-green-50"
-        }`}
-        onClick={() => handleCheckboxChange(data)}
-        bg={selectedProduct && isEqual(selectedProduct, data) ? "green.100" : "transparent"}
-      >
-        <StyledTd>
-          <Flex justify="center" align="center">
-            <Checkbox
-              onChange={() => handleCheckboxChange(data)}
-              isChecked={selectedProduct && isEqual(selectedProduct, data)}
-              colorScheme="green"
-            />
-          </Flex>
-        </StyledTd>
-        <StyledTd>
-          <img src={data.company} alt="Company Logo" />
-        </StyledTd>
-        <StyledTd>{data.information}</StyledTd>
-        <StyledTd>{data.comparisonRate}</StyledTd>
-        <StyledTd>{data.interestRate}</StyledTd>
-        <StyledTd>{data.monthlyRepayment}</StyledTd>
-        <StyledTd>
-          <Button
-            as="a"
-            href={data.CTA}
-            target="_blank"
-            colorScheme="whatsapp"
-            variant={data.CTA ? "outline" : "hidden"}
-          >
-            {data.CTA ? "Go to site" : ""}
-          </Button>
-        </StyledTd>
-      </StyledTr>
-    ));
+    return tableData
+      .slice(start, start + pageSize)
+      .map((data: MortgageData, index: number) => (
+        <StyledTr
+          key={index}
+          className={`cursor-pointer ${
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "bg-green-100"
+              : "hover:bg-green-50"
+          }`}
+          onClick={() => handleCheckboxChange(data, Constants.TABLE_TYPE.MORTGAGE)}
+          bg={
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "green.100"
+              : "transparent"
+          }
+        >
+          <StyledTd>
+            <Flex justify="center" align="center">
+              <Checkbox
+                onChange={() => handleCheckboxChange(data, Constants.TABLE_TYPE.MORTGAGE)}
+                isChecked={selectedProduct && isEqual(selectedProduct, data)}
+                colorScheme="green"
+              />
+            </Flex>
+          </StyledTd>
+          <StyledTd>
+            <img src={data.company} alt="Company Logo" />
+          </StyledTd>
+          <StyledTd>{data.information}</StyledTd>
+          <StyledTd>{data.comparisonRate}</StyledTd>
+          <StyledTd>{data.interestRate}</StyledTd>
+          <StyledTd>{data.monthlyRepayment}</StyledTd>
+          <StyledTd>
+            <Button
+              as="a"
+              href={data.CTA}
+              target="_blank"
+              colorScheme="whatsapp"
+              variant={data.CTA ? "outline" : "hidden"}
+            >
+              {data.CTA ? "Go to site" : ""}
+            </Button>
+          </StyledTd>
+        </StyledTr>
+      ));
   };
-  const ElectricityData = () => {
+  const renderElectricityData = () => {
     return tableData
       .slice(start, start + pageSize)
       .map((data: ElectricityData, index: number) => (
-        <StyledTr key={index}>
-          <StyledTd></StyledTd>
+        <StyledTr
+          key={index}
+          className={`cursor-pointer ${
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "bg-green-100"
+              : "hover:bg-green-50"
+          }`}
+          onClick={() => handleCheckboxChange(data, Constants.TABLE_TYPE.ELECTRICITY)}
+          bg={
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "green.100"
+              : "transparent"
+          }
+        >
+          <StyledTd>
+            <Flex justify="center" align="center">
+              <Checkbox
+                onChange={() => handleCheckboxChange(data, Constants.TABLE_TYPE.ELECTRICITY)}
+                isChecked={selectedProduct && isEqual(selectedProduct, data)}
+                colorScheme="green"
+              />
+            </Flex>
+          </StyledTd>
           <StyledTd>
             <img src={data?.company} alt="Company Logo" />
           </StyledTd>
@@ -246,12 +330,33 @@ const SortedTable: React.FC<SortedTableProps> = ({
       ));
   };
 
-  const GasData = () => {
+  const renderGasData = () => {
     return tableData
       .slice(start, start + pageSize)
       .map((data: GasData, index: number) => (
-        <Tr key={index}>
-          <StyledTd></StyledTd>
+        <StyledTr
+          key={index}
+          className={`cursor-pointer ${
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "bg-green-100"
+              : "hover:bg-green-50"
+          }`}
+          onClick={() => handleCheckboxChange(data, Constants.TABLE_TYPE.GAS)}
+          bg={
+            selectedProduct && isEqual(selectedProduct, data)
+              ? "green.100"
+              : "transparent"
+          }
+        >
+          <StyledTd>
+            <Flex justify="center" align="center">
+              <Checkbox
+                onChange={() => handleCheckboxChange(data, Constants.TABLE_TYPE.ELECTRICITY)}
+                isChecked={selectedProduct && isEqual(selectedProduct, data)}
+                colorScheme="green"
+              />
+            </Flex>
+          </StyledTd>
           <StyledTd>
             <img src={data?.company} alt="Company Logo" />
           </StyledTd>
@@ -272,7 +377,7 @@ const SortedTable: React.FC<SortedTableProps> = ({
               {data?.CTA != null ? "Go to site" : ""}
             </Button>
           </StyledTd>
-        </Tr>
+        </StyledTr>
       ));
   };
 
@@ -320,12 +425,13 @@ const SortedTable: React.FC<SortedTableProps> = ({
           </Thead>
           {tableData && tableData.length > 0 && (
             <Tbody>
-              {tableType === Constants.TABLE_TYPE.PHONE && <PhoneData />}
-              {tableType === Constants.TABLE_TYPE.MORTGAGE && renderMortgageData()}
+              {tableType === Constants.TABLE_TYPE.PHONE && renderPhoneData()}
+              {tableType === Constants.TABLE_TYPE.MORTGAGE &&
+                renderMortgageData()}
               {tableType === Constants.TABLE_TYPE.ELECTRICITY && (
-                <ElectricityData />
+                renderElectricityData()
               )}
-              {tableType === Constants.TABLE_TYPE.GAS && <GasData />}
+              {tableType === Constants.TABLE_TYPE.GAS && renderGasData()}
               {tableType === Constants.TABLE_TYPE.INTERNET && <InternetData />}
             </Tbody>
           )}
