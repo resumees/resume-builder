@@ -20,7 +20,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import React, { useEffect } from "react";
 import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthentication } from "../reduxFeatures/authenticationSlice";
@@ -107,7 +106,7 @@ export default function WithSubnavigation() {
             fontSize={"m"}
             color={"grey.800"}
             variant={"link"} >
-            Taboo
+            Resume
           </Button>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -345,9 +344,5 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Expenses",
     href: "/expenses",
-  },
-  {
-    label: "Comparison",
-    href: "/comparison/homeloans",
   }
 ];

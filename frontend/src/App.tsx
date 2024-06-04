@@ -1,6 +1,4 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import Finances from "./layouts/Finances";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./layouts/Navbar";
 import { RootState } from "./store";
@@ -11,8 +9,6 @@ import {
   Outlet,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools"
-import Comparison from "./layouts/Comparison";
 import Home from "./Home";
 
 const AuthenticatedRoutes: React.FC = () => {
@@ -20,7 +16,7 @@ const AuthenticatedRoutes: React.FC = () => {
     (state: RootState) => state.global.authentication
   );
 
-  return isAuthenticated ? <Outlet /> : <p>Please log in</p>;
+  return isAuthenticated ? <Outlet /> : <p>Please log in!</p>;
 };
 
 const queryClient = new QueryClient();
@@ -38,11 +34,6 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<AuthenticatedRoutes />}>
                   <Route index element={<Home />} />
-                  <Route path="/expenses" element={<Finances />} />
-                  <Route
-                    path="/comparison/*"
-                    element={<Comparison />}
-                  />
                 </Route>
                 <Route path="/login" element={<p>Please log in</p>} />
               </Routes>
