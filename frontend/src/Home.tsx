@@ -1,9 +1,10 @@
-import React from 'react';
+import { Button } from '@chakra-ui/react';
+
 
 function Home() {
   return (
     <div>
-      <p>Hey there!</p>
+      <Button>Test</Button>
     </div>
   );
 }
