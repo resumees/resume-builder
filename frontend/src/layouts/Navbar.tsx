@@ -46,6 +46,7 @@ export default function WithSubnavigation() {
       cacheTime: 60000,
       staleTime: 60000,
       onSuccess: (data) => {
+        console.log(data);
         dispatch(setAuthentication(data.isAuthenticated));
       },
     },
@@ -342,7 +343,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Expenses",
-    href: "/expenses",
+    label: "Campaign",
+    href: "/campaign",
   }
 ];

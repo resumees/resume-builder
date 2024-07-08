@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Home from "./Home";
+import Sidebar from "./layouts/Sidebar";
 
 const AuthenticatedRoutes: React.FC = () => {
   const { isAuthenticated } = useSelector(
@@ -33,7 +34,8 @@ const App: React.FC = () => {
             <div className="flex flex-col items-center justify-center text-center w-full flex-grow">
               <Routes>
                 <Route path="/" element={<AuthenticatedRoutes />}>
-                  <Route index element={<Home />} />
+                  {/* <Route index element={<Home />} /> */}
+                  <Route path="/campaign/*" element={<Sidebar />} />
                 </Route>
                 <Route path="/login" element={<p>Please log in</p>} />
               </Routes>

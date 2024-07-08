@@ -1,10 +1,10 @@
-import { Button } from '@chakra-ui/react';
+import FileUpload from './components/FIleUpload';
 
 
 function Home() {
   return (
     <div>
-      <Button>Test</Button>
+      <FileUpload />
     </div>
   );
 }
