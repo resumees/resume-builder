@@ -1,7 +1,7 @@
 import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Campaign from "@/components/Campaign";
+import Campaign from "@/components/Campaign/Campaign";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
