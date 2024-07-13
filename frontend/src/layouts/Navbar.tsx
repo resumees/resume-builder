@@ -1,3 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
+
 import {
   Box,
   Flex,
@@ -46,7 +48,6 @@ export default function WithSubnavigation() {
       cacheTime: 60000,
       staleTime: 60000,
       onSuccess: (data) => {
-        console.log(data);
         dispatch(setAuthentication(data.isAuthenticated));
       },
     },
@@ -343,7 +344,11 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Campaign",
-    href: "/campaign/create",
+    label: "Applicants",
+    href: "/apply",
+  },
+  {
+    label: "Recruiters",
+    href: "/dashboard/campaign/create",
   }
 ];

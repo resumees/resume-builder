@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./layouts/Navbar";
@@ -9,7 +10,6 @@ import {
   Outlet,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Home from "./Home";
 import Sidebar from "./layouts/Sidebar";
 
 const AuthenticatedRoutes: React.FC = () => {
@@ -33,9 +33,10 @@ const App: React.FC = () => {
             </div>
             <div className="flex flex-col items-center justify-center text-center w-full flex-grow">
               <Routes>
-                <Route path="/" element={<AuthenticatedRoutes />}>
-                  {/* <Route index element={<Home />} /> */}
-                  <Route path="/campaign/*" element={<Sidebar />} />
+                <Route path="/" element={<h1>Home Page</h1>} />
+                <Route path="/apply" element={<h1>Applicant page</h1>} />
+                <Route path="/dashboard" element={<AuthenticatedRoutes />}>
+                  <Route path="campaign/*" element={<Sidebar />} />
                 </Route>
                 <Route path="/login" element={<p>Please log in</p>} />
               </Routes>
