@@ -15,8 +15,10 @@ import {
   FormLabel,
   useDisclosure
 } from "@chakra-ui/react";
-import { CAMPAIGN_DESCRIPTION_PLACEHOLDER, CAMPAIGN_TITLE_PLACEHOLDER } from "./Campaign.config";
-
+import { CAMPAIGN_DESCRIPTION_PLACEHOLDER, CAMPAIGN_TITLE_PLACEHOLDER, TEST_APPLICANT_DATA } from "./Campaign.config";
+import { CampaignTable } from "./CampaignTable";
+import React from "react";
+        
 const Campaign: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
