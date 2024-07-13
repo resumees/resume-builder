@@ -18,7 +18,7 @@ import {
 import { CAMPAIGN_DESCRIPTION_PLACEHOLDER, CAMPAIGN_TITLE_PLACEHOLDER, TEST_APPLICANT_DATA } from "./Campaign.config";
 import { CampaignTable } from "./CampaignTable";
 import React from "react";
-
+        
 const Campaign: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
@@ -48,7 +48,6 @@ const Campaign: React.FC = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <CampaignTable campaignName={"Test"} tableData={TEST_APPLICANT_DATA} />
     </Box>
   );
 };
