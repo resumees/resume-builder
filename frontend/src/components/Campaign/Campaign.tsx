@@ -15,6 +15,7 @@ import {
   FormLabel,
   useDisclosure
 } from "@chakra-ui/react";
+import { CAMPAIGN_DESCRIPTION_PLACEHOLDER, CAMPAIGN_TITLE_PLACEHOLDER } from "./Campaign.config";
 
 const Campaign: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -30,11 +31,11 @@ const Campaign: React.FC = () => {
           <ModalBody>
             <FormControl>
               <FormLabel>Campaign Title</FormLabel>
-              <Input placeholder="Campaign Title" />
+              <Input placeholder={CAMPAIGN_TITLE_PLACEHOLDER} />
             </FormControl>
             <FormControl>
               <FormLabel>Position Description</FormLabel>
-              <Textarea placeholder="Enter a position description including key selection criteria, experience, etc" />
+              <Textarea placeholder={CAMPAIGN_DESCRIPTION_PLACEHOLDER} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
