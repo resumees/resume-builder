@@ -15,6 +15,11 @@ import {
   FormLabel,
   useDisclosure
 } from "@chakra-ui/react";
+<<<<<<< Updated upstream:frontend/src/components/Campaign.tsx
+=======
+import { CAMPAIGN_DESCRIPTION_PLACEHOLDER, CAMPAIGN_TITLE_PLACEHOLDER, TEST_APPLICANT_DATA } from "./Campaign.config";
+import { CampaignTable } from "./CampaignTable";
+>>>>>>> Stashed changes:frontend/src/components/Campaign/Campaign.tsx
 
 const Campaign: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,6 +50,7 @@ const Campaign: React.FC = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <CampaignTable campaignName={"Test"} tableData={TEST_APPLICANT_DATA} />
     </Box>
   );
 };
