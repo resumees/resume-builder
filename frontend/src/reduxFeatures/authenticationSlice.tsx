@@ -13,7 +13,6 @@ export const authenticationSlice = createSlice({
   initialState,
   reducers: {
     setAuthentication: (state, action: PayloadAction<boolean>) => {
-      console.log(action);
       state.isAuthenticated = action.payload;
     }
   },
