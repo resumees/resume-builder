@@ -1,4 +1,5 @@
-import FileUpload from './components/FIleUpload';
+/* eslint-disable react/react-in-jsx-scope */
+import FileUpload from './components/FileUpload';
 
 
 function Home() {
