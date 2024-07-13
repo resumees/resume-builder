@@ -58,7 +58,7 @@ const Comparison: React.FC = () => {
 
         <Routes>
           <Route path="/create" element={<Campaign />} />
-          <Route path="/other" element={<h1>other</h1>} />
+          <Route path="/other" element={<h1>other!</h1>} />
         </Routes>
       </Tabs>
     </Box>
