@@ -21,6 +21,8 @@ function authenticateJWT(req, res, next) {
       }
 
       req.user = dbUser;
+      req.username = dbUser.displayName;
+      req.email = dbUser.email;
       logger.info('PATH: /authenticateJWT - User is authenticated');
       next();
     });

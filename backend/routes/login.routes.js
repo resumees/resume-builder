@@ -9,7 +9,7 @@ const isProdEnv = process.env.NODE_ENV === 'prod';
 
 router.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile","email"] })
 );
 
 router.get(
@@ -21,7 +21,7 @@ router.get(
   function (req, res) {
     // Successful authentication, redirect home.
     logger.info('Login Successful - Providing JWT Token')
-    const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ _id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '24h' });
     res.cookie('jwt', token, {
       httpOnly: true,
       secure: isProdEnv,
@@ -37,6 +37,7 @@ router.post('/auth/logout', authenticateJWT, (req, res) => {
 });
 
 router.get('/auth/check-auth', authenticateJWT, (req, res) => {
+  console.log(req.email)
   res.json({ isAuthenticated: true });
 });
 
