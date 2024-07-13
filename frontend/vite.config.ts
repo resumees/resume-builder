@@ -7,7 +7,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',  // Bind to all network interfaces
-    port: 3000
+    port: 3000,
+    watch: {
+      usePolling: true,
+    },
   },
   resolve: {
     alias: {

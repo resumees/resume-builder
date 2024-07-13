@@ -20,7 +20,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import React, { useEffect } from "react";
 import { useQuery } from 'react-query';
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthentication } from "../reduxFeatures/authenticationSlice";
@@ -47,6 +46,7 @@ export default function WithSubnavigation() {
       cacheTime: 60000,
       staleTime: 60000,
       onSuccess: (data) => {
+        console.log(data);
         dispatch(setAuthentication(data.isAuthenticated));
       },
     },
@@ -107,7 +107,7 @@ export default function WithSubnavigation() {
             fontSize={"m"}
             color={"grey.800"}
             variant={"link"} >
-            Taboo
+            Resume
           </Button>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -343,11 +343,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Expenses",
-    href: "/expenses",
-  },
-  {
-    label: "Comparison",
-    href: "/comparison/homeloans",
+    label: "Campaign",
+    href: "/campaign/create",
   }
 ];

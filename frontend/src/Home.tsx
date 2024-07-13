@@ -1,9 +1,11 @@
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import FileUpload from './components/FileUpload';
+
 
 function Home() {
   return (
     <div>
-      <p>Hey there!</p>
+      <FileUpload />
     </div>
   );
 }

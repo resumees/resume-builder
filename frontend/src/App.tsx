@@ -1,6 +1,4 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import Finances from "./layouts/Finances";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "./layouts/Navbar";
 import { RootState } from "./store";
@@ -11,16 +9,15 @@ import {
   Outlet,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools"
-import Comparison from "./layouts/Comparison";
 import Home from "./Home";
+import Sidebar from "./layouts/Sidebar";
 
 const AuthenticatedRoutes: React.FC = () => {
   const { isAuthenticated } = useSelector(
     (state: RootState) => state.global.authentication
   );
 
-  return isAuthenticated ? <Outlet /> : <p>Please log in</p>;
+  return isAuthenticated ? <Outlet /> : <p>Please log in!</p>;
 };
 
 const queryClient = new QueryClient();
@@ -37,12 +34,8 @@ const App: React.FC = () => {
             <div className="flex flex-col items-center justify-center text-center w-full flex-grow">
               <Routes>
                 <Route path="/" element={<AuthenticatedRoutes />}>
-                  <Route index element={<Home />} />
-                  <Route path="/expenses" element={<Finances />} />
-                  <Route
-                    path="/comparison/*"
-                    element={<Comparison />}
-                  />
+                  {/* <Route index element={<Home />} /> */}
+                  <Route path="/campaign/*" element={<Sidebar />} />
                 </Route>
                 <Route path="/login" element={<p>Please log in</p>} />
               </Routes>
