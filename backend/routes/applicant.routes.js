@@ -8,7 +8,6 @@ router.get('/apply/campaigns/:userId/:campaignId', async (req, res) => {
 
     let user = await User.findOne({ _id: userId})
     if (user) {
-        console.log(user)
         const userCampaign = user.campaign.find(campaign => campaign._id.toString() === campaignId)
         if (userCampaign) {
             res.send(userCampaign);
