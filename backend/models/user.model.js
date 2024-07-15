@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const CampaignSchema = new mongoose.Schema({
+  documentName: {
+    type: String,
+    required: true
+  },
+  documentDescription: {
+    type: String,
+    required: true
+  }
+});
+
 const UserSchema = new mongoose.Schema({
   googleId: {
     type: String,
@@ -13,7 +24,8 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true
-  }
+  },
+  campaign: [CampaignSchema]
 });
 
 const User = mongoose.model('User', UserSchema);
