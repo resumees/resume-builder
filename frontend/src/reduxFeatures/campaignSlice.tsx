@@ -6,17 +6,7 @@ interface CampaignState {
 }
 
 const initialState: CampaignState = {
-  userCampaigns: [{
-    _id: "0",
-    documentName: "No Campaigns Saved",
-    documentDescription: "",
-  },
-  {
-    _id: "1",
-    documentName: "Create a Campaign",
-    documentDescription: "",
-  },
-],
+  userCampaigns: [],
 };
 
 export const campaignSlice = createSlice({
