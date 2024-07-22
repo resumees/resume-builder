@@ -3,7 +3,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import CreateCampaign from "@/components/Campaign/CreateCampaign";
 import { CampaignTable } from "@/components/Campaign/CampaignTable";
-import { TEST_APPLICANT_DATA } from "@/components/Campaign/Campaign.config";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
@@ -39,7 +38,7 @@ const Comparison: React.FC = () => {
 
         <Routes>
           {savedCampaigns.userCampaigns.map((campaign) => (
-            <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignName={campaign.documentName} tableData={TEST_APPLICANT_DATA} />} />
+            <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
           ))}
         </Routes>
       </Tabs>

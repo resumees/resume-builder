@@ -24,7 +24,7 @@ function authenticateJWT(req, res, next) {
       req.username = dbUser.displayName;
       req.email = dbUser.email;
       logger.info('PATH: /authenticateJWT - User is authenticated');
-      // console.log(dbUser.campaign);
+
       next();
     });
   } else {

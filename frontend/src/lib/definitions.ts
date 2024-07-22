@@ -1,5 +1,4 @@
 export type ContactDetails = {
-    applicantName: string;
     applicantEmail: string;
     applicantPhone: string;
 };
@@ -14,9 +13,7 @@ export type EmploymentEntry = {
     jobTitle: string;
     companyName: string;
     jobDescription: string;
-    startDate: string | null;
     endDate: string | null;
-    dateRange: string | null;
 };
 
 export type PersonalProjectEntry = {
@@ -26,8 +23,19 @@ export type PersonalProjectEntry = {
 };
 
 export type ApplicantData = {
+    _id: string;
+    documentName: string;
+    submittedDate: Date;
+    candidateScore: number;
     contactDetails: ContactDetails;
     educationHistory: EducationEntry[];
     workExperience: EmploymentEntry[];
     personalProjects: PersonalProjectEntry[];
 };
+
+export type CampaignData = {
+    _id: string;
+    documentName: string;
+    documentDescription: string;
+    applicant: ApplicantData[];
+}
