@@ -46,7 +46,6 @@ router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
 
     // const pushResponse = user.campaign.push(newCampaign);
     // const saveResponse = await user.save();
-    // console.log(`MongoDB Response - Save: ${saveResponse}`);
     
     // const savedCampaign = saveResponse.campaign[saveResponse.campaign.length - 1];
 
