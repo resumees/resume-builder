@@ -1,45 +1,24 @@
 import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Campaign from "@/components/Campaign/Campaign";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import CreateCampaign from "@/components/Campaign/CreateCampaign";
+import { CampaignTable } from "@/components/Campaign/CampaignTable";
+import { TEST_APPLICANT_DATA } from "@/components/Campaign/Campaign.config";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // State to keep track of the selected tab index
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/campaign":
-        setSelectedTabIndex(0);
-        break;
-      case "/campaign/create":
-        setSelectedTabIndex(0);
-        break;
-      case "/campaign/other":
-        setSelectedTabIndex(1);
-        break;
-      default:
-        setSelectedTabIndex(0);
-        break;
-    }
-  }, [location.pathname]);
+  const savedCampaigns = useSelector(
+    (state: RootState) => state.global.campaigns
+  );
 
   const handleTabChange = (index: number) => {
-    setSelectedTabIndex(index); // Update selectedTabIndex
-    switch (index) {
-      case 0:
-        navigate(`/campaign/create`);
-        break;
-      case 1:
-        navigate(`/campaign/other`);
-        break;
-      default:
-        navigate(`/campaign/create`);
-        break;
-    }
+    setSelectedTabIndex(index);
+    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[selectedTabIndex]._id}`)
   };
 
   return (
@@ -52,13 +31,16 @@ const Comparison: React.FC = () => {
         index={selectedTabIndex}
       >
         <TabList bg="lightblue">
-          <Tab _hover={{ bg: "gray.300" }}>Campaigns</Tab>
-          <Tab _hover={{ bg: "gray.300" }}>Another section</Tab>
+          <CreateCampaign />
+          {savedCampaigns.userCampaigns.map((campaign) => (
+            <Tab _hover={{ bg: "gray.300" }} key={campaign._id} >{campaign.documentName}</Tab>
+          ))}
         </TabList>
 
         <Routes>
-          <Route path="/create" element={<Campaign />} />
-          <Route path="/other" element={<h1>other!</h1>} />
+          {savedCampaigns.userCampaigns.map((campaign) => (
+            <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignName={campaign.documentName} tableData={TEST_APPLICANT_DATA} />} />
+          ))}
         </Routes>
       </Tabs>
     </Box>

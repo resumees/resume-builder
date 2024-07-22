@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authenticationSlice from './reduxFeatures/authenticationSlice';
+import campaignSlice from "./reduxFeatures/campaignSlice";
 
 const rootReducer = combineReducers({
   global: combineReducers({
     authentication: authenticationSlice,
+    campaigns: campaignSlice,
   }),
 });
 
