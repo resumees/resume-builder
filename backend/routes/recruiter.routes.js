@@ -4,7 +4,6 @@ const router = express.Router();
 const authenticateJWT = require("../middleware/jwt");
 
 router.get('/api/campaign/load', authenticateJWT, async (req, res) => {
-  console.log("/api/campaign/load called");
     try {
       const userId = req.user._id;
       const user = await User.findOne({ _id: userId });
@@ -26,7 +25,6 @@ router.get('/api/campaign/load', authenticateJWT, async (req, res) => {
   });
 
 router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
-  console.log("/api/campaign/new called");
   try {
     const userId = req.user._id;
     const { documentName, documentDescription } = req.body;
@@ -42,14 +40,17 @@ router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
     }
 
     const newCampaign = {
-      documentName,
-      documentDescription
+      documentName: documentName,
+      documentDescription: documentDescription,
     };
 
-    user.campaign.push(newCampaign);
-    await user.save();
+    // const pushResponse = user.campaign.push(newCampaign);
+    // const saveResponse = await user.save();
+    // console.log(`MongoDB Response - Save: ${saveResponse}`);
+    
+    // const savedCampaign = saveResponse.campaign[saveResponse.campaign.length - 1];
 
-    res.status(201).json({message: "Campaign saved successfully", newCampaign});
+    res.status(201).json({message: "Campaign saved successfully", savedCampaignId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)});
   } catch (error) {
     res.status(500).json({message: `Server error: ${error}`});
   }
