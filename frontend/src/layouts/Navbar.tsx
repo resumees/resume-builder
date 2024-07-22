@@ -27,6 +27,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAuthentication } from "../reduxFeatures/authenticationSlice";
 import request from "../util/api";
 import { RootState } from "../store";
+import { setCampaignsSlice } from "@/reduxFeatures/campaignSlice";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -49,6 +50,7 @@ export default function WithSubnavigation() {
       staleTime: 60000,
       onSuccess: (data) => {
         dispatch(setAuthentication(data.isAuthenticated));
+        dispatch(setCampaignsSlice(data.initialCampaigns));
       },
     },
   );
@@ -71,6 +73,12 @@ export default function WithSubnavigation() {
       })
       .then(() => {
         localStorage.removeItem("financials");
+      }).then(() => {
+        dispatch(setCampaignsSlice([{
+          _id: "0",
+          documentName: "Not signed in",
+          documentDescription: "User not signed in",
+        }]))
       });
   };
 

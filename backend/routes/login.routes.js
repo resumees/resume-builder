@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const authenticateJWT = require('../middleware/jwt');
 const logger = require("../middleware/logger");
+const User = require("../models/user.model");
 
 const isProdEnv = process.env.NODE_ENV === 'prod';
 
@@ -36,11 +37,11 @@ router.post('/auth/logout', authenticateJWT, (req, res) => {
   res.json({ message: 'Logged out' });
 });
 
-router.get('/auth/check-auth', authenticateJWT, (req, res) => {
-  // console.log(req.user.campaign);
+router.get('/auth/check-auth', authenticateJWT, async (req, res) => {
+  const user = await User.findOne(req._id);
   res.json({ 
     isAuthenticated: true,
-    userCampaigns: req.user.campaign,
+    initialCampaigns: user.campaign,
   });
 });
 
