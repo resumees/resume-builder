@@ -9,12 +9,12 @@ function authenticateJWT(req, res, next) {
 
   if (token) {
     // Verify the JWT
-    jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         return res.json({ isAuthenticated: false });
       }
       // Find the user in the database using the _id
-      const dbUser = await User.findById(user._id);
+      const dbUser = await User.findById(decodedToken._id);
 
       if (!dbUser) {
         return res.json({ isAuthenticated: false });
@@ -24,6 +24,7 @@ function authenticateJWT(req, res, next) {
       req.username = dbUser.displayName;
       req.email = dbUser.email;
       logger.info('PATH: /authenticateJWT - User is authenticated');
+      // console.log(dbUser.campaign);
       next();
     });
   } else {

@@ -51,3 +51,9 @@ export const TEST_APPLICANT_DATA:ApplicantData[] = [{
     workExperience: [TEST_EMPLOYMENT_LATEST, TEST_EMPLOYMENT_PREVIOUS],
     personalProjects: [TEST_PERSONAL_PROJECT],
 }]
+
+export type Campaign = {
+    _id: string;
+    documentName: string;
+    documentDescription: string;
+}

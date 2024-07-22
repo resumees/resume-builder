@@ -1,7 +1,9 @@
 import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Campaign from "@/components/Campaign/Campaign";
+import React, { useState, useEffect } from "react";
+import CreateCampaign from "@/components/Campaign/CreateCampaign";
+import { CampaignTable } from "@/components/Campaign/CampaignTable";
+import { TEST_APPLICANT_DATA } from "@/components/Campaign/Campaign.config";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
@@ -12,13 +14,13 @@ const Comparison: React.FC = () => {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/campaign":
+      case "/dashboard/campaign":
         setSelectedTabIndex(0);
         break;
-      case "/campaign/create":
+      case "/dashboard/campaign/create":
         setSelectedTabIndex(0);
         break;
-      case "/campaign/other":
+      case "/dashboard/campaign/other":
         setSelectedTabIndex(1);
         break;
       default:
@@ -31,13 +33,13 @@ const Comparison: React.FC = () => {
     setSelectedTabIndex(index); // Update selectedTabIndex
     switch (index) {
       case 0:
-        navigate(`/campaign/create`);
+        navigate(`/dashboard/campaign/create`);
         break;
       case 1:
-        navigate(`/campaign/other`);
+        navigate(`/dashboard/campaign/other`);
         break;
       default:
-        navigate(`/campaign/create`);
+        navigate(`/dashboard/campaign/create`);
         break;
     }
   };
@@ -52,13 +54,14 @@ const Comparison: React.FC = () => {
         index={selectedTabIndex}
       >
         <TabList bg="lightblue">
+          <CreateCampaign />
           <Tab _hover={{ bg: "gray.300" }}>Campaigns</Tab>
-          <Tab _hover={{ bg: "gray.300" }}>Another section</Tab>
+          <Tab _hover={{ bg: "gray.300" }}>{`${location.pathname}: ${selectedTabIndex}`}</Tab>
         </TabList>
 
         <Routes>
-          <Route path="/create" element={<Campaign />} />
-          <Route path="/other" element={<h1>other!</h1>} />
+          <Route path="/create" element={<CreateCampaign />} />
+          <Route path="/other" element={<CampaignTable campaignName="Test" tableData={TEST_APPLICANT_DATA} />} />
         </Routes>
       </Tabs>
     </Box>

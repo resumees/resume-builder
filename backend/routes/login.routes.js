@@ -37,8 +37,11 @@ router.post('/auth/logout', authenticateJWT, (req, res) => {
 });
 
 router.get('/auth/check-auth', authenticateJWT, (req, res) => {
-  console.log(req.email)
-  res.json({ isAuthenticated: true });
+  // console.log(req.user.campaign);
+  res.json({ 
+    isAuthenticated: true,
+    userCampaigns: req.user.campaign,
+  });
 });
 
 module.exports = router;
