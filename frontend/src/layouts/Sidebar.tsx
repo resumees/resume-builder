@@ -3,7 +3,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import CreateCampaign from "@/components/Campaign/CreateCampaign";
 import { CampaignTable } from "@/components/Campaign/CampaignTable";
-import { TEST_APPLICANT_DATA } from "@/components/Campaign/Campaign.config";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
