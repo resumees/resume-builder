@@ -37,11 +37,14 @@ router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
 
 router.get("/api/campaign/load/:campaignId", authenticateJWT, async (req, res) => {
   const user = await User.findOne(req.user._id);
+  console.log("user: ", user)
   const campaignId = req.params.campaignId;
+  console.log("campaignID: ", campaignId);
 
   if (user && campaignId) {
-    const selectedCampaign = user.campaign.find(campaign => campaign._id.toString() === campaignId);
-
+    const selectedCampaign = user.campaign.find(campaign => { 
+      return campaign._id.toString() === campaignId}
+    );
     if (selectedCampaign) {
       res.json({
         message: `${selectedCampaign.documentName} loaded successfully.`,

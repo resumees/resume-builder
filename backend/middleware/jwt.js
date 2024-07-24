@@ -19,7 +19,6 @@ function authenticateJWT(req, res, next) {
       if (!dbUser) {
         return res.json({ isAuthenticated: false });
       }
-
       req.user = dbUser;
       req.username = dbUser.displayName;
       req.email = dbUser.email;

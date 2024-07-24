@@ -36,10 +36,10 @@ const Comparison: React.FC = () => {
           ))}
         </TabList>
 
-        <Routes>
-          {savedCampaigns.userCampaigns.map((campaign) => (
-            <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
-          ))}
+          <Routes>
+            {savedCampaigns.userCampaigns.map((campaign) => (
+              <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
+            ))}
         </Routes>
       </Tabs>
     </Box>
