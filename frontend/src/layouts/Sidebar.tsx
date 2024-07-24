@@ -17,7 +17,7 @@ const Comparison: React.FC = () => {
 
   const handleTabChange = (index: number) => {
     setSelectedTabIndex(index);
-    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[selectedTabIndex]._id}`)
+    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[index]._id}`)
   };
 
   return (
