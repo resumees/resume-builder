@@ -29,7 +29,7 @@ router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
     
     const savedCampaign = saveResponse.campaign[saveResponse.campaign.length - 1];
 
-    // res.status(201).json({message: "Campaign saved successfully", savedCampaignId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)});
+    // res.status(201).json({savedCampaignId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)});
     res.status(201).json({savedCampaignId: savedCampaign._id});
   } catch (error) {
     res.status(500).json({message: `Server error: ${error}`});
@@ -45,10 +45,7 @@ router.get("/api/campaign/load/:campaignId", authenticateJWT, async (req, res) =
       return campaign._id.toString() === campaignId}
     );
     if (selectedCampaign) {
-      res.json({
-        message: `${selectedCampaign.documentName} loaded successfully.`,
-        currentCampaign: selectedCampaign,
-      })
+      res.json(selectedCampaign)
     } else {
       res.status(500).send("This campaign does not exist")
     }
