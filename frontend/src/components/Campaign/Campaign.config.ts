@@ -60,3 +60,8 @@ export const TEST_CAMPAIGN_DATA:CampaignData = {
     documentDescription: "Placeholder Campaign",
     applicant: TEST_APPLICANT_DATA,
 }
+
+export type CampaignPageProps = {
+    campaignId: string;
+    campaignTitle: string;
+};
