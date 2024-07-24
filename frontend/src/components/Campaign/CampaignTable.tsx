@@ -70,14 +70,14 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
       ) : (
         <>
           <TableContainer>
-            <Table variant="simple">
+            <Table variant="striped">
               <TableCaption>{campaignData?.documentName} Applicants</TableCaption>
               <Thead>
                 <Tr>
                   <Th>Rank</Th>
                   <Th>Applicant Name</Th>
                   <Th>Date Submitted</Th>
-                  <Th>Score</Th>
+                  <Th isNumeric>Score</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -86,7 +86,7 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
                     <Td>{index + 1}</Td>
                     <Td>{data.documentName}</Td>
                     <Td>{data.submittedDate.toString()}</Td>
-                    <Td>{data.candidateScore}</Td>
+                    <Td isNumeric>{data.candidateScore}</Td>
                   </Tr>
                 ))}
               </Tbody>
