@@ -20,7 +20,7 @@ function authenticateJWT(req, res, next) {
         return res.json({ isAuthenticated: false });
       }
 
-      req.user = dbUser;
+      req.decodedToken = dbUser;
       req.username = dbUser.displayName;
       req.email = dbUser.email;
       logger.info('PATH: /authenticateJWT - User is authenticated');
