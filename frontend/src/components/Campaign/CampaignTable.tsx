@@ -71,7 +71,7 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
         <>
           <TableContainer>
             <Table variant="simple">
-              <TableCaption>{campaignData?.documentName} Applicants: {campaignData?._id}</TableCaption>
+              <TableCaption>{campaignData?.documentName} Applicants</TableCaption>
               <Thead>
                 <Tr>
                   <Th>Rank</Th>
