@@ -2,9 +2,9 @@ import { Box, Tab, TabList, Tabs } from "@chakra-ui/react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import CreateCampaign from "@/components/Campaign/CreateCampaign";
-import { CampaignTable } from "@/components/Campaign/CampaignTable";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { CampaignPage } from "@/components/Campaign/CampaignPage";
 
 const Comparison: React.FC = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Comparison: React.FC = () => {
 
   const handleTabChange = (index: number) => {
     setSelectedTabIndex(index);
-    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[index]._id}`)
+    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[index]._id}`);
   };
 
   return (
@@ -32,14 +32,20 @@ const Comparison: React.FC = () => {
         <TabList bg="lightblue">
           <CreateCampaign />
           {savedCampaigns.userCampaigns.map((campaign) => (
-            <Tab _hover={{ bg: "gray.300" }} key={campaign._id} >{campaign.documentName}</Tab>
+            <Tab _hover={{ bg: "gray.300" }} key={campaign._id}>
+              {campaign.documentName}
+            </Tab>
           ))}
         </TabList>
 
-          <Routes>
-            {savedCampaigns.userCampaigns.map((campaign) => (
-              <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
-            ))}
+        <Routes>
+          {savedCampaigns.userCampaigns.map((campaign) => (
+            <Route
+              key={campaign._id}
+              path={`/${campaign._id}`}
+              element={<CampaignPage campaignId={campaign._id} campaignTitle={campaign.documentName} />}
+            />
+          ))}
         </Routes>
       </Tabs>
     </Box>
