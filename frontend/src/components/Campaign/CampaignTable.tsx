@@ -1,6 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
 import { ApplicantData } from "@/lib/definitions";
-import request from "@/util/api";
 import {
   Table,
   TableCaption,
@@ -12,17 +10,26 @@ import {
   Tr,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
+import { upsertCampaign } from "@/reduxFeatures/campaignSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 type CampaignTableProps = {
   campaignId: string;
 };
 
 export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
-  const [campaignName, setCampaignName] = useState("");
-  const [campaignData, setCampaignData] = useState([]);
+
   const toast = useToast();
+  const dispatch = useDispatch();
+
+  const campaignData = useSelector(
+    (state: RootState) => state.global.campaigns.userCampaigns.find(
+      (campaign) => campaign._id === campaignId
+    )
+  );
 
   const { isLoading } = useQuery(
     [`load${campaignId}`, campaignId],
@@ -37,8 +44,7 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
           return res.json();
         })
         .then((data) => {
-          setCampaignName(data.currentCampaign.documentName);
-          setCampaignData(data.currentCampaign.applicant);
+          dispatch(upsertCampaign(data))
         })
         .catch((error) => {
           console.error("Load campaign error:", error);
@@ -52,8 +58,8 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
       enabled: true,
       refetchOnMount: "always",
       refetchOnWindowFocus: false,
-      cacheTime: 600,
-      staleTime: 600,
+      cacheTime: 60000,
+      staleTime: 60000,
     }
   );
 
@@ -65,7 +71,7 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
         <>
           <TableContainer>
             <Table variant="simple">
-              <TableCaption>{campaignName} Applicants</TableCaption>
+              <TableCaption>{campaignData?.documentName} Applicants</TableCaption>
               <Thead>
                 <Tr>
                   <Th>Rank</Th>
@@ -75,7 +81,7 @@ export const CampaignTable: React.FC<CampaignTableProps> = ({ campaignId }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {campaignData?.map((data: ApplicantData, index: number) => (
+                {campaignData?.applicant?.map((data: ApplicantData, index: number) => (
                   <Tr key={index + 1}>
                     <Td>{index + 1}</Td>
                     <Td>{data.documentName}</Td>

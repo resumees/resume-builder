@@ -17,7 +17,7 @@ const Comparison: React.FC = () => {
 
   const handleTabChange = (index: number) => {
     setSelectedTabIndex(index);
-    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[selectedTabIndex]._id}`)
+    navigate(`/dashboard/campaign/${savedCampaigns.userCampaigns[index]._id}`)
   };
 
   return (
@@ -36,10 +36,10 @@ const Comparison: React.FC = () => {
           ))}
         </TabList>
 
-        <Routes>
-          {savedCampaigns.userCampaigns.map((campaign) => (
-            <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
-          ))}
+          <Routes>
+            {savedCampaigns.userCampaigns.map((campaign) => (
+              <Route key={campaign._id} path={`/${campaign._id}`} element={<CampaignTable campaignId={campaign._id} />} />
+            ))}
         </Routes>
       </Tabs>
     </Box>

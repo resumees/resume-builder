@@ -9,17 +9,16 @@ function authenticateJWT(req, res, next) {
 
   if (token) {
     // Verify the JWT
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
       if (err) {
         return res.json({ isAuthenticated: false });
       }
       // Find the user in the database using the _id
-      const dbUser = await User.findById(decodedToken._id);
+      const dbUser = await User.findById(user._id);
 
       if (!dbUser) {
         return res.json({ isAuthenticated: false });
       }
-
       req.user = dbUser;
       req.username = dbUser.displayName;
       req.email = dbUser.email;

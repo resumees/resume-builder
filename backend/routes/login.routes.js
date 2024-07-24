@@ -38,7 +38,7 @@ router.post('/auth/logout', authenticateJWT, (req, res) => {
 });
 
 router.get('/auth/check-auth', authenticateJWT, async (req, res) => {
-  const user = await User.findOne(req._id);
+  const user = await User.findOne(req.user._id);
   res.json({ 
     isAuthenticated: true,
     initialCampaigns: user.campaign,
