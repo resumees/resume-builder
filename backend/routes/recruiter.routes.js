@@ -6,7 +6,6 @@ const authenticateJWT = require("../middleware/jwt");
 router.post("/api/campaign/new", authenticateJWT, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log('campaign/new userid: ', userId)
     const { documentName, documentDescription } = req.body;
 
     if (!documentName || !documentDescription) {
@@ -53,5 +52,30 @@ router.get("/api/campaign/load/:campaignId", authenticateJWT, async (req, res) =
     res.status(500).send("No valid user found")
   }
 });
+
+router.post("/api/campaign/delete/:campaignId", authenticateJWT, async (req, res) => {
+  try {
+    const user = await User.findOne(req.user._id);
+    const campaignId = req.params.campaignId;
+
+    if (user && campaignId) {
+      const selectedCampaign = user.campaign.find(campaign => { 
+        return campaign._id.toString() === campaignId}
+      );
+      
+      if (selectedCampaign !== -1) {
+        const deleteResponse = user.campaign.remove(selectedCampaign);
+        const saveResponse = user.save();
+        res.status(200).send("Campaign successfully deleted");
+      } else {
+        res.status(500).send("This campaign does not exist")
+      }
+    } else {
+      res.status(500).send("No valid user found")
+    }
+  } catch (error) {
+    res.status(500).json({message: `Server error: ${error}`});
+  }
+})
 
 module.exports = router;
