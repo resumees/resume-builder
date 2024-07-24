@@ -36,10 +36,15 @@ export const campaignSlice = createSlice({
       })
       :
       state.userCampaigns[campaignIndex] = action.payload;
-    }
+    },
+    deleteCampaign: (state, action: PayloadAction<CampaignData>) => {
+      state.userCampaigns = state.userCampaigns.filter(
+        (campaign) => campaign._id !== action.payload._id
+      );
+    },
   },
 });
 
-export const { addCampaign, setCampaignsSlice, upsertCampaign } = campaignSlice.actions;
+export const { addCampaign, deleteCampaign, setCampaignsSlice, upsertCampaign } = campaignSlice.actions;
 
 export default campaignSlice.reducer;
