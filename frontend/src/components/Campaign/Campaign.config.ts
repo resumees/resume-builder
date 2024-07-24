@@ -2,6 +2,7 @@ import { ApplicantData, CampaignData, ContactDetails, EducationEntry, Employment
 
 export const CAMPAIGN_TITLE_PLACEHOLDER = "Campaign Title";
 export const CAMPAIGN_DESCRIPTION_PLACEHOLDER = "Enter a position description including key selection criteria, experience, etc";
+export const DELETE_CAMPAIGN_PLACEHOLDER = "Enter Campaign Title to confirm delete.";
 
 const TEST_CONTACT_DETAILS:ContactDetails = {
     applicantEmail: "example@test.com",
